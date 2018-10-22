@@ -1,4 +1,4 @@
-package be.uclouvain.lingi2252.groupN.WarningSystem;
+package be.uclouvain.lingi2252.groupN.warningsystem;
 
 import java.util.Map;
 

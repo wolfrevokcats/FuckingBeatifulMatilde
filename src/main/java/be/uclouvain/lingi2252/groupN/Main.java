@@ -5,6 +5,6 @@ public class Main {
 
     }
     public static void scenario2() {
-
+        House house = new House();
     }
 }
