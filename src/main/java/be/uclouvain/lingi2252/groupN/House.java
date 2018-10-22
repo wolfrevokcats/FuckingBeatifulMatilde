@@ -1,7 +1,7 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.WarningSystem.AirQualityTester;
-import be.uclouvain.lingi2252.groupN.WarningSystem.AlarmSystem;
+import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
+import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 
 import java.util.List;
 import java.util.Optional;
