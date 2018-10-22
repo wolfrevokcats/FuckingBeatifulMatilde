@@ -11,11 +11,11 @@ public class CommunicationHub {
     private Room owner;
     private AirQualityTester airQC;
 
-
     //constructor
-    public CommunicationHub(){
-
+    public CommunicationHub(Room owner){
+        this.owner = owner;
     }
+
     //methods
     public void sendToRoom(Command command){
 

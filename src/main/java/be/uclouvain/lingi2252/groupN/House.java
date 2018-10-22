@@ -3,10 +3,7 @@ package be.uclouvain.lingi2252.groupN;
 import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class House {
@@ -29,6 +26,7 @@ public class House {
         this.rooms = rooms;
         alarm = new AlarmSystem(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()));
         airQC = new AirQualityTester(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()), .8, 10000.0, 100.0);
+        residents = new ArrayList<>();
     }
 
     //methods

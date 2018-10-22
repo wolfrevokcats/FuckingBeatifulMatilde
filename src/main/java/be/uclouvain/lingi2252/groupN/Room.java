@@ -6,6 +6,7 @@ import be.uclouvain.lingi2252.groupN.equipment.Equipment;
 import be.uclouvain.lingi2252.groupN.equipment.Windows;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,7 +22,9 @@ public class Room {
     //constructor
     public Room(String name){
         this.name = name;
-        this.commHub = new CommunicationHub();
+        this.commHub = new CommunicationHub(this);
+        this.sensors = new ArrayList<>();
+        this.equipmentList = new ArrayList<>();
     }
 
 
