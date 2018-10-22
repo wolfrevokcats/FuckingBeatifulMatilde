@@ -31,7 +31,13 @@ public class House {
     }
 
     public void addUser(User user){
+        residents.add(user);
+    }
 
+    public void addUsers(List<User> users) {
+        for (User user : users) {
+            addUser(user);
+        }
     }
 
     public void removeUser(User user){
