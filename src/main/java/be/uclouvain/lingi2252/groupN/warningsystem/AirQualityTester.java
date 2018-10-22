@@ -12,13 +12,13 @@ public class AirQualityTester extends AlarmSystem{
     // fields
     private Double humidityThreshold;
     private Double fineParticlesThreshold;
-    private Map<String, Double> harmfulGasThreshold;
+    private Double harmfulGasThreshold;
 
-    AirQualityTester(List<CommunicationHub> hubs) {
+    public AirQualityTester(List<CommunicationHub> hubs) {
         super(hubs);
     }
 
-    AirQualityTester(List<CommunicationHub> hubs, Double humidityThreshold, Double fineParticlesThreshold, Map<String, Double> harmfulGasThreshold) {
+    public AirQualityTester(List<CommunicationHub> hubs, Double humidityThreshold, Double fineParticlesThreshold, Double harmfulGasThreshold) {
         super(hubs);
         this.harmfulGasThreshold = harmfulGasThreshold;
         this.fineParticlesThreshold = fineParticlesThreshold;

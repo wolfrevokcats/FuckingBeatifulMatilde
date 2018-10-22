@@ -13,6 +13,15 @@ public abstract class Sensor {
         this.commHub = commHub;
     }
 
-    public abstract void sense(Signal signal);
-    public abstract void send(Signal signal);
+    public void sense(Signal signal) {
+        if (!signal.equals(lastValue))
+            send(signal);
+    }
+    public void send(Signal signal) {
+        commHub.elaborate(signal, this);
+    }
+
+    public String getName() {
+        return name;
+    }
 }

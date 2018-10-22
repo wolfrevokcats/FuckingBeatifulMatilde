@@ -12,8 +12,12 @@ public class User {
     }
 
     //methods
-    public void enterRoom(Room room){
-
+    public void enterRoom(House house, String roomName){
+        if (house.getRoom(roomName).isPresent()) {
+            house.getRoom(roomName).get().roomEntered(this);
+        } else {
+            throw new IllegalArgumentException("No such room [" + roomName + "] in this house!");
+        }
     }
 
 }
