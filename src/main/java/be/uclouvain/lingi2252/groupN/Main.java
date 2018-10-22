@@ -9,6 +9,7 @@ import be.uclouvain.lingi2252.groupN.sensors.HarmfulGasDetector;
 import be.uclouvain.lingi2252.groupN.sensors.MotionSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.signals.Air;
+import be.uclouvain.lingi2252.groupN.signals.Motion;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,5 +68,7 @@ public class Main {
         matilde.enterRoom(house, "kitchen");
         house.getRoom("kitchen").get().getEquipment("cookers").set(true);
         house.getRoom("kitchen").get().getSensor("kithfs1").sense(new Air(5000.0, 150.0, .6));
+
+        house.getRoom("kitchen").get().getSensor("kitmos1").sense(new Motion("FALL"));
     }
 }
