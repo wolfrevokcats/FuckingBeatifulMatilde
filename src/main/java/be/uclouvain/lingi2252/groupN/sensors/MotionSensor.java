@@ -3,6 +3,10 @@ package be.uclouvain.lingi2252.groupN.sensors;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
 
 public class MotionSensor extends Sensor {
+    public MotionSensor () {
+
+    }
+
     @Override
     public void send(Signal signal) {
 
