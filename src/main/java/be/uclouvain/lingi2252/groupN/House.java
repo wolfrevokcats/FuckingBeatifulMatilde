@@ -17,31 +17,40 @@ public class House {
     private Optional<AirQualityTester> airQC;
 
     //constructor
-    public House(User room){
+    public House(User owner){
+        this.owner = owner;
+    }
 
+    public House(User owner, List<Room> rooms) {
+        this.owner = owner;
+        this.rooms = rooms;
     }
 
     //methods
-    public void addRoom(Room room){
-
+    public void addRoom(Room room) {
+        rooms.add(room);
     }
 
-    public void removeRoom(Room room){
-
+    public void removeRoom(Room room) {
+        rooms.remove(room);
     }
 
-    public void addUser(User user){
+    public Optional<Room> getRoom(String name) {
+        return rooms.stream()
+                .filter(room -> room.getName().equals(name))
+                .findAny();
+    }
+
+    public void addUser(User user) {
         residents.add(user);
     }
 
     public void addUsers(List<User> users) {
-        for (User user : users) {
-            addUser(user);
-        }
+        this.residents.addAll(users);
     }
 
     public void removeUser(User user){
-
+        residents.remove(user);
     }
 
 
