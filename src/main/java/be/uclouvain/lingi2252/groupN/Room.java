@@ -18,6 +18,7 @@ public class Room {
     //constructor
     public Room(String name){
         this.name = name;
+        this.commHub = new CommunicationHub();
     }
 
 
@@ -60,5 +61,9 @@ public class Room {
 
     public String getName() {
         return name;
+    }
+
+    public CommunicationHub getCommHub() {
+        return commHub;
     }
 }

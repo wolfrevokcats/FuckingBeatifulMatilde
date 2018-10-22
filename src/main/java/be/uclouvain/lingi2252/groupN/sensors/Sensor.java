@@ -8,6 +8,11 @@ public abstract class Sensor {
     Signal lastValue;
     CommunicationHub commHub;
 
+    public Sensor(String name, CommunicationHub commHub) {
+        this.name = name;
+        this.commHub = commHub;
+    }
+
     public abstract void sense(Signal signal);
     public abstract void send(Signal signal);
 }
