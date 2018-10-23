@@ -7,12 +7,12 @@ public class User {
 
 
     //constructor
-    public User(String name){
+    public User(String name) {
 
     }
 
     //methods
-    public void enterRoom(House house, String roomName){
+    public void enterRoom(House house, String roomName) {
         if (house.getRoom(roomName).isPresent()) {
             house.getRoom(roomName).get().roomEntered(this);
         } else {

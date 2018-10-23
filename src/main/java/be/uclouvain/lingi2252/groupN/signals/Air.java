@@ -13,6 +13,7 @@ public class Air implements Signal {
         this.harmfulGas = harmfulGas;
         this.humidity = humidity;
     }
+
     @Override
     public Map<String, Double> extract() {
         Map<String, Double> airMetrics = new HashMap<>();

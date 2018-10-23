@@ -3,7 +3,9 @@ package be.uclouvain.lingi2252.groupN;
 import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class House {
@@ -17,7 +19,7 @@ public class House {
     private AirQualityTester airQC;
 
     //constructor
-    public House(User owner){
+    public House(User owner) {
         this.owner = owner;
         this.rooms = new ArrayList<>();
         alarm = new AlarmSystem(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()));
@@ -38,7 +40,9 @@ public class House {
         rooms.add(room);
     }
 
-    public void addRooms(List<Room> rooms) { this.rooms.addAll(rooms); }
+    public void addRooms(List<Room> rooms) {
+        this.rooms.addAll(rooms);
+    }
 
     public void removeRoom(Room room) {
         rooms.remove(room);
@@ -58,7 +62,7 @@ public class House {
         this.residents.addAll(users);
     }
 
-    public void removeUser(User user){
+    public void removeUser(User user) {
         residents.remove(user);
     }
 

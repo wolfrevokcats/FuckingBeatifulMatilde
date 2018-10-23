@@ -2,7 +2,6 @@ package be.uclouvain.lingi2252.groupN.warningsystem;
 
 import be.uclouvain.lingi2252.groupN.CommunicationHub;
 import be.uclouvain.lingi2252.groupN.Room;
-import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.signals.Air;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
 
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class AirQualityTester extends AlarmSystem{
+public class AirQualityTester extends AlarmSystem {
 
     // fields
     private Double humidityThreshold;

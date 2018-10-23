@@ -3,11 +3,12 @@ package be.uclouvain.lingi2252.groupN;
 import be.uclouvain.lingi2252.groupN.sensors.AirSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.signals.Air;
+import be.uclouvain.lingi2252.groupN.signals.Motion;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
-import be.uclouvain.lingi2252.groupN.warningsystem.*;
+import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
+import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CommunicationHub {
@@ -19,24 +20,24 @@ public class CommunicationHub {
     private Map<Sensor, Signal> lastValues;
 
     //constructor
-    public CommunicationHub(Room owner){
+    public CommunicationHub(Room owner) {
         this.owner = owner;
         lastValues = new HashMap<>();
     }
 
-    public CommunicationHub(Room owner, AirQualityTester airQC){
+    public CommunicationHub(Room owner, AirQualityTester airQC) {
         this.owner = owner;
         this.airQC = airQC;
         lastValues = new HashMap<>();
     }
 
-    public CommunicationHub(Room owner, AlarmSystem alarm){
+    public CommunicationHub(Room owner, AlarmSystem alarm) {
         this.owner = owner;
         this.alarm = alarm;
         lastValues = new HashMap<>();
     }
 
-    public CommunicationHub(Room owner, AlarmSystem alarm, AirQualityTester airQC){
+    public CommunicationHub(Room owner, AlarmSystem alarm, AirQualityTester airQC) {
         this.owner = owner;
         this.alarm = alarm;
         this.airQC = airQC;
@@ -44,12 +45,19 @@ public class CommunicationHub {
     }
 
     //methods
-    public void sendToRoom(Command command){
+    public void sendToRoom(Command command) {
 
     }
 
     public void elaborate(Signal signal, Sensor sensor) {
         lastValues.put(sensor, signal);
+
+        if (signal instanceof Motion)
+            if (signal.extract().equals("FALL")) {
+                System.out.println("Fall detected in [" + owner.getName() + "]");
+                alarm.compute(signal, owner);
+            }
+
         if (signal instanceof Air && sensor instanceof AirSensor)
             airQC.compute(signal, owner);
     }

@@ -17,8 +17,9 @@ public abstract class Sensor {
     public void sense(Signal signal) {
         if (!signal.equals(lastValue))
             lastValue = signal;
-            send(signal);
+        send(signal);
     }
+
     public void send(Signal signal) {
         commHub.elaborate(signal, this);
     }

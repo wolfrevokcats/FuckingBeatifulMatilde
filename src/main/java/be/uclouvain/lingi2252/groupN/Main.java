@@ -4,8 +4,8 @@ import be.uclouvain.lingi2252.groupN.equipment.Cookers;
 import be.uclouvain.lingi2252.groupN.equipment.Doors;
 import be.uclouvain.lingi2252.groupN.equipment.Equipment;
 import be.uclouvain.lingi2252.groupN.equipment.Windows;
-import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.AirSensor;
+import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.MotionSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.signals.Air;
@@ -73,7 +73,6 @@ public class Main {
         house.getRoom("kitchen").get().getEquipment("cookers").set(true);
         house.getRoom("kitchen").get().getSensor("kitcam1").sense(new Frame("smoke near cooker"));
         house.getRoom("kitchen").get().getSensor("kithgd1").sense(new Air(5000.0, 150.0, .6));
-
         house.getRoom("kitchen").get().getSensor("kitmos1").sense(new Motion("FALL"));
     }
 }

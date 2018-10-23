@@ -8,21 +8,21 @@ public class CentralUnit {
     private List<CommunicationHub> hubs;
 
     //constructor
-    public CentralUnit(){
+    public CentralUnit() {
 
     }
 
 
     //methods
-    public void setTempRules(Double lowTemp, Double highTemp){
+    public void setTempRules(Double lowTemp, Double highTemp) {
 
     }
 
-    public void setBlindsSchedule(Double fromHour, Double toHour){
+    public void setBlindsSchedule(Double fromHour, Double toHour) {
 
     }
 
-    public String findObject(String object){
+    public String findObject(String object) {
 
         return " ";
     }

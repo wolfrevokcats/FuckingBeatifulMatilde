@@ -7,7 +7,6 @@ import be.uclouvain.lingi2252.groupN.equipment.Windows;
 import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
-import be.uclouvain.lingi2252.groupN.signals.Signal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class Room {
     private House owner;
 
     //constructor
-    public Room(House owner, String name){
+    public Room(House owner, String name) {
         this.name = name;
         this.commHub = new CommunicationHub(this, owner.getAlarm(), owner.getAirQC());
         this.sensors = new ArrayList<>();
@@ -34,11 +33,11 @@ public class Room {
 
 
     //methods
-    public void roomEntered(User user){
+    public void roomEntered(User user) {
 
     }
 
-    public void addSensor(Sensor sensor){
+    public void addSensor(Sensor sensor) {
         sensors.add(sensor);
     }
 
@@ -46,11 +45,11 @@ public class Room {
         this.sensors.addAll(sensors);
     }
 
-    public void removeSensor(Sensor sensor){
+    public void removeSensor(Sensor sensor) {
         sensors.remove(sensor);
     }
 
-    public void lockdown(){
+    public void lockdown() {
 
     }
 
@@ -112,9 +111,9 @@ public class Room {
         switch (name) {
             case "doors":
                 return equipmentList.stream()
-                            .filter(equipment -> equipment instanceof Doors)
-                            .findAny()
-                            .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
+                        .filter(equipment -> equipment instanceof Doors)
+                        .findAny()
+                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
             case "windows":
                 return equipmentList.stream()
                         .filter(equipment -> equipment instanceof Windows)

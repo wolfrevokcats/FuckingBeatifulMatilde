@@ -4,7 +4,7 @@ import be.uclouvain.lingi2252.groupN.Room;
 
 import java.util.Optional;
 
-public class Doors implements Equipment{
+public class Doors implements Equipment {
     private Boolean status;
     private Room owner;
 
