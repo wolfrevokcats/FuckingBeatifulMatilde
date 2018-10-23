@@ -11,6 +11,7 @@ import be.uclouvain.lingi2252.groupN.signals.Frame;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -63,10 +64,11 @@ public class Room {
 
     public void findObject(String object) {
 
+
     }
 
     public void findWhy(String what) {
-        System.out.println("Object tracking tracking to find what caused [" + what + "] in [" + name + "]");
+        System.out.println("Object Tracking procedure triggered to find what caused [" + what + "] in [" + name + "]");
         if (what.equals("smoke")) {
             List<Camera> cameras = sensors.stream().filter(sensor -> sensor instanceof Camera).map(sensor -> (Camera) sensor).collect(Collectors.toList());
             List<Frame> lastFrames = cameras.stream().map(camera -> (Frame) commHub.getLastValue(camera)).collect(Collectors.toList());

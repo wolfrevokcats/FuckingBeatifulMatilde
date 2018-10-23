@@ -12,10 +12,12 @@ public class AlarmSystem {
     //fields
     protected List<CommunicationHub> hubs;
     String emergencyNumber;
+    String emergencyPerson;
 
     public AlarmSystem(List<CommunicationHub> hubs) {
         this.hubs = hubs;
         emergencyNumber = "112";
+        emergencyPerson = "[Adalberto]";
     }
 
     public void compute(Signal signal, Room room) {
@@ -26,10 +28,12 @@ public class AlarmSystem {
 
     public void ring(Room room, String issue) {
         //send lists of commands to commhubs
+
     }
 
     public void emergencyCall(String message) {
         System.out.println("Calling " + emergencyNumber + " with this message \"" + message + "\"");
+        System.out.println("Calling emergency contact " + emergencyPerson);
     }
 
     public void setEmergencyNumber(String emergencyNumber) {

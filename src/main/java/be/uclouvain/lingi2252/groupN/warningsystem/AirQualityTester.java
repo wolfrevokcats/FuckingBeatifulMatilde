@@ -32,15 +32,15 @@ public class AirQualityTester extends AlarmSystem {
         if (signal instanceof Air) {
             Map<String, Double> air = (Map<String, Double>) signal.extract();
             if (air.get("fine particles") >= fineParticlesThreshold) {
-                System.out.println("Fine particles [" + air.get("fine particles") + "] above threshold [" + fineParticlesThreshold + "] in [" + room.getName() + "]");
+                System.out.println("Detected fine particles [" + air.get("fine particles") + "] above threshold [" + fineParticlesThreshold + "] in [" + room.getName() + "]");
                 ring(room, "fine particles");
             }
             if (air.get("humidity") >= humidityThreshold) {
-                System.out.println("Humidity [" + air.get("humidity") + "] above threshold [" + humidityThreshold + "] in [" + room.getName() + "]");
+                System.out.println("Detected humidity [" + air.get("humidity") + "] above threshold [" + humidityThreshold + "] in [" + room.getName() + "]");
                 ring(room, "humidity");
             }
             if (air.get("harmful gas") >= harmfulGasThreshold) {
-                System.out.println("Harmful gas [" + air.get("harmful gas") + "] above threshold [" + harmfulGasThreshold + "] in [" + room.getName() + "]");
+                System.out.println("Detected harmful gas [" + air.get("harmful gas") + "] above threshold [" + harmfulGasThreshold + "] in [" + room.getName() + "]");
                 ring(room, "harmful gas");
             }
         }
@@ -49,7 +49,8 @@ public class AirQualityTester extends AlarmSystem {
     @Override
     public void ring(Room room, String issue) {
         if (issue.equals("harmful gas")) {
-            System.out.println("Alarm ringing in the house [harmful gas] detected!");
+            System.out.print("Alarm starts ringing in the house...");
+            System.out.println("[harmful gas] detected!");
             room.evacuate();
             room.findWhy("smoke");
         }
