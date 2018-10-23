@@ -4,10 +4,15 @@ import be.uclouvain.lingi2252.groupN.equipment.Cookers;
 import be.uclouvain.lingi2252.groupN.equipment.Doors;
 import be.uclouvain.lingi2252.groupN.equipment.Equipment;
 import be.uclouvain.lingi2252.groupN.equipment.Windows;
+import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
+import be.uclouvain.lingi2252.groupN.signals.Frame;
+import be.uclouvain.lingi2252.groupN.signals.Signal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 public class Room {
@@ -17,12 +22,12 @@ public class Room {
     private List<Sensor> sensors;
     private CommunicationHub commHub;
     private List<Equipment> equipmentList;
-
+    private House owner;
 
     //constructor
-    public Room(String name){
+    public Room(House owner, String name){
         this.name = name;
-        this.commHub = new CommunicationHub(this);
+        this.commHub = new CommunicationHub(this, owner.getAlarm(), owner.getAirQC());
         this.sensors = new ArrayList<>();
         this.equipmentList = new ArrayList<>();
     }
@@ -50,7 +55,29 @@ public class Room {
     }
 
     public void evacuate() {
+        System.out.println("Triggering [" + name + "] evacuation");
+        for (Equipment equipment : equipmentList) {
+            if (equipment instanceof Doors || equipment instanceof Windows)
+                equipment.set(true);
+        }
+    }
 
+    public void findObject(String object) {
+
+    }
+
+    public void findWhy(String what) {
+        System.out.println("Object tracking tracking to finc what caused [" + what + "] in [" + name + "]");
+        if (what.equals("smoke")) {
+            List<Camera> cameras = sensors.stream().filter(sensor -> sensor instanceof Camera).map(sensor -> (Camera) sensor).collect(Collectors.toList());
+            List<Frame> lastFrames = cameras.stream().map(camera -> (Frame) commHub.getLastValue(camera)).collect(Collectors.toList());
+
+            lastFrames.stream()
+                    .filter(Objects::nonNull)
+                    .filter(frame -> frame.extract().contains("smoke"))
+                    .forEach(frame -> System.out.println("Smoke identified [" + frame.extract().substring(6) + "]"));
+
+        }
     }
 
     public void addEquipment(Equipment equipment) {

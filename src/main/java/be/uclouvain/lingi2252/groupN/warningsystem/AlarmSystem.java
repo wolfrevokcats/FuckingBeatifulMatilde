@@ -1,6 +1,7 @@
 package be.uclouvain.lingi2252.groupN.warningsystem;
 
 import be.uclouvain.lingi2252.groupN.CommunicationHub;
+import be.uclouvain.lingi2252.groupN.Room;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
 
 import java.util.List;
@@ -16,11 +17,11 @@ public class AlarmSystem {
         emergencyNumber = "112";
     }
 
-    public void compute(Signal signal) {
+    public void compute(Signal signal, Room room) {
 
     }
 
-    public void ring() {
+    public void ring(Room room, String issue) {
         //send lists of commands to commhubs
     }
 

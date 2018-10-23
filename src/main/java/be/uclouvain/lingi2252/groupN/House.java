@@ -19,6 +19,10 @@ public class House {
     //constructor
     public House(User owner){
         this.owner = owner;
+        this.rooms = new ArrayList<>();
+        alarm = new AlarmSystem(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()));
+        airQC = new AirQualityTester(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()), .8, 10000.0, 100.0);
+        residents = new ArrayList<>();
     }
 
     public House(User owner, List<Room> rooms) {
@@ -33,6 +37,8 @@ public class House {
     public void addRoom(Room room) {
         rooms.add(room);
     }
+
+    public void addRooms(List<Room> rooms) { this.rooms.addAll(rooms); }
 
     public void removeRoom(Room room) {
         rooms.remove(room);
@@ -56,5 +62,11 @@ public class House {
         residents.remove(user);
     }
 
+    public AlarmSystem getAlarm() {
+        return alarm;
+    }
 
+    public AirQualityTester getAirQC() {
+        return airQC;
+    }
 }

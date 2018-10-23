@@ -11,10 +11,12 @@ public abstract class Sensor {
     public Sensor(String name, CommunicationHub commHub) {
         this.name = name;
         this.commHub = commHub;
+        lastValue = null;
     }
 
     public void sense(Signal signal) {
         if (!signal.equals(lastValue))
+            lastValue = signal;
             send(signal);
     }
     public void send(Signal signal) {
