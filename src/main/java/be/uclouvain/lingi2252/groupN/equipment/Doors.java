@@ -3,7 +3,6 @@ package be.uclouvain.lingi2252.groupN.equipment;
 import be.uclouvain.lingi2252.groupN.Room;
 
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 public class Doors implements Equipment {
     private Boolean status;
