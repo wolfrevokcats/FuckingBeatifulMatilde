@@ -16,13 +16,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
-        scenario2();
+        try {
+            scenario2();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    private static void scenario2() {
+    private static void scenario2() throws InterruptedException {
         List<User> users = new ArrayList<>(Arrays.asList(new User("Matilde"), new User("Quentin"), new User("Benoît"), new User("Kim")));
 
         House house = new House(users.get(0));
@@ -70,9 +75,33 @@ public class Main {
 
         User matilde = users.get(0);
         matilde.enterRoom(house, "kitchen");
+        TimeUnit.MILLISECONDS.sleep(500);
+        System.out.print(".");
+        TimeUnit.MILLISECONDS.sleep(500);
+        System.out.print(".");
+        TimeUnit.MILLISECONDS.sleep(500);
+        System.out.print(".\n");
         house.getRoom("kitchen").get().getEquipment("cookers").set(true);
+        TimeUnit.MILLISECONDS.sleep(500);
+        System.out.print(".");
+        TimeUnit.MILLISECONDS.sleep(500);
+        System.out.print(".");
+        TimeUnit.MILLISECONDS.sleep(500);
+        System.out.print(".\n");
         house.getRoom("kitchen").get().getSensor("kitcam1").sense(new Frame("smoke near cooker"));
+        TimeUnit.MILLISECONDS.sleep(500);
+        System.out.print(".");
+        TimeUnit.MILLISECONDS.sleep(500);
+        System.out.print(".");
+        TimeUnit.MILLISECONDS.sleep(500);
+        System.out.print(".\n");
         house.getRoom("kitchen").get().getSensor("kithgd1").sense(new Air(5000.0, 150.0, .6));
+        TimeUnit.MILLISECONDS.sleep(500);
+        System.out.print(".");
+        TimeUnit.MILLISECONDS.sleep(500);
+        System.out.print(".");
+        TimeUnit.MILLISECONDS.sleep(500);
+        System.out.print(".\n");
         house.getRoom("kitchen").get().getSensor("kitmos1").sense(new Motion("FALL"));
     }
 }

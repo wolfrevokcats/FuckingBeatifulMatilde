@@ -8,7 +8,7 @@ public class User {
 
     //constructor
     public User(String name) {
-
+        this.name = name;
     }
 
     //methods
@@ -20,4 +20,7 @@ public class User {
         }
     }
 
+    public String getName() {
+        return name;
+    }
 }

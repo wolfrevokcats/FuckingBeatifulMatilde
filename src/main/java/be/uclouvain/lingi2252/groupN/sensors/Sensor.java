@@ -15,6 +15,7 @@ public abstract class Sensor {
     }
 
     public void sense(Signal signal) {
+        System.out.println("[" + name + "] sensed signal!");
         if (!signal.equals(lastValue))
             lastValue = signal;
         send(signal);

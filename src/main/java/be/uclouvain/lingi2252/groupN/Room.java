@@ -34,7 +34,7 @@ public class Room {
 
     //methods
     public void roomEntered(User user) {
-
+        System.out.println("[" + user.getName() + "] entering the room [" + name + "]");
     }
 
     public void addSensor(Sensor sensor) {
@@ -66,7 +66,7 @@ public class Room {
     }
 
     public void findWhy(String what) {
-        System.out.println("Object tracking tracking to finc what caused [" + what + "] in [" + name + "]");
+        System.out.println("Object tracking tracking to find what caused [" + what + "] in [" + name + "]");
         if (what.equals("smoke")) {
             List<Camera> cameras = sensors.stream().filter(sensor -> sensor instanceof Camera).map(sensor -> (Camera) sensor).collect(Collectors.toList());
             List<Frame> lastFrames = cameras.stream().map(camera -> (Frame) commHub.getLastValue(camera)).collect(Collectors.toList());
