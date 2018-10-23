@@ -75,33 +75,22 @@ public class Main {
 
         User matilde = users.get(0);
         matilde.enterRoom(house, "kitchen");
-        TimeUnit.MILLISECONDS.sleep(500);
-        System.out.print(".");
-        TimeUnit.MILLISECONDS.sleep(500);
-        System.out.print(".");
-        TimeUnit.MILLISECONDS.sleep(500);
-        System.out.print(".\n");
+        simpleDisplayDelay(3, 500);
         house.getRoom("kitchen").get().getEquipment("cookers").set(true);
-        TimeUnit.MILLISECONDS.sleep(500);
-        System.out.print(".");
-        TimeUnit.MILLISECONDS.sleep(500);
-        System.out.print(".");
-        TimeUnit.MILLISECONDS.sleep(500);
-        System.out.print(".\n");
+        simpleDisplayDelay(3, 500);
         house.getRoom("kitchen").get().getSensor("kitcam1").sense(new Frame("smoke near cooker"));
-        TimeUnit.MILLISECONDS.sleep(500);
-        System.out.print(".");
-        TimeUnit.MILLISECONDS.sleep(500);
-        System.out.print(".");
-        TimeUnit.MILLISECONDS.sleep(500);
-        System.out.print(".\n");
+        simpleDisplayDelay(3, 500);
         house.getRoom("kitchen").get().getSensor("kithgd1").sense(new Air(5000.0, 150.0, .6));
-        TimeUnit.MILLISECONDS.sleep(500);
-        System.out.print(".");
-        TimeUnit.MILLISECONDS.sleep(500);
-        System.out.print(".");
-        TimeUnit.MILLISECONDS.sleep(500);
-        System.out.print(".\n");
+        simpleDisplayDelay(3, 500);
         house.getRoom("kitchen").get().getSensor("kitmos1").sense(new Motion("FALL"));
+    }
+
+    public static void simpleDisplayDelay(int nbPoints, int individualDelay) throws InterruptedException {
+        for (int i = 0; i < nbPoints; i++) {
+            TimeUnit.MILLISECONDS.sleep(individualDelay);
+            System.out.print(".");
+        }
+        TimeUnit.MILLISECONDS.sleep(individualDelay);
+        System.out.print("\n");
     }
 }
