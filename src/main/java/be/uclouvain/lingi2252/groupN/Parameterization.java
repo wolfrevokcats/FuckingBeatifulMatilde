@@ -149,7 +149,6 @@ public class Parameterization {
 
                     }
                 }
-
             }
 
             return house;
