@@ -27,7 +27,7 @@
     "adalberto": 1,
     "julie": 1
   },
-  "additional_features:": {
+  "additional_features": {
     "air_quality_tester": true,
     "alarm_system": true,
     "smart_assistant": false

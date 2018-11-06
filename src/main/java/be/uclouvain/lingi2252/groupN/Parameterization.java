@@ -1,5 +1,6 @@
 package be.uclouvain.lingi2252.groupN;
 
+import be.uclouvain.lingi2252.groupN.equipment.Cookers;
 import be.uclouvain.lingi2252.groupN.equipment.Doors;
 import be.uclouvain.lingi2252.groupN.equipment.Windows;
 import be.uclouvain.lingi2252.groupN.sensors.AirSensor;
@@ -19,6 +20,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.lang.Math.toIntExact;
 
 public class Parameterization {
     public static House newHouse(String filepath) {
@@ -40,7 +43,7 @@ public class Parameterization {
                 users.add(user);
 
                 // Fining the owner inside the users list (assigned int = 0)
-                int userStatus = (int) jsonUsers.get(key);
+                int userStatus = toIntExact((long) jsonUsers.get(key));
                 if (userStatus == 0) {
                     owners.add(user);
                 }
@@ -66,7 +69,7 @@ public class Parameterization {
                 JSONObject jsonSensors = (JSONObject) jsonRoom.get("sensors");
                 for (Object sensorObj : jsonSensors.keySet()) {
                     String sensorKey = (String) sensorObj;
-                    int nbSensors = (int) jsonSensors.get(sensorKey);
+                    int nbSensors = toIntExact((long) jsonSensors.get(sensorKey));
 
                     List<Sensor> sensors = new ArrayList<>();
 
@@ -75,9 +78,10 @@ public class Parameterization {
                         case "cameras":
                             for (int i = 0; i < nbSensors; i++) {
                                 sensors.add(new Camera(roomKey + '_' + sensorKey + '_' + i, room.getCommHub()));
+                                System.out.println(roomKey + '_' + sensorKey + '_' + i);
                             }
                             break;
-                        case "air_sensor":
+                        case "air_sensors":
                             for (int i = 0; i < nbSensors; i++) {
                                 sensors.add(new AirSensor(roomKey + '_' + sensorKey + '_' + i, room.getCommHub()));
                             }
@@ -99,14 +103,14 @@ public class Parameterization {
                 for (Object equipmentObj : jsonEquipment) {
                     String equipmentKey = (String) equipmentObj;
                     switch (equipmentKey) {
-                        case "Doors":
+                        case "doors":
                             room.addEquipment(new Doors(room));
                             break;
-                        case "Windows":
+                        case "windows":
                             room.addEquipment(new Windows(room));
                             break;
-                        case "Cookers":
-                            room.addEquipment(new Doors(room));
+                        case "cookers":
+                            room.addEquipment(new Cookers(room));
                             break;
                         default:
                             System.out.println("Equipment doesn't exist or isn't implemented yet!");
@@ -129,8 +133,8 @@ public class Parameterization {
                             Double humidityThreshold = (Double) jsonAirThresholds.get("humidity");
                             Double fineParticlesThreshold = (Double) jsonAirThresholds.get("fine_particles");
                             Double harmfulGasThreshold = (Double) jsonAirThresholds.get("harmful_gas");
-                            AirQualityTester airQC = new AirQualityTester(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()), humidityThreshold, fineParticlesThreshold, harmfulGasThreshold);
-                            house.addAirQC(airQC);
+                            AirQualityTester airQT = new AirQualityTester(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()), humidityThreshold, fineParticlesThreshold, harmfulGasThreshold);
+                            house.addAirQT(airQT);
                             break;
                         case "alarm_system":
                             AlarmSystem alarmSystem = new AlarmSystem(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()));

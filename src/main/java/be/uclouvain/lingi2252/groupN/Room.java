@@ -26,9 +26,10 @@ public class Room {
     //constructor
     public Room(House owner, String name) {
         this.name = name;
-        this.commHub = new CommunicationHub(this, owner.getAlarm(), owner.getAirQC());
+        this.commHub = new CommunicationHub(this);
         this.sensors = new ArrayList<>();
         this.equipmentList = new ArrayList<>();
+        this.owner = owner;
     }
 
 
@@ -128,5 +129,9 @@ public class Room {
             default:
                 throw new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!");
         }
+    }
+
+    public House getOwner() {
+        return owner;
     }
 }
