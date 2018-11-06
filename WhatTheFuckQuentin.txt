@@ -5,3 +5,7 @@
     3) threshold for humidity
 - .json file: additionalFeauture: just the ones you put??
 - possibility to build house with different rooms and equipments
+- fix in CommunicationHub: owner.getOwner().getAirQT()
+- ask if the variability should be implemented inside the parametrization.java in order to choose which things, present in the configuration file, we want to "import"
+- how things change if we change the configuration file?
+- find a way to let things work (same scenario) for different kind of house: how will the house detect a falling if there's no falling detector? how we
