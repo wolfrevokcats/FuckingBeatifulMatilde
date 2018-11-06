@@ -13,23 +13,15 @@ public class House {
     // fields
     private List<Room> rooms;
     private List<User> residents;
-    private User owner;
+    private List<User> owners;
     private CentralUnit central;
     private AlarmSystem alarm;
     private AirQualityTester airQC;
 
     //constructor
-    public House(User owner) {
-        this.owner = owner;
+    public House(List<User> owners) {
+        this.owners = owners;
         this.rooms = new ArrayList<>();
-        alarm = new AlarmSystem(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()));
-        airQC = new AirQualityTester(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()), .8, 10000.0, 100.0);
-        residents = new ArrayList<>();
-    }
-
-    public House(User owner, List<Room> rooms) {
-        this.owner = owner;
-        this.rooms = rooms;
         alarm = new AlarmSystem(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()));
         airQC = new AirQualityTester(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()), .8, 10000.0, 100.0);
         residents = new ArrayList<>();
@@ -72,5 +64,13 @@ public class House {
 
     public AirQualityTester getAirQC() {
         return airQC;
+    }
+
+    public List<User> getResidents() {
+        return residents;
+    }
+
+    public List<User> getOwners() {
+        return owners;
     }
 }

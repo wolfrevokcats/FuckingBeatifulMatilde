@@ -30,7 +30,7 @@ public class Main {
     private static void scenario2() throws InterruptedException {
         List<User> users = new ArrayList<>(Arrays.asList(new User("Matilde"), new User("Quentin"), new User("Benoît"), new User("Kim")));
 
-        House house = new House(users.get(0));
+        House house = new House(new ArrayList<>(Collections.singletonList(users.get(0))));
 
         List<Room> rooms = new ArrayList<>(Arrays.asList(new Room(house, "entrance"), new Room(house, "kitchen"), new Room(house, "living room"), new Room(house, "bedroom"), new Room(house, "bathroom")));
 
