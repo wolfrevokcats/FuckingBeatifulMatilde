@@ -1,9 +1,13 @@
 package be.uclouvain.lingi2252.groupN;
 
+import be.uclouvain.lingi2252.groupN.equipment.Doors;
+import be.uclouvain.lingi2252.groupN.equipment.Windows;
 import be.uclouvain.lingi2252.groupN.sensors.AirSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.MotionSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
+import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
+import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,6 +18,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Parameterization {
     public static House newHouse(String filepath) {
@@ -84,11 +89,58 @@ public class Parameterization {
 
                 JSONArray jsonEquipment = (JSONArray) jsonRoom.get("equipment");
                 for (Object equipmentObj : jsonEquipment) {
-
+                    String equipmentKey = (String) equipmentObj;
+                    switch (equipmentKey) {
+                        case "Doors":
+                            room.addEquipment(new Doors(room));
+                            break;
+                        case "Windows":
+                            room.addEquipment(new Windows(room));
+                            break;
+                        case "Cookers":
+                            room.addEquipment(new Doors(room));
+                            break;
+                        default:
+                            System.out.println("Equipment doesn't exist or isn't implemented yet!");
+                            break;
+                    }
                 }
             }
 
             house.addRooms(rooms);
+
+            JSONObject jsonFeatures = (JSONObject) mainFile.get("additional_features");
+            for (Object featureObj : jsonFeatures.keySet()) {
+                String featureKey = (String) featureObj;
+                boolean isPresent = (boolean) jsonFeatures.get(featureKey);
+
+                if (isPresent) {
+                    switch (featureKey) {
+                        case "air_quality_tester":
+                            JSONObject jsonAirThresholds = (JSONObject) mainFile.get("air_quality_thresholds");
+                            Double humidityThreshold = (Double) jsonAirThresholds.get("humidity");
+                            Double fineParticlesThreshold = (Double) jsonAirThresholds.get("fine_particles");
+                            Double harmfulGasThreshold = (Double) jsonAirThresholds.get("harmful_gas");
+                            AirQualityTester airQC = new AirQualityTester(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()), humidityThreshold, fineParticlesThreshold, harmfulGasThreshold);
+                            house.addAirQC(airQC);
+                            break;
+                        case "alarm_system":
+                            AlarmSystem alarmSystem = new AlarmSystem(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()));
+                            house.addAlarm(alarmSystem);
+                            break;
+                        case "smart_assistant":
+                            System.out.println("Coming soon!");
+                            break;
+                        default:
+                            System.out.println("Equipment doesn't exist or isn't implemented yet!");
+                            break;
+
+                    }
+                }
+
+            }
+
+            return house;
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();

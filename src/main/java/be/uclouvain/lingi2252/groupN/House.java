@@ -6,7 +6,6 @@ import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class House {
 
@@ -22,8 +21,10 @@ public class House {
     public House(List<User> owners) {
         this.owners = owners;
         this.rooms = new ArrayList<>();
-        alarm = new AlarmSystem(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()));
-        airQC = new AirQualityTester(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()), .8, 10000.0, 100.0);
+//        alarm = new AlarmSystem(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()));
+//        airQC = new AirQualityTester(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()), .8, 10000.0, 100.0);
+        alarm = null;
+        airQC = null;
         residents = new ArrayList<>();
     }
 
@@ -56,6 +57,14 @@ public class House {
 
     public void removeUser(User user) {
         residents.remove(user);
+    }
+
+    public void addAlarm(AlarmSystem alarm) {
+        this.alarm = alarm;
+    }
+
+    public void addAirQC(AirQualityTester airQualityTester) {
+        this.airQC = airQualityTester;
     }
 
     public AlarmSystem getAlarm() {
