@@ -21,8 +21,6 @@ public class House {
     public House(List<User> owners) {
         this.owners = owners;
         this.rooms = new ArrayList<>();
-//        alarm = new AlarmSystem(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()));
-//        airQT = new AirQualityTester(rooms.stream().map(Room::getCommHub).collect(Collectors.toList()), .8, 10000.0, 100.0);
         alarm = null;
         airQT = null;
         residents = new ArrayList<>();
