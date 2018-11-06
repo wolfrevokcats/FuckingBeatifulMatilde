@@ -1,66 +1,31 @@
 {
   "rooms": {
     "entrance": {
-      "sensors": {
-        "cameras" : 2,
-        "air_sensors": 1,
-        "motion_sensors": 1
-      },
-      "equipment": [
-        "doors",
-        "windows"
-      ]
+      "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
+      "equipment": [ "doors", "windows" ]
     },
     "kitchen": {
-      "sensors": {
-        "cameras" : 2,
-        "air_sensors": 1,
-        "motion_sensors": 1
-      },
-      "equipment": [
-        "doors",
-        "windows",
-        "cookers"
-      ]
+      "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
+      "equipment": [ "doors", "windows", "cookers" ]
     },
     "living_room": {
-      "sensors": {
-        "cameras" : 3,
-        "air_sensors": 1,
-        "motion_sensors": 2
-      },
-      "equipment": [
-        "doors",
-        "windows"
-      ]
+      "sensors": { "cameras" : 3, "air_sensors": 1, "motion_sensors": 2 },
+      "equipment": [ "doors", "windows" ]
     },
     "bedroom": {
-      "sensors": {
-        "cameras" : 2,
-        "air_sensors": 1,
-        "motion_sensors": 1
-      },
-      "equipment": [
-        "doors",
-        "windows"
-      ]
+      "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
+      "equipment": [ "doors", "windows" ]
     },
     "bathroom": {
-      "sensors": {
-        "cameras" : 2,
-        "air_sensors": 1,
-        "motion_sensors": 1
-      },
-      "equipment": [
-        "doors"
-      ]
+      "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
+      "equipment": [ "doors" ]
     }
   },
   "users": {
     "matilde": 0,
     "quentin": 1,
-    "kim": 1,
-    "benoit": 1
+    "adalberto": 1,
+    "julie": 1
   },
   "additionalFeatures:": {
     "air_quality_tester": true,

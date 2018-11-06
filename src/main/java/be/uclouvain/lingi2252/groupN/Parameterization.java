@@ -23,27 +23,33 @@ public class Parameterization {
         try {
             JSONObject mainFile = (JSONObject) jsonParser.parse(new FileReader(jsonFile));
 
+            // Extract lists of Users and Owners from .json file
             JSONObject jsonUsers = (JSONObject) mainFile.get("users");
             List<User> users = new ArrayList<>();
             List<User> owners = new ArrayList<>();
 
+            // Fill the list of Users. Each object here are of type User
             for (Object o : jsonUsers.keySet()) {
                 String key = (String) o;
                 User user = new User(key);
                 users.add(user);
 
+                // Fining the owner inside the users list (assigned int = 0)
                 int userStatus = (int) jsonUsers.get(key);
                 if (userStatus == 0) {
                     owners.add(user);
                 }
             }
 
+            // Populate the house with the list of owners
             House house = new House(owners);
             house.addUsers(users);
 
+            // Extract lists of Rooms from .json file
             JSONObject jsonRooms = (JSONObject) mainFile.get("rooms");
             List<Room> rooms = new ArrayList<>();
 
+            // Populate the room list with the ones present in the .json file
             for (Object roomObj : jsonRooms.keySet()) {
                 String roomKey = (String) roomObj;
                 Room room = new Room(house, roomKey);
@@ -51,6 +57,7 @@ public class Parameterization {
 
                 JSONObject jsonRoom = (JSONObject) jsonRooms.get(roomKey);
 
+                // Populate each room with the corresponding sensors
                 JSONObject jsonSensors = (JSONObject) jsonRoom.get("sensors");
                 for (Object sensorObj : jsonSensors.keySet()) {
                     String sensorKey = (String) sensorObj;
@@ -58,6 +65,7 @@ public class Parameterization {
 
                     List<Sensor> sensors = new ArrayList<>();
 
+                    // Connect each sensor to the Communication Hub
                     switch (sensorKey) {
                         case "cameras":
                             for (int i = 0; i < nbSensors; i++) {

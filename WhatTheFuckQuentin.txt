@@ -1,0 +1,7 @@
+- more than one owners per house: change something?
+- things to be interactive:
+    1) threshold for fine particles
+    2) threshold for harmful gas
+    3) threshold for humidity
+- .json file: additionalFeauture: just the ones you put??
+- possibility to build house with different rooms and equipments
