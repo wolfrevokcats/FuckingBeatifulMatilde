@@ -27,9 +27,14 @@
     "adalberto": 1,
     "julie": 1
   },
-  "additionalFeatures:": {
+  "additional_features:": {
     "air_quality_tester": true,
     "alarm_system": true,
     "smart_assistant": false
+  },
+  "air_quality_thresholds":{
+    "humidity": 0.8,
+    "fine_particles": 10000.0,
+    "harmful_gas": 100.0
   }
 }
