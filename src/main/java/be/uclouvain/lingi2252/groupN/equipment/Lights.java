@@ -4,23 +4,23 @@ import be.uclouvain.lingi2252.groupN.Room;
 
 import java.util.Optional;
 
-public class Doors implements Equipment {
+public class Lights implements Equipment {
     private Boolean status;
     private Room owner;
 
-    public Doors(Room owner) {
+    public Lights(Room owner) {
         this.owner = owner;
         status = false;
     }
 
-    public Doors(Room owner, Boolean status) {
+    public Lights(Room owner, Boolean status) {
         this.owner = owner;
         this.status = status;
     }
 
     @Override
     public Boolean checkStatus() {
-        return this.status;
+        return null;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Doors implements Equipment {
     @Override
     public void set(Boolean status) {
         this.status = status;
-        System.out.println("All doors " + (status ? "opened" : "closed") + " in [" + owner.getName() + "]");
+        System.out.println("Lights turned " + (status ? "on" : "off") + " in [" + owner.getName() + "]");
     }
 
     @Override

@@ -1,8 +1,6 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.equipment.Cookers;
-import be.uclouvain.lingi2252.groupN.equipment.Doors;
-import be.uclouvain.lingi2252.groupN.equipment.Windows;
+import be.uclouvain.lingi2252.groupN.equipment.*;
 import be.uclouvain.lingi2252.groupN.sensors.AirSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.MotionSensor;
@@ -123,6 +121,12 @@ public class Parameterization {
                             break;
                         case "cookers":
                             room.addEquipment(new Cookers(room));
+                            break;
+                        case "lights":
+                            room.addEquipment(new Lights(room));
+                            break;
+                        case "blinds":
+                            room.addEquipment(new Blinds(room));
                             break;
                         default:
                             System.out.println("Equipment doesn't exist or isn't implemented yet!");
