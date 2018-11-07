@@ -31,10 +31,7 @@ public class Cookers implements Equipment {
     @Override
     public void set(Boolean status) {
         this.status = status;
-        if (status)
-            System.out.println("Cookers turned on in [" + owner.getName() + "]");
-        else
-            System.out.println("Cookers turned off in [" + owner.getName() + "]");
+        System.out.println("Cookers turned " + (status ? "on" : "off") + " in [" + owner.getName() + "]");
     }
 
     @Override

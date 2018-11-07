@@ -31,10 +31,7 @@ public class Windows implements Equipment {
     @Override
     public void set(Boolean status) {
         this.status = status;
-        if (status)
-            System.out.println("All windows opened in [" + owner.getName() + "]");
-        else
-            System.out.println("All windows closed in [" + owner.getName() + "]");
+        System.out.println("All windows " + (status ? "opened" : "closed") + " in [" + owner.getName() + "]");
 
     }
 
