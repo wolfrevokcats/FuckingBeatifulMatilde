@@ -24,7 +24,20 @@ import java.util.stream.Collectors;
 import static java.lang.Math.toIntExact;
 
 public class Parameterization {
-    public static House newHouse(String filepath) {
+    private static final Parameterization SINGLE_INSTANCE = new Parameterization();
+    private House house;
+
+    private Parameterization() { }
+
+    public static Parameterization getInstance() {
+        return SINGLE_INSTANCE;
+    }
+
+    /**
+     * Initializes the parametrization component with a given configuration
+     * @param filepath: a configuration file of JSON format
+     */
+    public void initialize(String filepath) {
         File jsonFile = new File(filepath);
 
         JSONParser jsonParser = new JSONParser();
@@ -50,7 +63,7 @@ public class Parameterization {
             }
 
             // Populate the house with the list of owners
-            House house = new House(owners);
+            house = new House(owners);
             house.addUsers(users);
 
             // Extract lists of Rooms from .json file
@@ -78,7 +91,6 @@ public class Parameterization {
                         case "cameras":
                             for (int i = 0; i < nbSensors; i++) {
                                 sensors.add(new Camera(roomKey + '_' + sensorKey + '_' + i, room.getCommHub()));
-                                System.out.println(roomKey + '_' + sensorKey + '_' + i);
                             }
                             break;
                         case "air_sensors":
@@ -151,11 +163,12 @@ public class Parameterization {
                 }
             }
 
-            return house;
-
         } catch (IOException | ParseException e) {
             e.printStackTrace();
-            return null;
         }
+    }
+
+    public House getHouse() {
+        return house;
     }
 }

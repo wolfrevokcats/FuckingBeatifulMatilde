@@ -17,7 +17,8 @@ public class Main {
     }
 
     private static void scenario2() throws InterruptedException {
-        House house = Parameterization.newHouse(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "samplehouse.json").toString());
+        Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "samplehouse.json").toString());
+        House house = Parameterization.getInstance().getHouse();
 
         User matilde = house.getResidents().get(0);
         matilde.enterRoom(house, "kitchen");
