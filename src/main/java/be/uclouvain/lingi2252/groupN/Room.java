@@ -35,7 +35,7 @@ public class Room {
 
     //methods
     public void roomEntered(User user) {
-        System.out.println("[" + user.getName() + "] entering the room [" + name + "]");
+        System.out.println("[" + user.getName() + "] is entering the room [" + name + "]");
     }
 
     public void addSensor(Sensor sensor) {

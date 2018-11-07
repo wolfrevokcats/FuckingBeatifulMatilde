@@ -10,34 +10,16 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     public static void main(String[] args) {
         try {
-            scenario2();
+            System.out.println("--- First Scenario ---");
+            Scenario.scenario1();
+            //System.out.println("--- Second Scenario ---");
+            //Scenario.scenario2();
+            //System.out.println("--- Third Scenario ---");
+            //Scenario.scenario3();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private static void scenario2() throws InterruptedException {
-        Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "samplehouse.json").toString());
-        House house = Parameterization.getInstance().getHouse();
-
-        User matilde = house.getUser("matilde");
-        matilde.enterRoom(house, "kitchen");
-        simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").getEquipment("cookers").set(true);
-        simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").getSensor("kitchen_cameras_0").sense(new Frame("smoke near cooker"));
-        simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").getSensor("kitchen_air_sensors_0").sense(new Air(5000.0, 150.0, .6));
-        simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").getSensor("kitchen_motion_sensors_0").sense(new Motion("FALL"));
-    }
-
-    public static void simpleDisplayDelay(int nbPoints, int individualDelay) throws InterruptedException {
-        for (int i = 0; i < nbPoints; i++) {
-            TimeUnit.MILLISECONDS.sleep(individualDelay);
-            System.out.print(".");
-        }
-        TimeUnit.MILLISECONDS.sleep(individualDelay);
-        System.out.print("\n");
-    }
 }
