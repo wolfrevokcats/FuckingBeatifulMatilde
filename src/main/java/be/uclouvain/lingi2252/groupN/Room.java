@@ -1,9 +1,6 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.equipment.Cookers;
-import be.uclouvain.lingi2252.groupN.equipment.Doors;
-import be.uclouvain.lingi2252.groupN.equipment.Equipment;
-import be.uclouvain.lingi2252.groupN.equipment.Windows;
+import be.uclouvain.lingi2252.groupN.equipment.*;
 import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
@@ -35,7 +32,7 @@ public class Room {
 
     //methods
     public void roomEntered(User user) {
-        System.out.println("[" + user.getName() + "] entering the room [" + name + "]");
+        System.out.println("[" + user.getName() + "] is entering the room [" + name + "]");
     }
 
     public void addSensor(Sensor sensor) {
@@ -126,6 +123,12 @@ public class Room {
                         .filter(equipment -> equipment instanceof Cookers)
                         .findAny()
                         .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
+            case "lights":
+                return equipmentList.stream()
+                        .filter(equipment -> equipment instanceof Lights)
+                        .findAny()
+                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
+
             default:
                 throw new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!");
         }
