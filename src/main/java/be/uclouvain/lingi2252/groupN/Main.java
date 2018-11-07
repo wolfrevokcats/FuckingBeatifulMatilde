@@ -20,16 +20,16 @@ public class Main {
         Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "samplehouse.json").toString());
         House house = Parameterization.getInstance().getHouse();
 
-        User matilde = house.getResidents().get(0);
+        User matilde = house.getUser("matilde");
         matilde.enterRoom(house, "kitchen");
         simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").get().getEquipment("cookers").set(true);
+        house.getRoom("kitchen").getEquipment("cookers").set(true);
         simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").get().getSensor("kitchen_cameras_0").sense(new Frame("smoke near cooker"));
+        house.getRoom("kitchen").getSensor("kitchen_cameras_0").sense(new Frame("smoke near cooker"));
         simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").get().getSensor("kitchen_air_sensors_0").sense(new Air(5000.0, 150.0, .6));
+        house.getRoom("kitchen").getSensor("kitchen_air_sensors_0").sense(new Air(5000.0, 150.0, .6));
         simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").get().getSensor("kitchen_motion_sensors_0").sense(new Motion("FALL"));
+        house.getRoom("kitchen").getSensor("kitchen_motion_sensors_0").sense(new Motion("FALL"));
     }
 
     public static void simpleDisplayDelay(int nbPoints, int individualDelay) throws InterruptedException {

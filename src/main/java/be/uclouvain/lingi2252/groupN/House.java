@@ -39,10 +39,18 @@ public class House {
         rooms.remove(room);
     }
 
-    public Optional<Room> getRoom(String name) {
+    public Room getRoom(String name) {
         return rooms.stream()
                 .filter(room -> room.getName().equals(name))
-                .findAny();
+                .findAny()
+                .orElse(null);
+    }
+
+    public User getUser(String name) {
+        return residents.stream()
+                .filter(resident -> resident.getName().equals(name))
+                .findAny()
+                .orElse(null);
     }
 
     public void addUser(User user) {
