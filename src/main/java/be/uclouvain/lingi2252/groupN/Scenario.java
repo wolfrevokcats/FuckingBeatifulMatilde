@@ -33,7 +33,7 @@ public class Scenario {
 //    to bed, the lights turn off automatically.
 
     public static void scenario1() throws InterruptedException{
-        Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "samplehouse.json").toString());
+        Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "house2.json").toString());
         House house = Parameterization.getInstance().getHouse();
 
 
@@ -43,6 +43,8 @@ public class Scenario {
         User matilde = house.getUser("matilde");
         System.out.print("At " + ft.format(dNow) + " ");
         matilde.enterRoom(house,"entrance");
+        house.getRoom("entrance").getEquipment("lights").set(true);
+
 
 
     }

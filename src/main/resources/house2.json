@@ -1,0 +1,40 @@
+{
+  "rooms": {
+    "entrance": {
+      "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
+      "equipment": [ "doors", "windows", "lights"]
+    },
+    "kitchen": {
+      "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
+      "equipment": [ "doors", "windows", "cookers", "lights" ]
+    },
+    "living_room": {
+      "sensors": { "cameras" : 3, "air_sensors": 1, "motion_sensors": 2 },
+      "equipment": [ "doors", "windows", "lights"]
+    },
+    "bedroom": {
+      "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
+      "equipment": [ "doors", "windows", "lights"]
+    },
+    "bathroom": {
+      "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
+      "equipment": [ "doors", "lights" ]
+    }
+  },
+  "users": {
+    "matilde": 0,
+    "quentin": 1,
+    "adalberto": 1,
+    "julie": 1
+  },
+  "additional_features": {
+    "air_quality_tester": true,
+    "alarm_system": true,
+    "smart_assistant": false
+  },
+  "air_quality_thresholds":{
+    "humidity": 0.8,
+    "fine_particles": 10000.0,
+    "harmful_gas": 100.0
+  }
+}
