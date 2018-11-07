@@ -3,8 +3,17 @@
     1) threshold for fine particles
     2) threshold for harmful gas
     3) threshold for humidity
-- .json file: additionalFeauture: just the ones you put??
+- .json file: additionalFeature: just the ones you put??
 - possibility to build house with different rooms and equipments
+- Add new sensors and equipment
+- Implement scenario 1
+- Create and implement scenario 3
+- Look for useful design patterns:
+    - Singleton
+    - Factory Pattern
+    - Observer
+- Modify Parameterization to be able to check if something is implemented (room / equipment / sensor / feature...)
+
 - fix in CommunicationHub: owner.getOwner().getAirQT()
 - ask if the variability should be implemented inside the parametrization.java in order to choose which things, present in the configuration file, we want to "import"
 - how things change if we change the configuration file?
