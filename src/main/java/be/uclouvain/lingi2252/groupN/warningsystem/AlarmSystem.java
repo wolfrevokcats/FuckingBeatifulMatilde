@@ -1,11 +1,15 @@
 package be.uclouvain.lingi2252.groupN.warningsystem;
 
 import be.uclouvain.lingi2252.groupN.CommunicationHub;
+import be.uclouvain.lingi2252.groupN.House;
 import be.uclouvain.lingi2252.groupN.Room;
+import be.uclouvain.lingi2252.groupN.User;
+import be.uclouvain.lingi2252.groupN.signals.Frame;
 import be.uclouvain.lingi2252.groupN.signals.Motion;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AlarmSystem {
 
@@ -25,6 +29,8 @@ public class AlarmSystem {
     public void compute(Signal signal, Room room) {
         if (signal instanceof Motion && signal.extract().equals("FALL")) {
             emergencyCall("Somebody fell in [" + room.getName() + "]");
+        } else if (signal instanceof Frame && House.getInstance().getResidents().stream().map(User::getName).collect(Collectors.toList()).contains(signal.extract())) {
+            this.setEngaged(false);
         }
     }
 
