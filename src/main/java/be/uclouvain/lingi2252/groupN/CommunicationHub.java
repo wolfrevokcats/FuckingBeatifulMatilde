@@ -32,11 +32,11 @@ public class CommunicationHub {
         if (signal instanceof Motion)
             if (signal.extract().equals("FALL")) {
                 System.out.println("Fall detected in [" + owner.getName() + "]");
-                owner.getOwner().getAlarm().compute(signal, owner);
+                House.getInstance().getAlarm().compute(signal, owner);
             }
 
         if (signal instanceof Air && sensor instanceof AirSensor)
-            owner.getOwner().getAirQT().compute(signal, owner);
+            House.getInstance().getAirQT().compute(signal, owner);
     }
 
     public Signal getLastValue(Sensor sensor) {

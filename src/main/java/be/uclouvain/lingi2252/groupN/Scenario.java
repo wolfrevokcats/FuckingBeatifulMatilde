@@ -41,7 +41,7 @@ public class Scenario {
 
         User matilde = house.getUser("matilde");
         System.out.print("At " + ft.format(dNow) + " ");
-        matilde.enterRoom(house, "entrance");
+        matilde.enterRoom("entrance");
         house.getRoom("entrance").getEquipment("lights").set(true);
 
 
@@ -53,7 +53,7 @@ public class Scenario {
         House house = House.getInstance();
 
         User matilde = house.getUser("matilde");
-        matilde.enterRoom(house, "kitchen");
+        matilde.enterRoom("kitchen");
         simpleDisplayDelay(3, 500);
         house.getRoom("kitchen").getEquipment("cookers").set(true);
         simpleDisplayDelay(3, 500);

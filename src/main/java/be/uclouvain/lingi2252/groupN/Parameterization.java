@@ -73,7 +73,7 @@ public class Parameterization {
             // Populate the room list with the ones present in the .json file
             for (Object roomObj : jsonRooms.keySet()) {
                 String roomKey = (String) roomObj;
-                Room room = new Room(house, roomKey);
+                Room room = new Room(roomKey);
                 rooms.add(room);
 
                 JSONObject jsonRoom = (JSONObject) jsonRooms.get(roomKey);
