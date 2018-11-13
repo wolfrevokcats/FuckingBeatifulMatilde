@@ -49,6 +49,7 @@ public class AlarmSystem {
     public void emergencyCall(String message) {
         System.out.println("Calling " + this.contacts.get(message) + " with this message \"" + message + "\"");
         System.out.println("Calling emergency contact " + emergencyPerson);
+
     }
 
     public void setEmergencyNumber(String emergencyNumber) {
