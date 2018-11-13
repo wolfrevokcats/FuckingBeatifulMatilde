@@ -11,8 +11,10 @@ public class AlarmSystem {
 
     //fields
     protected List<CommunicationHub> hubs;
-    String emergencyNumber;
-    String emergencyPerson;
+    private String emergencyNumber;
+    private String emergencyPerson;
+    private Boolean status;
+
 
     public AlarmSystem(List<CommunicationHub> hubs) {
         this.hubs = hubs;
@@ -39,4 +41,11 @@ public class AlarmSystem {
     public void setEmergencyNumber(String emergencyNumber) {
         this.emergencyNumber = emergencyNumber;
     }
+
+    public void setEngaged(Boolean status){
+        this.status = status;
+        System.out.println("Alarm status: " + (status ? "armed" : "disarmed"));
+    }
+
+
 }

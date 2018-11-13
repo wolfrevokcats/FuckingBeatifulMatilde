@@ -13,8 +13,7 @@
     - Smart Assistant :
         - Change temperature
         - Find objects
-- Create and implement scenario 3
-- Create scenario 4
+- Create and implement scenario 3:
 - Look for useful design patterns:
     - Singleton
     - Factory Pattern
@@ -28,5 +27,5 @@
 - find a way to let things work (same scenario) for different kind of house: how will the house detect a falling if there's no falling detector? how we
 
 - fix the class diagram (put the design patterns)
-- add 2 scenarios (3 to be implemented: 1-2-3, 1 not:4)
+- add 2 scenarios (3 to be implemented: 1-2-3)
 

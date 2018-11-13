@@ -41,6 +41,9 @@ public class Scenario {
 
         User matilde = house.getUser("matilde");
         System.out.print("At " + ft.format(dNow) + " ");
+        // Recognize the owner: signal --> frame --> camera
+
+
         matilde.enterRoom("entrance");
         house.getRoom("entrance").getEquipment("lights").set(true);
 
