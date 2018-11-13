@@ -33,7 +33,7 @@ public class AlarmSystem {
 
     public void compute(Signal signal, Room room) {
         if (signal instanceof Motion && signal.extract().equals("FALL")) {
-            emergencyCall("Somebody fell in [" + room.getName() + "]");
+            emergencyCall("FALL", "Somebody fell in [" + room.getName() + "]");
 
         } else if (signal instanceof Frame && House.getInstance().getResidents().stream().map(User::getName).collect(Collectors.toList()).contains(signal.extract())) {
             this.setEngaged(false);
@@ -46,14 +46,12 @@ public class AlarmSystem {
 
     }
 
-    public void emergencyCall(String message) {
-        System.out.println("Calling " + this.contacts.get(message) + " with this message \"" + message + "\"");
-        System.out.println("Calling emergency contact " + emergencyPerson);
+    public void emergencyCall(String reason, String message) {
+        List<String> toBeCalled = this.contacts.get(reason);
+        for (String contact : toBeCalled) {
+            System.out.println("Calling " + contact + " with this message \"" + message + "\"");
+        }
 
-    }
-
-    public void setEmergencyNumber(String emergencyNumber) {
-        this.emergencyNumber = emergencyNumber;
     }
 
     public void setEngaged(Boolean flag){
