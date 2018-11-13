@@ -1,20 +1,26 @@
+
 - more than one owners per house: change something?
 - things to be interactive:
     1) threshold for fine particles
     2) threshold for harmful gas
     3) threshold for humidity
 - .json file: additionalFeature: just the ones you put??
-- possibility to build house with different rooms and equipments
 - Add new sensors and equipment
 - Implement scenario 1
 - Create and implement scenario 3
+- Create scenario 4
 - Look for useful design patterns:
     - Singleton
     - Factory Pattern
     - Observer
-- Modify Parameterization to be able to check if something is implemented (room / equipment / sensor / feature...)
+- Modify Parameterization to be able to check if something is implemented (room / equipment / sensor / feature...): check in: call alarm/room that doesn't exist
+
 
 - fix in CommunicationHub: owner.getOwner().getAirQT()
 - ask if the variability should be implemented inside the parametrization.java in order to choose which things, present in the configuration file, we want to "import"
 - how things change if we change the configuration file?
 - find a way to let things work (same scenario) for different kind of house: how will the house detect a falling if there's no falling detector? how we
+
+- fix the class diagram (put the design patterns)
+- add 2 scenarios (3 to be implemented: 1-2-3, 1 not:4)
+

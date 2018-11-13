@@ -47,7 +47,6 @@ public class Scenario {
 
     }
 
-
     public static void scenario2() throws InterruptedException {
         Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "samplehouse.json").toString());
         House house = House.getInstance();
