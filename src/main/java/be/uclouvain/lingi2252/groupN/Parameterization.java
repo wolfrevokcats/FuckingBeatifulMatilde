@@ -23,9 +23,9 @@ import static java.lang.Math.toIntExact;
 
 public class Parameterization {
     private static final Parameterization SINGLE_INSTANCE = new Parameterization();
-    private House house;
 
-    private Parameterization() { }
+    private Parameterization() {
+    }
 
     public static Parameterization getInstance() {
         return SINGLE_INSTANCE;
@@ -33,6 +33,7 @@ public class Parameterization {
 
     /**
      * Initializes the parametrization component with a given configuration
+     *
      * @param filepath: a configuration file of JSON format
      */
     public void initialize(String filepath) {
@@ -61,7 +62,8 @@ public class Parameterization {
             }
 
             // Populate the house with the list of owners
-            house = new House(owners);
+            House house = House.getInstance();
+            house.initialize(owners);
             house.addUsers(users);
 
             // Extract lists of Rooms from .json file
@@ -170,9 +172,5 @@ public class Parameterization {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-    }
-
-    public House getHouse() {
-        return house;
     }
 }

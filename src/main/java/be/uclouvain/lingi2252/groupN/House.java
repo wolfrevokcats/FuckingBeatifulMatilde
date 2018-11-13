@@ -5,10 +5,10 @@ import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class House {
 
+    private static final House SINGLE_INSTANCE = new House();
     // fields
     private List<Room> rooms;
     private List<User> residents;
@@ -18,7 +18,20 @@ public class House {
     private AirQualityTester airQT;
 
     //constructor
-    public House(List<User> owners) {
+    private House() {
+        this.rooms = new ArrayList<>();
+        this.residents = new ArrayList<>();
+        this.owners = new ArrayList<>();
+        this.central = null;
+        this.alarm = null;
+        this.airQT = null;
+    }
+
+    public static House getInstance() {
+        return SINGLE_INSTANCE;
+    }
+
+    public void initialize(List<User> owners) {
         this.owners = owners;
         this.rooms = new ArrayList<>();
         alarm = null;
@@ -28,7 +41,7 @@ public class House {
 
     //methods
     public void addRoom(Room room) {
-        rooms.add(room);
+        this.rooms.add(room);
     }
 
     public void addRooms(List<Room> rooms) {
@@ -36,25 +49,25 @@ public class House {
     }
 
     public void removeRoom(Room room) {
-        rooms.remove(room);
+        this.rooms.remove(room);
     }
 
     public Room getRoom(String name) {
-        return rooms.stream()
+        return this.rooms.stream()
                 .filter(room -> room.getName().equals(name))
                 .findAny()
                 .orElse(null);
     }
 
     public User getUser(String name) {
-        return residents.stream()
+        return this.residents.stream()
                 .filter(resident -> resident.getName().equals(name))
                 .findAny()
                 .orElse(null);
     }
 
     public void addUser(User user) {
-        residents.add(user);
+        this.residents.add(user);
     }
 
     public void addUsers(List<User> users) {
@@ -62,7 +75,7 @@ public class House {
     }
 
     public void removeUser(User user) {
-        residents.remove(user);
+        this.residents.remove(user);
     }
 
     public void addAlarm(AlarmSystem alarm) {
@@ -74,18 +87,18 @@ public class House {
     }
 
     public AlarmSystem getAlarm() {
-        return alarm;
+        return this.alarm;
     }
 
     public AirQualityTester getAirQT() {
-        return airQT;
+        return this.airQT;
     }
 
     public List<User> getResidents() {
-        return residents;
+        return this.residents;
     }
 
     public List<User> getOwners() {
-        return owners;
+        return this.owners;
     }
 }

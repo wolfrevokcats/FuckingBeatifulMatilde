@@ -5,15 +5,14 @@ import be.uclouvain.lingi2252.groupN.signals.Frame;
 import be.uclouvain.lingi2252.groupN.signals.Motion;
 
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
-
-import java.util.*;
-import java.text.*;
 
 public class Scenario {
 
     // constructor
-    public Scenario(){
+    public Scenario() {
 
     }
 
@@ -32,28 +31,26 @@ public class Scenario {
 //    as "The medicine is on the kitchen’s table". When the user goes
 //    to bed, the lights turn off automatically.
 
-    public static void scenario1() throws InterruptedException{
+    public static void scenario1() throws InterruptedException {
         Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "house2.json").toString());
-        House house = Parameterization.getInstance().getHouse();
+        House house = House.getInstance();
 
 
-        Date dNow = new Date( );
-        SimpleDateFormat ft = new SimpleDateFormat ("HH:mm:ss");
+        Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("HH:mm:ss");
 
         User matilde = house.getUser("matilde");
         System.out.print("At " + ft.format(dNow) + " ");
-        matilde.enterRoom(house,"entrance");
+        matilde.enterRoom(house, "entrance");
         house.getRoom("entrance").getEquipment("lights").set(true);
-
 
 
     }
 
 
-
     public static void scenario2() throws InterruptedException {
         Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "samplehouse.json").toString());
-        House house = Parameterization.getInstance().getHouse();
+        House house = House.getInstance();
 
         User matilde = house.getUser("matilde");
         matilde.enterRoom(house, "kitchen");
@@ -67,7 +64,7 @@ public class Scenario {
         house.getRoom("kitchen").getSensor("kitchen_motion_sensors_0").sense(new Motion("FALL"));
     }
 
-    public static void scenario3() throws InterruptedException{
+    public static void scenario3() throws InterruptedException {
 
     }
 

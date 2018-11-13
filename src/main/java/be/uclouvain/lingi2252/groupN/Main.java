@@ -1,12 +1,5 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.signals.Air;
-import be.uclouvain.lingi2252.groupN.signals.Frame;
-import be.uclouvain.lingi2252.groupN.signals.Motion;
-
-import java.nio.file.Paths;
-import java.util.concurrent.TimeUnit;
-
 public class Main {
     public static void main(String[] args) {
         try {
