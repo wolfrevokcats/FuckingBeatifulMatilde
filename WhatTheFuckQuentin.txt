@@ -6,7 +6,13 @@
     3) threshold for humidity
 - .json file: additionalFeature: just the ones you put??
 - Add new sensors and equipment
-- Implement scenario 1
+- Implement scenario 1 :
+    - Alarm System
+    - Light turn on/off auto
+    - Heaters
+    - Smart Assistant :
+        - Change temperature
+        - Find objects
 - Create and implement scenario 3
 - Create scenario 4
 - Look for useful design patterns:
