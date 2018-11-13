@@ -6,7 +6,13 @@
 - .json file: additionalFeature: just the ones you put??
 - possibility to build house with different rooms and equipments
 - Add new sensors and equipment
-- Implement scenario 1
+- Implement scenario 1 :
+    - Alarm System
+    - Light turn on/off auto
+    - Heaters
+    - Smart Assistant :
+        - Change temperature
+        - Find objects
 - Create and implement scenario 3
 - Look for useful design patterns:
     - Singleton
