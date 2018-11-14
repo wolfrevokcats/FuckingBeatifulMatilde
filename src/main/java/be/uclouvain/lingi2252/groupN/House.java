@@ -101,4 +101,8 @@ public class House {
     public List<User> getOwners() {
         return this.owners;
     }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
 }
