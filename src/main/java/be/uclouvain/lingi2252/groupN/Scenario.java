@@ -3,6 +3,7 @@ package be.uclouvain.lingi2252.groupN;
 import be.uclouvain.lingi2252.groupN.signals.Air;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
 import be.uclouvain.lingi2252.groupN.signals.Motion;
+import be.uclouvain.lingi2252.groupN.signals.Temperature;
 
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -46,7 +47,9 @@ public class Scenario {
         house.getRoom("garden").getSensor("garden_camera_4").sense(new Frame("matilde"));
         simpleDisplayDelay(3, 500);
         matilde.enterRoom("entrance");
-
+        simpleDisplayDelay(3, 500);
+        house.getRoom("entrance").getSensor("entrance_temperature_sensor_0").sense(new Temperature(19.0));
+        matilde.askToSmartAssistant("Can you raise the temperature?");
     }
 
     public static void scenario2() throws InterruptedException {

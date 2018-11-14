@@ -28,4 +28,8 @@ public class User {
     public String getName() {
         return name;
     }
+
+    public void askToSmartAssistant(String request) {
+        SmartAssistant.getInstance().ask(request);
+    }
 }

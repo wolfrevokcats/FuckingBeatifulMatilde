@@ -45,18 +45,6 @@ public class Room {
                 .forEach(lights -> lights.set(false));
     }
 
-    public void addSensor(Sensor sensor) {
-        sensors.add(sensor);
-    }
-
-    public void addSensors(List<Sensor> sensors) {
-        this.sensors.addAll(sensors);
-    }
-
-    public void removeSensor(Sensor sensor) {
-        sensors.remove(sensor);
-    }
-
     public void lockdown() {
 
     }
@@ -86,26 +74,6 @@ public class Room {
                     .forEach(frame -> System.out.println("Smoke identified [" + frame.extract().substring(6) + "]"));
 
         }
-    }
-
-    public void addEquipment(Equipment equipment) {
-        equipmentList.add(equipment);
-    }
-
-    public void addEquipment(List<Equipment> equipmentList) {
-        this.equipmentList.addAll(equipmentList);
-    }
-
-    public void removeEquipment(Equipment equipment) {
-        equipmentList.remove(equipment);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public CommunicationHub getCommHub() {
-        return commHub;
     }
 
     public Sensor getSensor(String name) {
@@ -161,5 +129,41 @@ public class Room {
             default:
                 throw new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!");
         }
+    }
+
+    public void addSensor(Sensor sensor) {
+        sensors.add(sensor);
+    }
+
+    public void addSensors(List<Sensor> sensors) {
+        this.sensors.addAll(sensors);
+    }
+
+    public void removeSensor(Sensor sensor) {
+        sensors.remove(sensor);
+    }
+
+    public void addEquipment(Equipment equipment) {
+        equipmentList.add(equipment);
+    }
+
+    public void addEquipment(List<Equipment> equipmentList) {
+        this.equipmentList.addAll(equipmentList);
+    }
+
+    public void removeEquipment(Equipment equipment) {
+        equipmentList.remove(equipment);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public CommunicationHub getCommHub() {
+        return commHub;
+    }
+
+    public List<Equipment> getEquipmentList() {
+        return equipmentList;
     }
 }

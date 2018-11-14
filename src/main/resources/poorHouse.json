@@ -2,11 +2,11 @@
   "rooms": {
     "entrance": {
       "sensor": { "camera" : 2, "contact_sensor" : 2},
-      "equipment": [ "doors", "windows", "lights"]
+      "equipment": [ "doors", "windows", "lights" ]
     },
     "kitchen": {
       "sensor": { "camera" : 2, "contact_sensor" : 2},
-      "equipment": [ "doors", "windows", "cookers", "lights"]
+      "equipment": [ "doors", "windows", "cookers", "lights" ]
     },
     "bedroom": {
       "sensor": { "camera" : 2, "contact_sensor" : 2 },
