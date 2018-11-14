@@ -1,24 +1,24 @@
 {
   "rooms": {
     "entrance": {
-      "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
+      "sensor": { "camera" : 2, "air_sensor": 1, "motion_sensor": 1 },
       "equipment": [ "doors", "windows", "lights"]
     },
     "kitchen": {
-      "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
-      "equipment": [ "doors", "windows", "cookers", "lights", "blinds"]
+      "sensor": { "camera" : 2, "air_sensor": 1, "motion_sensor": 1 },
+      "equipment": [ "doors", "windows", "cookers", "lights" ]
     },
     "living_room": {
-      "sensors": { "cameras" : 3, "air_sensors": 1, "motion_sensors": 2 },
-      "equipment": [ "doors", "windows", "lights", "blinds"]
+      "sensor": { "camera" : 3, "air_sensor": 1, "motion_sensor": 2 },
+      "equipment": [ "doors", "windows", "lights"]
     },
     "bedroom": {
-      "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
-      "equipment": [ "doors", "windows", "lights", "blinds"]
+      "sensor": { "camera" : 2, "air_sensor": 1, "motion_sensor": 1 },
+      "equipment": [ "doors", "windows", "lights"]
     },
     "bathroom": {
-      "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
-      "equipment": [ "doors", "lights", "blinds"]
+      "sensor": { "camera" : 2, "air_sensor": 1, "motion_sensor": 1 },
+      "equipment": [ "doors", "lights" ]
     }
   },
   "users": {

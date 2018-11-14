@@ -1,19 +1,19 @@
 {
   "rooms": {
     "entrance": {
-      "sensors": { "cameras" : 2, "contact_sensor" : 2},
+      "sensor": { "camera" : 2, "contact_sensor" : 2},
       "equipment": [ "doors", "windows", "lights"]
     },
     "kitchen": {
-      "sensors": { "cameras" : 2, "contact_sensor" : 2},
+      "sensor": { "camera" : 2, "contact_sensor" : 2},
       "equipment": [ "doors", "windows", "cookers", "lights"]
     },
     "bedroom": {
-      "sensors": { "cameras" : 2, "contact_sensor" : 2 },
+      "sensor": { "camera" : 2, "contact_sensor" : 2 },
       "equipment": [ "doors", "windows", "lights" ]
     },
     "bathroom": {
-      "sensors": { "cameras" : 2, "contact_sensor" : 2},
+      "sensor": { "camera" : 2, "contact_sensor" : 2},
       "equipment": [ "doors", "windows", "lights" ]
     }
   },
