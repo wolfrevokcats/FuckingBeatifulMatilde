@@ -6,19 +6,19 @@
     },
     "kitchen": {
       "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
-      "equipment": [ "doors", "windows", "cookers", "lights" ]
+      "equipment": [ "doors", "windows", "cookers", "lights", "blinds"]
     },
     "living_room": {
       "sensors": { "cameras" : 3, "air_sensors": 1, "motion_sensors": 2 },
-      "equipment": [ "doors", "windows", "lights"]
+      "equipment": [ "doors", "windows", "lights", "blinds"]
     },
     "bedroom": {
       "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
-      "equipment": [ "doors", "windows", "lights"]
+      "equipment": [ "doors", "windows", "lights", "blinds"]
     },
     "bathroom": {
       "sensors": { "cameras" : 2, "air_sensors": 1, "motion_sensors": 1 },
-      "equipment": [ "doors", "lights" ]
+      "equipment": [ "doors", "lights", "blinds"]
     }
   },
   "users": {

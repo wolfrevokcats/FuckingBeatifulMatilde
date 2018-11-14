@@ -32,7 +32,7 @@ public class Scenario {
 //    to bed, the lights turn off automatically.
 
     public static void scenario1() throws InterruptedException {
-        Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "house2.json").toString());
+        Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "richHouse.json").toString());
         House house = House.getInstance();
 
 
@@ -47,11 +47,10 @@ public class Scenario {
         matilde.enterRoom("entrance");
         house.getRoom("entrance").getEquipment("lights").set(true);
 
-
     }
 
     public static void scenario2() throws InterruptedException {
-        Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "samplehouse.json").toString());
+        Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "middleclassHouse.json").toString());
         House house = House.getInstance();
 
         User matilde = house.getUser("matilde");
@@ -66,7 +65,32 @@ public class Scenario {
         house.getRoom("kitchen").getSensor("kitchen_motion_sensors_0").sense(new Motion("FALL"));
     }
 
+
+
+    // At 21:00 the user goes to sleep and the alarm system is armed.
+    // Close to midnight the contact sensor detects a detachment, spreading an alarm signal to
+    // the alarm system through the communication hub.
+    // The cameras detects the intrusive presence.
+    // Communication Hub:
+    // 1) Close and lock all the doors in the house
+    // 2) Call the emergency numbers
+
+
     public static void scenario3() throws InterruptedException {
+        Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "poorHouse.json").toString());
+        House house = House.getInstance();
+
+        User user = house.getUser("julie");
+        user.enterRoom("bedroom");
+        simpleDisplayDelay(3, 500);
+        house.getRoom("kitchen").getEquipment("cookers").set(true);
+        simpleDisplayDelay(3, 500);
+        house.getRoom("kitchen").getSensor("kitchen_cameras_0").sense(new Frame("smoke near cooker"));
+        simpleDisplayDelay(3, 500);
+        house.getRoom("kitchen").getSensor("kitchen_air_sensors_0").sense(new Air(5000.0, 150.0, .6));
+        simpleDisplayDelay(3, 500);
+        house.getRoom("kitchen").getSensor("kitchen_motion_sensors_0").sense(new Motion("FALL"));
+
 
     }
 

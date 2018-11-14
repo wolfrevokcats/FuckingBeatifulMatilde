@@ -126,7 +126,26 @@ public class Room {
                         .filter(equipment -> equipment instanceof Lights)
                         .findAny()
                         .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
-
+            case "blinds":
+                return equipmentList.stream()
+                        .filter(equipment -> equipment instanceof Blinds)
+                        .findAny()
+                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
+            case "conditioners":
+                return equipmentList.stream()
+                        .filter(equipment -> equipment instanceof Conditioners)
+                        .findAny()
+                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
+            case "fireplaces":
+                return equipmentList.stream()
+                        .filter(equipment -> equipment instanceof Fireplaces)
+                        .findAny()
+                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
+            case "heaters":
+                return equipmentList.stream()
+                        .filter(equipment -> equipment instanceof Heaters)
+                        .findAny()
+                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
             default:
                 throw new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!");
         }
