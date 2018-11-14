@@ -30,7 +30,7 @@ public class AirQualityTester extends AlarmSystem {
     @Override
     public void compute(Signal signal, Room room) {
         if (signal instanceof Air) {
-            Map<String, Double> air = (Map<String, Double>) signal.extract();
+            Map<String, Double> air = ((Air) signal).extract();
             if (air.get("fine particles") >= fineParticlesThreshold) {
                 System.out.println("Detected fine particles [" + air.get("fine particles") + "] above threshold [" + fineParticlesThreshold + "] in [" + room.getName() + "]");
                 ring(room, "fine particles");

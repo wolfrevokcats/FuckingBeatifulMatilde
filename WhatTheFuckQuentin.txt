@@ -21,7 +21,6 @@
 - Modify Parameterization to be able to check if something is implemented (room / equipment / sensor / feature...): check in: call alarm/room that doesn't exist
 
 
-- fix in CommunicationHub: owner.getOwner().getAirQT()
 - how things change if we change the configuration file?
 - find a way to let things work (same scenario) for different kind of house: how will the house detect a falling if there's no falling detector? how we
 

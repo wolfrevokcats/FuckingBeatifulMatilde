@@ -31,6 +31,18 @@ public class Room {
     //methods
     public void roomEntered(User user) {
         System.out.println("[" + user.getName() + "] is entering the room [" + name + "]");
+        equipmentList.stream()
+                .filter(equipment -> equipment instanceof Lights)
+                .filter(lights -> !lights.checkStatus())
+                .forEach(lights -> lights.set(true));
+    }
+
+    public void roomLeft(User user) {
+        System.out.println("[" + user.getName() + "] left the room [" + name + "]");
+        equipmentList.stream()
+                .filter(equipment -> equipment instanceof Lights)
+                .filter(Equipment::checkStatus)
+                .forEach(lights -> lights.set(false));
     }
 
     public void addSensor(Sensor sensor) {

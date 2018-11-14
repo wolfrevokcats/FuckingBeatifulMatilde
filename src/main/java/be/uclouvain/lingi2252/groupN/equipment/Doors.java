@@ -2,8 +2,6 @@ package be.uclouvain.lingi2252.groupN.equipment;
 
 import be.uclouvain.lingi2252.groupN.Room;
 
-import java.util.Optional;
-
 public class Doors implements Equipment {
     private Boolean status;
     private Room owner;
@@ -32,10 +30,5 @@ public class Doors implements Equipment {
     public void set(Boolean status) {
         this.status = status;
         System.out.println("All doors " + (status ? "opened" : "closed") + " in [" + owner.getName() + "]");
-    }
-
-    @Override
-    public void setAuto(Optional<Double> time) {
-
     }
 }

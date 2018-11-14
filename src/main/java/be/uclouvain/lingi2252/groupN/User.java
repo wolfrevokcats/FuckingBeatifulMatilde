@@ -4,15 +4,20 @@ public class User {
 
     //fields
     private String name;
-
+    private Room currentLocation;
 
     //constructor
     public User(String name) {
         this.name = name;
+        this.currentLocation = null;
     }
 
     //methods
     public void enterRoom(String roomName) {
+        if (currentLocation != null) {
+            currentLocation.roomLeft(this);
+        }
+
         if (House.getInstance().getRoom(roomName) != null) {
             House.getInstance().getRoom(roomName).roomEntered(this);
         } else {

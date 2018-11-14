@@ -37,15 +37,15 @@ public class Scenario {
 
 
         Date dNow = new Date();
+        Date customDate = new Date(dNow.getYear(),dNow.getMonth(), dNow.getDate(), 20, 0, 0);
         SimpleDateFormat ft = new SimpleDateFormat("HH:mm:ss");
 
         User matilde = house.getUser("matilde");
-        System.out.print("At " + ft.format(dNow) + " ");
+        System.out.print("At " + ft.format(customDate) + " ");
         // Recognize the owner: signal --> frame --> camera
 
 
         matilde.enterRoom("entrance");
-        house.getRoom("entrance").getEquipment("lights").set(true);
 
     }
 

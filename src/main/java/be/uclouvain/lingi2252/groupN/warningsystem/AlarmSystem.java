@@ -24,6 +24,7 @@ public class AlarmSystem {
     private Map<String ,List<String>> contacts;
 
     public AlarmSystem(List<CommunicationHub> hubs) {
+        this.status = false;
         this.hubs = hubs;
         this.contacts = new HashMap<>();
         this.contacts.put("FALL",new ArrayList<>(Arrays.asList("118","Adalberto")));

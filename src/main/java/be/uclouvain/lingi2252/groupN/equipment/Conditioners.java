@@ -1,14 +1,7 @@
 package be.uclouvain.lingi2252.groupN.equipment;
 
-import java.util.Optional;
-
 public class Conditioners extends TemperatureControl {
     boolean status;
-
-    @Override
-    public void setAuto(Optional<Double> time) {
-
-    }
 
     @Override
     public void set(Boolean status) {
