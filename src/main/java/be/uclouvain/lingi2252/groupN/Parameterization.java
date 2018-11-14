@@ -1,9 +1,6 @@
 package be.uclouvain.lingi2252.groupN;
 
 import be.uclouvain.lingi2252.groupN.equipment.*;
-import be.uclouvain.lingi2252.groupN.sensors.AirSensor;
-import be.uclouvain.lingi2252.groupN.sensors.Camera;
-import be.uclouvain.lingi2252.groupN.sensors.MotionSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
@@ -15,6 +12,8 @@ import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +28,17 @@ public class Parameterization {
 
     public static Parameterization getInstance() {
         return SINGLE_INSTANCE;
+    }
+
+    private static String toClassName(String string) {
+        String[] split = string.split("_");
+        StringBuilder res = new StringBuilder();
+
+        for (String aSplit : split) {
+            res.append(aSplit.substring(0, 1).toUpperCase()).append(aSplit.substring(1));
+        }
+
+        return res.toString();
     }
 
     /**
@@ -79,34 +89,49 @@ public class Parameterization {
                 JSONObject jsonRoom = (JSONObject) jsonRooms.get(roomKey);
 
                 // Populate each room with the corresponding sensors
-                JSONObject jsonSensors = (JSONObject) jsonRoom.get("sensors");
+                JSONObject jsonSensors = (JSONObject) jsonRoom.get("sensor");
                 for (Object sensorObj : jsonSensors.keySet()) {
                     String sensorKey = (String) sensorObj;
                     int nbSensors = toIntExact((long) jsonSensors.get(sensorKey));
 
                     List<Sensor> sensors = new ArrayList<>();
 
-                    // Connect each sensor to the Communication Hub
-                    switch (sensorKey) {
-                        case "cameras":
-                            for (int i = 0; i < nbSensors; i++) {
-                                sensors.add(new Camera(roomKey + '_' + sensorKey + '_' + i, room.getCommHub()));
-                            }
-                            break;
-                        case "air_sensors":
-                            for (int i = 0; i < nbSensors; i++) {
-                                sensors.add(new AirSensor(roomKey + '_' + sensorKey + '_' + i, room.getCommHub()));
-                            }
-                            break;
-                        case "motion_sensors":
-                            for (int i = 0; i < nbSensors; i++) {
-                                sensors.add(new MotionSensor(roomKey + '_' + sensorKey + '_' + i, room.getCommHub()));
-                            }
-                            break;
-                        default:
-                            System.out.println("Sensor doesn't exist or isn't implemented yet!");
-                            break;
+                    String classPath = "be.uclouvain.lingi2252.groupN.sensors." + toClassName(sensorKey);
+
+                    try {
+                        Class<?> clazz = Class.forName(classPath);
+                        Constructor<?> ctor = clazz.getConstructor(String.class, CommunicationHub.class);
+                        for (int i = 0; i < nbSensors; i++) {
+                            Sensor sensor = (Sensor) ctor.newInstance(roomKey + '_' + sensorKey + '_' + i, room.getCommHub());
+                            sensors.add(sensor);
+                        }
+                    } catch (ClassNotFoundException e) {
+                        System.out.println("Sensor [" + classPath + "] doesn't exist or isn't implemented yet!");
+                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                        e.printStackTrace();
                     }
+
+//                    // Connect each sensor to the Communication Hub
+//                    switch (sensorKey) {
+//                        case "camera":
+//                            for (int i = 0; i < nbSensors; i++) {
+//                                sensors.add(new Camera(roomKey + '_' + sensorKey + '_' + i, room.getCommHub()));
+//                            }
+//                            break;
+//                        case "air_sensor":
+//                            for (int i = 0; i < nbSensors; i++) {
+//                                sensors.add(new AirSensor(roomKey + '_' + sensorKey + '_' + i, room.getCommHub()));
+//                            }
+//                            break;
+//                        case "motion_sensor":
+//                            for (int i = 0; i < nbSensors; i++) {
+//                                sensors.add(new MotionSensor(roomKey + '_' + sensorKey + '_' + i, room.getCommHub()));
+//                            }
+//                            break;
+//                        default:
+//                            System.out.println("Sensor doesn't exist or isn't implemented yet!");
+//                            break;
+//                    }
 
                     room.addSensors(sensors);
                 }

@@ -58,11 +58,11 @@ public class Scenario {
         simpleDisplayDelay(3, 500);
         house.getRoom("kitchen").getEquipment("cookers").set(true);
         simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").getSensor("kitchen_cameras_0").sense(new Frame("smoke near cooker"));
+        house.getRoom("kitchen").getSensor("kitchen_camera_0").sense(new Frame("smoke near cooker"));
         simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").getSensor("kitchen_air_sensors_0").sense(new Air(5000.0, 150.0, .6));
+        house.getRoom("kitchen").getSensor("kitchen_air_sensor_0").sense(new Air(5000.0, 150.0, .6));
         simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").getSensor("kitchen_motion_sensors_0").sense(new Motion("FALL"));
+        house.getRoom("kitchen").getSensor("kitchen_motion_sensor_0").sense(new Motion("FALL"));
     }
 
 
