@@ -19,6 +19,9 @@
     "bathroom": {
       "sensor": { "camera" : 2, "air_sensor": 1, "motion_sensor": 1 },
       "equipment": [ "doors", "lights" ]
+    },
+    "garden": {
+      "sensor": { "camera" : 5}
     }
   },
   "users": {

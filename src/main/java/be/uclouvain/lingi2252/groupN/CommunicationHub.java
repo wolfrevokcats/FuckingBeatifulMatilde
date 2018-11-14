@@ -1,8 +1,10 @@
 package be.uclouvain.lingi2252.groupN;
 
 import be.uclouvain.lingi2252.groupN.sensors.AirSensor;
+import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.signals.Air;
+import be.uclouvain.lingi2252.groupN.signals.Frame;
 import be.uclouvain.lingi2252.groupN.signals.Motion;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
 
@@ -34,6 +36,10 @@ public class CommunicationHub {
                 System.out.println("Fall detected in [" + owner.getName() + "]");
                 House.getInstance().getAlarm().compute(signal, owner);
             }
+
+        if (signal instanceof Frame && sensor instanceof Camera) {
+            House.getInstance().getAlarm().compute(signal, owner);
+        }
 
         if (signal instanceof Air && sensor instanceof AirSensor)
             House.getInstance().getAirQT().compute(signal, owner);

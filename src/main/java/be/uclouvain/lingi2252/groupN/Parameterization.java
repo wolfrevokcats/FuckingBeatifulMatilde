@@ -116,6 +116,8 @@ public class Parameterization {
     }
 
     private void addSensorsToRoom(Room room, JSONObject jsonSensors) {
+        if (jsonSensors == null) return;
+
         for (Object sensorObj : jsonSensors.keySet()) {
             String sensorKey = (String) sensorObj;
             int nbSensors = toIntExact((long) jsonSensors.get(sensorKey));
@@ -142,6 +144,8 @@ public class Parameterization {
     }
 
     private void addEquipmentToRoom(Room room, JSONArray jsonEquipment) {
+        if (jsonEquipment == null) return;
+
         for (Object equipmentObj : jsonEquipment) {
             String equipmentKey = (String) equipmentObj;
 

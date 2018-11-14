@@ -8,11 +8,7 @@ import be.uclouvain.lingi2252.groupN.signals.Frame;
 import be.uclouvain.lingi2252.groupN.signals.Motion;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Arrays;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AlarmSystem {
@@ -21,23 +17,29 @@ public class AlarmSystem {
     protected List<CommunicationHub> hubs;
     private Boolean status;
     // <message,contact numbers>
-    private Map<String ,List<String>> contacts;
+    private Map<String, List<String>> contacts;
 
     public AlarmSystem(List<CommunicationHub> hubs) {
         this.status = false;
         this.hubs = hubs;
         this.contacts = new HashMap<>();
-        this.contacts.put("FALL",new ArrayList<>(Arrays.asList("118","Adalberto")));
-        this.contacts.put("FIRE",new ArrayList<>(Arrays.asList("115","Natalie")));
-        this.contacts.put("BREAK-IN",new ArrayList<>(Arrays.asList("112","Julie")));
+        this.contacts.put("FALL", new ArrayList<>(Arrays.asList("118", "Adalberto")));
+        this.contacts.put("FIRE", new ArrayList<>(Arrays.asList("115", "Natalie")));
+        this.contacts.put("BREAK-IN", new ArrayList<>(Arrays.asList("112", "Julie")));
     }
 
     public void compute(Signal signal, Room room) {
         if (signal instanceof Motion && signal.extract().equals("FALL")) {
             emergencyCall("FALL", "Somebody fell in [" + room.getName() + "]");
 
-        } else if (signal instanceof Frame && House.getInstance().getResidents().stream().map(User::getName).collect(Collectors.toList()).contains(signal.extract())) {
-            this.setEngaged(false);
+        } else if (signal instanceof Frame) {
+            if (House.getInstance().getResidents().stream().map(User::getName).collect(Collectors.toList()).contains(signal.extract())) {
+                System.out.println("[" + signal.extract() + "] recognized.");
+                this.setEngaged(false);
+            } else {
+                //Something / someone else than a user has been detected
+            }
+
         }
 
     }
@@ -55,7 +57,7 @@ public class AlarmSystem {
 
     }
 
-    public void setEngaged(Boolean flag){
+    public void setEngaged(Boolean flag) {
         this.status = flag;
         System.out.println("Alarm status: " + (status ? "armed" : "disarmed"));
     }

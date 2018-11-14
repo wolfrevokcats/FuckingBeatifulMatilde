@@ -37,14 +37,14 @@ public class Scenario {
 
 
         Date dNow = new Date();
-        Date customDate = new Date(dNow.getYear(),dNow.getMonth(), dNow.getDate(), 20, 0, 0);
+        Date customDate = new Date(dNow.getYear(),dNow.getMonth(), dNow.getDate(), 19, 57, 44);
         SimpleDateFormat ft = new SimpleDateFormat("HH:mm:ss");
 
         User matilde = house.getUser("matilde");
-        System.out.print("At " + ft.format(customDate) + " ");
-        // Recognize the owner: signal --> frame --> camera
+        System.out.println("Time: " + ft.format(customDate));
 
-
+        house.getRoom("garden").getSensor("garden_camera_4").sense(new Frame("matilde"));
+        simpleDisplayDelay(3, 500);
         matilde.enterRoom("entrance");
 
     }
