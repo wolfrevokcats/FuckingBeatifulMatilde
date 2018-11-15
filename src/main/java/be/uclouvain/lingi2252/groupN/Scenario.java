@@ -43,25 +43,25 @@ public class Scenario {
         SimpleDateFormat ft = new SimpleDateFormat("HH:mm:ss");
 
         House.getInstance().getAlarm().setEngaged(true);
-        User matilde = house.getUser("quentin");
+        User quentin = house.getUser("quentin");
         System.out.println("Time: " + ft.format(customDate));
         simpleDisplayDelay(3, 500);
 
-        house.getRoom("garden").getSensor("garden_camera_4").sense(new Frame("matilde"));
+        house.getRoom("garden").getSensor("garden_camera_4").sense(new Frame("quentin"));
         simpleDisplayDelay(3, 500);
-        matilde.enterRoom("entrance");
+        quentin.enterRoom("entrance");
         simpleDisplayDelay(3, 500);
         house.getRoom("entrance").getSensor("entrance_temperature_sensor_0").sense(new Temperature(19.0));
         simpleDisplayDelay(3, 500);
-        matilde.askToSmartAssistant("Can you raise the temperature?");
+        quentin.askToSmartAssistant("Can you raise the temperature?");
         simpleDisplayDelay(3, 500);
         house.getRoom("kitchen").getSensor("kitchen_camera_0").sense(new Frame("medicine on table"));
         simpleDisplayDelay(3, 500);
-        matilde.askToSmartAssistant("Where is my medicine?");
+        quentin.askToSmartAssistant("Where is my medicine?");
         simpleDisplayDelay(3, 500);
-        matilde.enterRoom("bedroom");
+        quentin.enterRoom("bedroom");
         simpleDisplayDelay(3, 500);
-        matilde.askToSmartAssistant("Turn off the lights.");
+        quentin.askToSmartAssistant("Turn off the lights.");
     }
 
     public static void scenario2() throws InterruptedException {

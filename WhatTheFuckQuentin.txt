@@ -6,16 +6,9 @@
     3) threshold for humidity
 - .json file: additionalFeature: just the ones you put??
 - Add new sensors and equipment
-- Implement scenario 1 :
-    - Alarm System V
-    - Light turn on/off auto V
-    - Heaters V
-    - Smart Assistant :
-        - Change temperature V
-        - Find objects
 - Create and implement scenario 3:
 - Look for useful design patterns:
-    - Singleton
+    - Singleton V
     - Factory Pattern
     - Observer
 - Modify Parameterization to be able to check if something is implemented (room / equipment / sensor / feature...): check in: call alarm/room that doesn't exist

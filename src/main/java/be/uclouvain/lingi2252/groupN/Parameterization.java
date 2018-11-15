@@ -190,7 +190,7 @@ public class Parameterization {
                         house.addAlarm(alarmSystem);
                         break;
                     case "smart_assistant":
-                        System.out.println("Coming soon!");
+                        SmartAssistant.getInstance().initialize();
                         break;
                     default:
                         System.out.println("Equipment doesn't exist or isn't implemented yet!");
