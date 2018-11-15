@@ -26,7 +26,7 @@ public class CommunicationHub {
         lastValues.put(sensor, signal);
 
         if (signal instanceof Temperature) {
-            System.out.println("Temperature measured [" + signal.extract() + "] in [" + owner.getName() + "].");
+            System.out.println("Temperature measured [" + signal.extract() + "] in [" + owner.getName() + "]");
 
             owner.getEquipmentList().stream()
                     .filter(equipment -> equipment instanceof TemperatureControl)

@@ -1,5 +1,9 @@
 package be.uclouvain.lingi2252.groupN;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class SmartAssistant {
 
     private static final SmartAssistant SINGLE_INSTANCE = new SmartAssistant();
@@ -13,28 +17,39 @@ public class SmartAssistant {
     }
 
     public String ask(String input) {
-        if (input.contains("temperature")) {
+        if (checkInput(input, "temperature")) {
             String potentialNumber = input.replaceAll("[^0-9]+", "");
-            if (input.contains("raise") || input.contains("increase")) {
+            if (checkInput(input, "raise") || checkInput(input, "increase")) {
                 if (potentialNumber.equals("")) {
                     CentralUnit.getInstance().setHeatingTempRules(1.0, 1.0);
-                    return "The setpoint temperature will be increased by one degree.";
+                    return "The setpoint temperature will be increased by one degree";
                 } else {
                     double temp = Double.parseDouble(potentialNumber);
                     CentralUnit.getInstance().setHeatingTempRules(temp, temp + 1.0);
-                    return "The setpoint temperature will be increased to " + temp + " degrees.";
+                    return "The setpoint temperature will be increased to " + temp + " degrees";
                 }
-            } else if (input.contains("lower") || input.contains("decrease")) {
+            } else if (checkInput(input, "lower") || checkInput(input, "decrease")) {
                 if (potentialNumber.equals("")) {
                     CentralUnit.getInstance().setCoolingTempRules(-1.0, -1.0);
-                    return "The setpoint temperature will be decreased by one degree.";
+                    return "The setpoint temperature will be decreased by one degree";
                 } else {
                     double temp = Double.parseDouble(potentialNumber);
                     CentralUnit.getInstance().setCoolingTempRules(temp - 1.0, temp);
-                    return "The setpoint temperature will be decreased to " + temp + " degrees.";
+                    return "The setpoint temperature will be decreased to " + temp + " degrees";
                 }
             }
+        } else if (checkInput(input, "find") || checkInput(input, "where")) {
+            String search = input.replaceAll("[^a-zA-Z ]", "").toLowerCase();
+            search = search.replace("find "," ").replace("where "," ");
+            search = search.replace(" is "," ").replace(" my "," ").replace(" the ", " ");
+            List<String> words = new ArrayList<>(Arrays.asList(search.split(" ")));
+            words.removeIf(String::isEmpty);
+            return CentralUnit.getInstance().findObject(words.toArray(new String[0]));
         }
         return "";
+    }
+
+    private boolean checkInput(String input, String wanted) {
+        return (input.toLowerCase().contains(wanted.toLowerCase()));
     }
 }

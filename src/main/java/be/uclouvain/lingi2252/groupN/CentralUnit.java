@@ -4,10 +4,11 @@ import be.uclouvain.lingi2252.groupN.equipment.Conditioners;
 import be.uclouvain.lingi2252.groupN.equipment.Fireplaces;
 import be.uclouvain.lingi2252.groupN.equipment.Heaters;
 import be.uclouvain.lingi2252.groupN.equipment.TemperatureControl;
+import be.uclouvain.lingi2252.groupN.sensors.Camera;
+import be.uclouvain.lingi2252.groupN.signals.Frame;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CentralUnit {
 
@@ -82,8 +83,26 @@ public class CentralUnit {
 
     }
 
-    public String findObject(String object) {
+    public String findObject(String[] objects) {
+        Map<Room, List<Frame>> possibleMatches = new HashMap<>();
+        System.out.println("Object Tracking procedure triggered to find " + Arrays.toString(objects));
 
-        return " ";
+         hubs.stream()
+                .map(CommunicationHub::getOwner)
+                .forEach(room -> possibleMatches.put(room, room.findObject(objects)));
+
+        StringBuilder res = new StringBuilder().append("Possible matches for ").append(Arrays.toString(objects)).append(":\n");
+        boolean found = false;
+
+        for (Room room : possibleMatches.keySet()) {
+            for (Frame frame : possibleMatches.get(room)) {
+                res.append(frame.extract()).append(" in [").append(room.getName()).append("]");
+                found = true;
+            }
+        }
+
+        if (!found) res.append("No match found.");
+
+        return res.toString();
     }
 }

@@ -53,6 +53,11 @@ public class Scenario {
         house.getRoom("entrance").getSensor("entrance_temperature_sensor_0").sense(new Temperature(19.0));
         simpleDisplayDelay(3, 500);
         matilde.askToSmartAssistant("Can you raise the temperature?");
+        simpleDisplayDelay(3, 500);
+        house.getRoom("kitchen").getSensor("kitchen_camera_0").sense(new Frame("medicine on table"));
+        simpleDisplayDelay(3, 500);
+        matilde.askToSmartAssistant("Where is my medicine?");
+        simpleDisplayDelay(3, 500);
     }
 
     public static void scenario2() throws InterruptedException {

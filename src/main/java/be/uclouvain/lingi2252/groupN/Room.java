@@ -49,17 +49,28 @@ public class Room {
 
     }
 
+    public List<Frame> findObject(String[] objects) {
+        List<Camera> cameras = sensors.stream().filter(sensor -> sensor instanceof Camera).map(sensor -> (Camera) sensor).collect(Collectors.toList());
+        List<Frame> lastFrames = cameras.stream().map(camera -> (Frame) commHub.getLastValue(camera)).collect(Collectors.toList());
+
+        List<Frame> res = new ArrayList<>();
+
+        for (String object : objects) {
+            res.addAll(lastFrames.stream()
+                    .filter(Objects::nonNull)
+                    .filter(frame -> frame.extract().contains(object))
+                    .collect(Collectors.toList()));
+        }
+
+        return res;
+    }
+
     public void evacuate() {
         System.out.println("Triggering [" + name + "] evacuation");
         for (Equipment equipment : equipmentList) {
             if (equipment instanceof Doors || equipment instanceof Windows)
                 equipment.set(true);
         }
-    }
-
-    public void findObject(String object) {
-
-
     }
 
     public void findWhy(String what) {
