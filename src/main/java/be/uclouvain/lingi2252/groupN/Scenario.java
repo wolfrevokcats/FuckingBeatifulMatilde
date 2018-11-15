@@ -1,6 +1,7 @@
 package be.uclouvain.lingi2252.groupN;
 
 import be.uclouvain.lingi2252.groupN.signals.Air;
+import be.uclouvain.lingi2252.groupN.signals.Contact;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
 import be.uclouvain.lingi2252.groupN.signals.Motion;
 import be.uclouvain.lingi2252.groupN.signals.Temperature;
@@ -42,7 +43,7 @@ public class Scenario {
         SimpleDateFormat ft = new SimpleDateFormat("HH:mm:ss");
 
         House.getInstance().getAlarm().setEngaged(true);
-        User matilde = house.getUser("matilde");
+        User matilde = house.getUser("quentin");
         System.out.println("Time: " + ft.format(customDate));
         simpleDisplayDelay(3, 500);
 
@@ -80,6 +81,7 @@ public class Scenario {
     }
 
 
+
     // At 21:00 the user goes to sleep and the alarm system is armed.
     // Close to midnight the contact sensor detects a detachment, spreading an alarm signal to
     // the alarm system through the communication hub.
@@ -94,15 +96,17 @@ public class Scenario {
         House house = House.getInstance();
 
         User user = house.getUser("julie");
+        System.out.println("At 21.00 CEST " + user.getName() + " goes to sleep");
+
         user.enterRoom("bedroom");
         simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").getEquipment("cookers").set(true);
+        house.getRoom("bedroom").getEquipment("lights").set(true);
         simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").getSensor("kitchen_cameras_0").sense(new Frame("smoke near cooker"));
+        house.getRoom("entrance").getSensor("entrance_cameras_0").sense(new Frame("smoke near cooker"));
         simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").getSensor("kitchen_air_sensors_0").sense(new Air(5000.0, 150.0, .6));
+        house.getRoom("entrance").getSensor("entrance_contact_sensors_0").sense(new Contact(true));
         simpleDisplayDelay(3, 500);
-        house.getRoom("kitchen").getSensor("kitchen_motion_sensors_0").sense(new Motion("FALL"));
+
 
 
     }
