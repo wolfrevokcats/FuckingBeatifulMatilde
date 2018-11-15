@@ -2,23 +2,9 @@ package be.uclouvain.lingi2252.groupN.equipment;
 
 import be.uclouvain.lingi2252.groupN.Room;
 
-public class Doors implements Equipment {
-    private Boolean status;
-    private Room owner;
-
+public class Doors extends Equipment {
     public Doors(Room owner) {
-        this.owner = owner;
-        status = false;
-    }
-
-    public Doors(Room owner, Boolean status) {
-        this.owner = owner;
-        this.status = status;
-    }
-
-    @Override
-    public Boolean checkStatus() {
-        return this.status;
+        super(owner);
     }
 
     @Override
@@ -28,7 +14,6 @@ public class Doors implements Equipment {
 
     @Override
     public void set(Boolean status) {
-        this.status = status;
-        System.out.println("All doors " + (status ? "opened" : "closed") + " in [" + owner.getName() + "]");
+        setStatus("open/close", status);
     }
 }

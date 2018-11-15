@@ -1,8 +1,14 @@
 package be.uclouvain.lingi2252.groupN.equipment;
 
-public abstract class TemperatureControl implements Equipment {
+import be.uclouvain.lingi2252.groupN.Room;
+
+public abstract class TemperatureControl extends Equipment {
     protected Double minTemp;
     protected Double maxTemp;
+
+    protected TemperatureControl(Room owner) {
+        super(owner);
+    }
 
     public abstract void giveTemperature(Double temperature);
 

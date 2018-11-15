@@ -3,30 +3,20 @@ package be.uclouvain.lingi2252.groupN.equipment;
 import be.uclouvain.lingi2252.groupN.Room;
 
 public class Conditioners extends TemperatureControl {
-    private boolean status;
-    private Room owner;
-
     public Conditioners(Room owner) {
-        this.owner = owner;
-        this.status = false;
+        super(owner);
         this.minTemp = 25.0;
         this.maxTemp = 26.0;
     }
 
     @Override
     public void set(Boolean status) {
-        if (status != this.status)
-            System.out.println("Conditioners turned " + (status ? "on" : "off") + " in [" + owner.getName() + "]");
+        setStatus("turn on/off", status);
     }
 
     @Override
     public void schedule(Boolean status, Double from, Double to) {
 
-    }
-
-    @Override
-    public Boolean checkStatus() {
-        return status;
     }
 
     @Override

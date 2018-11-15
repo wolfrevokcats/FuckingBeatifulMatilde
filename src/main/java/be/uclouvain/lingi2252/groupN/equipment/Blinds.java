@@ -2,23 +2,9 @@ package be.uclouvain.lingi2252.groupN.equipment;
 
 import be.uclouvain.lingi2252.groupN.Room;
 
-public class Blinds implements Equipment {
-    private Boolean status;
-    private Room owner;
-
+public class Blinds extends Equipment {
     public Blinds(Room owner) {
-        this.owner = owner;
-        status = false;
-    }
-
-    public Blinds(Room owner, Boolean status) {
-        this.owner = owner;
-        this.status = status;
-    }
-
-    @Override
-    public Boolean checkStatus() {
-        return status;
+        super(owner);
     }
 
     @Override
@@ -28,10 +14,6 @@ public class Blinds implements Equipment {
 
     @Override
     public void set(Boolean status) {
-        this.status = status;
-        if (status)
-            System.out.println("Blinds turned on in [" + owner.getName() + "]");
-        else
-            System.out.println("Blinds turned off in [" + owner.getName() + "]");
+        setStatus("open/close", status);
     }
 }

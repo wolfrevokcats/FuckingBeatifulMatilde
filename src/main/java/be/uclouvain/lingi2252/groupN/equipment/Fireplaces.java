@@ -3,30 +3,20 @@ package be.uclouvain.lingi2252.groupN.equipment;
 import be.uclouvain.lingi2252.groupN.Room;
 
 public class Fireplaces extends TemperatureControl {
-    private boolean status;
-    private Room owner;
-
     public Fireplaces(Room owner) {
-        this.owner = owner;
-        this.status = false;
+        super(owner);
         this.minTemp = 19.0;
         this.maxTemp = 20.0;
     }
 
     @Override
     public void set(Boolean status) {
-        if (status != this.status)
-            System.out.println("Fireplaces turned " + (status ? "on" : "off") + " in [" + owner.getName() + "]");
+        setStatus("turn on/off", status);
     }
 
     @Override
     public void schedule(Boolean status, Double from, Double to) {
 
-    }
-
-    @Override
-    public Boolean checkStatus() {
-        return status;
     }
 
     @Override

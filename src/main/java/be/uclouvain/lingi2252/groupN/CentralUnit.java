@@ -4,11 +4,9 @@ import be.uclouvain.lingi2252.groupN.equipment.Conditioners;
 import be.uclouvain.lingi2252.groupN.equipment.Fireplaces;
 import be.uclouvain.lingi2252.groupN.equipment.Heaters;
 import be.uclouvain.lingi2252.groupN.equipment.TemperatureControl;
-import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CentralUnit {
 
@@ -87,7 +85,7 @@ public class CentralUnit {
         Map<Room, List<Frame>> possibleMatches = new HashMap<>();
         System.out.println("Object Tracking procedure triggered to find " + Arrays.toString(objects));
 
-         hubs.stream()
+        hubs.stream()
                 .map(CommunicationHub::getOwner)
                 .forEach(room -> possibleMatches.put(room, room.findObject(objects)));
 

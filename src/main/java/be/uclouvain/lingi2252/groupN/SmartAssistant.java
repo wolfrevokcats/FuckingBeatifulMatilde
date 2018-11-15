@@ -42,8 +42,8 @@ public class SmartAssistant {
             }
         } else if (checkInput(input, "find") || checkInput(input, "where")) {
             String search = input.replaceAll("[^a-zA-Z ]", "").toLowerCase();
-            search = search.replace("find "," ").replace("where "," ");
-            search = search.replace(" is "," ").replace(" my "," ").replace(" the ", " ");
+            search = search.replace("find ", " ").replace("where ", " ");
+            search = search.replace(" is ", " ").replace(" my ", " ").replace(" the ", " ");
             List<String> words = new ArrayList<>(Arrays.asList(search.split(" ")));
             words.removeIf(String::isEmpty);
             return CentralUnit.getInstance().findObject(words.toArray(new String[0]));
