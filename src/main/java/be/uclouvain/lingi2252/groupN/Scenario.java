@@ -58,6 +58,9 @@ public class Scenario {
         simpleDisplayDelay(3, 500);
         matilde.askToSmartAssistant("Where is my medicine?");
         simpleDisplayDelay(3, 500);
+        matilde.enterRoom("bedroom");
+        simpleDisplayDelay(3, 500);
+        matilde.askToSmartAssistant("Turn off the lights.");
     }
 
     public static void scenario2() throws InterruptedException {

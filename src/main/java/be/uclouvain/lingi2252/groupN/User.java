@@ -20,16 +20,21 @@ public class User {
 
         if (House.getInstance().getRoom(roomName) != null) {
             House.getInstance().getRoom(roomName).roomEntered(this);
+            currentLocation = House.getInstance().getRoom(roomName);
         } else {
             throw new IllegalArgumentException("No such room [" + roomName + "] in this house!");
         }
     }
 
-    public String getName() {
-        return name;
+    public void askToSmartAssistant(String request) {
+        System.out.println(SmartAssistant.getInstance().ask(this, request));
     }
 
-    public void askToSmartAssistant(String request) {
-        System.out.println(SmartAssistant.getInstance().ask(request));
+    public Room getLocation() {
+        return currentLocation;
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -1,5 +1,7 @@
 package be.uclouvain.lingi2252.groupN;
 
+import be.uclouvain.lingi2252.groupN.equipment.Lights;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +18,7 @@ public class SmartAssistant {
         return SINGLE_INSTANCE;
     }
 
-    public String ask(String input) {
+    public String ask(User user, String input) {
         if (checkInput(input, "temperature")) {
             String potentialNumber = input.replaceAll("[^0-9]+", "");
             if (checkInput(input, "raise") || checkInput(input, "increase")) {
@@ -45,6 +47,17 @@ public class SmartAssistant {
             List<String> words = new ArrayList<>(Arrays.asList(search.split(" ")));
             words.removeIf(String::isEmpty);
             return CentralUnit.getInstance().findObject(words.toArray(new String[0]));
+        } else if (checkInput(input, "light")) {
+            Room room = user.getLocation();
+            if (checkInput(input, "off")) {
+                room.getEquipmentList().stream()
+                        .filter(equipment -> equipment instanceof Lights)
+                        .forEach(lights -> lights.set(false));
+            } else {
+                room.getEquipmentList().stream()
+                        .filter(equipment -> equipment instanceof Lights)
+                        .forEach(lights -> lights.set(true));
+            }
         }
         return "";
     }
