@@ -30,7 +30,7 @@ public class Parameterization {
         return SINGLE_INSTANCE;
     }
 
-    private static String toClassName(String string) {
+    public static String toClassName(String string) {
         String[] split = string.split("_");
         StringBuilder res = new StringBuilder();
 

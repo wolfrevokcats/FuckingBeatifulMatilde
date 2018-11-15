@@ -1,6 +1,9 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.equipment.*;
+import be.uclouvain.lingi2252.groupN.equipment.Doors;
+import be.uclouvain.lingi2252.groupN.equipment.Equipment;
+import be.uclouvain.lingi2252.groupN.equipment.Lights;
+import be.uclouvain.lingi2252.groupN.equipment.Windows;
 import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
@@ -96,51 +99,19 @@ public class Room {
     }
 
     public Equipment getEquipment(String name) {
-        switch (name) {
-            case "doors":
-                return equipmentList.stream()
-                        .filter(equipment -> equipment instanceof Doors)
-                        .findAny()
-                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
-            case "windows":
-                return equipmentList.stream()
-                        .filter(equipment -> equipment instanceof Windows)
-                        .findAny()
-                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
-            case "cookers":
-                return equipmentList.stream()
-                        .filter(equipment -> equipment instanceof Cookers)
-                        .findAny()
-                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
-            case "lights":
-                return equipmentList.stream()
-                        .filter(equipment -> equipment instanceof Lights)
-                        .findAny()
-                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
-            case "blinds":
-                return equipmentList.stream()
-                        .filter(equipment -> equipment instanceof Blinds)
-                        .findAny()
-                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
-            case "conditioners":
-                return equipmentList.stream()
-                        .filter(equipment -> equipment instanceof Conditioners)
-                        .findAny()
-                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
-            case "fireplaces":
-                return equipmentList.stream()
-                        .filter(equipment -> equipment instanceof Fireplaces)
-                        .findAny()
-                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
-            case "heaters":
-                return equipmentList.stream()
-                        .filter(equipment -> equipment instanceof Heaters)
-                        .findAny()
-                        .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
-            default:
-                throw new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!");
-        }
+        String className = "be.uclouvain.lingi2252.groupN.equipment." + Parameterization.toClassName(name);
+        return equipmentList.stream()
+                .filter(equipment -> {
+                    try {
+                        return Class.forName(className).isInstance(equipment);
+                    } catch (ClassNotFoundException e) {
+                        throw new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!");
+                    }
+                })
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
     }
+
 
     public void addSensor(Sensor sensor) {
         sensors.add(sensor);
