@@ -27,3 +27,23 @@
 - SMAFLIN:
     1) Scenario 3
     2) Find some design patterns
+
+CODE SAMPLES FOR VARIABILITY :
+
+A room can have different sensors / equipment
+REFLECTION AND INHERITANCE AT THE F***ING TIME:
+
+Parameterization.java in addEquipmentToRoom() method
+String equipmentKey = (String) equipmentObj;
+
+            String classPath = "be.uclouvain.lingi2252.groupN.equipment." + toClassName(equipmentKey);
+
+            try {
+                Class<?> clazz = Class.forName(classPath);
+                Constructor<?> ctor = clazz.getConstructor(Room.class);
+
+                room.addEquipment((Equipment) ctor.newInstance(room));
+
+            } catch (ClassNotFoundException e) {
+                System.out.println("Equipment [" + classPath + "] doesn't exist or isn't implemented yet!");
+            }
