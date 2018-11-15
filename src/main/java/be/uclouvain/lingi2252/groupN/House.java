@@ -13,7 +13,6 @@ public class House {
     private List<Room> rooms;
     private List<User> residents;
     private List<User> owners;
-    private CentralUnit central;
     private AlarmSystem alarm;
     private AirQualityTester airQT;
 
@@ -22,7 +21,6 @@ public class House {
         this.rooms = new ArrayList<>();
         this.residents = new ArrayList<>();
         this.owners = new ArrayList<>();
-        this.central = null;
         this.alarm = null;
         this.airQT = null;
     }

@@ -38,17 +38,20 @@ public class Scenario {
 
 
         Date dNow = new Date();
-        Date customDate = new Date(dNow.getYear(),dNow.getMonth(), dNow.getDate(), 19, 57, 44);
+        Date customDate = new Date(dNow.getYear(), dNow.getMonth(), dNow.getDate(), 19, 57, 44);
         SimpleDateFormat ft = new SimpleDateFormat("HH:mm:ss");
 
+        House.getInstance().getAlarm().setEngaged(true);
         User matilde = house.getUser("matilde");
         System.out.println("Time: " + ft.format(customDate));
+        simpleDisplayDelay(3, 500);
 
         house.getRoom("garden").getSensor("garden_camera_4").sense(new Frame("matilde"));
         simpleDisplayDelay(3, 500);
         matilde.enterRoom("entrance");
         simpleDisplayDelay(3, 500);
         house.getRoom("entrance").getSensor("entrance_temperature_sensor_0").sense(new Temperature(19.0));
+        simpleDisplayDelay(3, 500);
         matilde.askToSmartAssistant("Can you raise the temperature?");
     }
 
@@ -67,7 +70,6 @@ public class Scenario {
         simpleDisplayDelay(3, 500);
         house.getRoom("kitchen").getSensor("kitchen_motion_sensor_0").sense(new Motion("FALL"));
     }
-
 
 
     // At 21:00 the user goes to sleep and the alarm system is armed.

@@ -15,7 +15,8 @@ public class Conditioners extends TemperatureControl {
 
     @Override
     public void set(Boolean status) {
-        if (status != this.status) System.out.println("Conditioners turned " + (status ? "on" : "off") + " in [" + owner.getName() + "].");
+        if (status != this.status)
+            System.out.println("Conditioners turned " + (status ? "on" : "off") + " in [" + owner.getName() + "].");
     }
 
     @Override

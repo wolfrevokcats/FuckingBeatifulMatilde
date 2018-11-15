@@ -58,8 +58,10 @@ public class AlarmSystem {
     }
 
     public void setEngaged(Boolean flag) {
-        this.status = flag;
-        System.out.println("Alarm status: " + (status ? "armed" : "disarmed"));
+        if (flag != status) {
+            this.status = flag;
+            System.out.println("Alarm status: " + (status ? "armed" : "disarmed"));
+        }
     }
 
 

@@ -30,6 +30,6 @@ public class User {
     }
 
     public void askToSmartAssistant(String request) {
-        SmartAssistant.getInstance().ask(request);
+        System.out.println(SmartAssistant.getInstance().ask(request));
     }
 }

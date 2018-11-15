@@ -45,7 +45,18 @@ public class CommunicationHub {
         }
     }
 
+    public Signal getLastValue(String sensorName) {
+        for (Sensor sensor : lastValues.keySet()) {
+            if (sensor.getName().equals(sensorName)) return lastValues.get(sensor);
+        }
+        return null;
+    }
+
     public Signal getLastValue(Sensor sensor) {
         return lastValues.get(sensor);
+    }
+
+    public Room getOwner() {
+        return owner;
     }
 }

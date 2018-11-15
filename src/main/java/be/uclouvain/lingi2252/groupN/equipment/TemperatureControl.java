@@ -10,15 +10,17 @@ public abstract class TemperatureControl implements Equipment {
         return minTemp;
     }
 
-    public void setMinTemp(Double minTemp) {
-        this.minTemp = minTemp;
+    public void setTargetTemp(Double minTemp, Double maxTemp) {
+        if (minTemp.equals(maxTemp)) {
+            this.minTemp += minTemp;
+            this.maxTemp += maxTemp;
+        } else {
+            this.minTemp = minTemp;
+            this.maxTemp = maxTemp;
+        }
     }
 
     public Double getMaxTemp() {
         return maxTemp;
-    }
-
-    public void setMaxTemp(Double maxTemp) {
-        this.maxTemp = maxTemp;
     }
 }

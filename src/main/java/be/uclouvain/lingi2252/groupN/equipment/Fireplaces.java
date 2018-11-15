@@ -15,7 +15,8 @@ public class Fireplaces extends TemperatureControl {
 
     @Override
     public void set(Boolean status) {
-        if (status != this.status) System.out.println("Fireplaces turned " + (status ? "on" : "off") + " in [" + owner.getName() + "].");
+        if (status != this.status)
+            System.out.println("Fireplaces turned " + (status ? "on" : "off") + " in [" + owner.getName() + "].");
     }
 
     @Override

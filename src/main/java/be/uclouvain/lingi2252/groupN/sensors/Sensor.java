@@ -4,9 +4,9 @@ import be.uclouvain.lingi2252.groupN.CommunicationHub;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
 
 public abstract class Sensor {
-    String name;
-    Signal lastValue;
-    CommunicationHub commHub;
+    private String name;
+    private Signal lastValue;
+    private CommunicationHub commHub;
 
     public Sensor(String name, CommunicationHub commHub) {
         this.name = name;

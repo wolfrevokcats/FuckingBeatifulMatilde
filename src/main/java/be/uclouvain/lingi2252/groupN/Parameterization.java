@@ -1,6 +1,6 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.equipment.*;
+import be.uclouvain.lingi2252.groupN.equipment.Equipment;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
@@ -166,14 +166,16 @@ public class Parameterization {
     }
 
     private void addFeaturesToHouse(JSONObject jsonFeatures, JSONObject mainFile) {
+        House house = House.getInstance();
+        List<CommunicationHub> commHubs = house.getRooms().stream().map(Room::getCommHub).collect(Collectors.toList());
+
+        CentralUnit.getInstance().initialize(commHubs);
+
         for (Object featureObj : jsonFeatures.keySet()) {
             String featureKey = (String) featureObj;
             boolean isPresent = (boolean) jsonFeatures.get(featureKey);
 
             if (isPresent) {
-                House house = House.getInstance();
-                List<CommunicationHub> commHubs = house.getRooms().stream().map(Room::getCommHub).collect(Collectors.toList());
-
                 switch (featureKey) {
                     case "air_quality_tester":
                         JSONObject jsonAirThresholds = (JSONObject) mainFile.get("air_quality_thresholds");
