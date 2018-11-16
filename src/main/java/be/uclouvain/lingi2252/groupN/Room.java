@@ -105,7 +105,7 @@ public class Room {
                     try {
                         return Class.forName(className).isInstance(equipment);
                     } catch (ClassNotFoundException e) {
-                        throw new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!");
+                        throw new IllegalArgumentException("The equipment [" + name + "] does not exist!");
                     }
                 })
                 .findAny()

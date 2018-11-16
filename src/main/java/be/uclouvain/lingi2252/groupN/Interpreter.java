@@ -1,18 +1,19 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.equipment.Conditioners;
-import be.uclouvain.lingi2252.groupN.equipment.Fireplaces;
-import be.uclouvain.lingi2252.groupN.equipment.Heaters;
-import be.uclouvain.lingi2252.groupN.equipment.TemperatureControl;
+import be.uclouvain.lingi2252.groupN.equipment.*;
+import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.sensors.TemperatureSensor;
 import be.uclouvain.lingi2252.groupN.signals.Temperature;
 import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 import be.uclouvain.lingi2252.groupN.warningsystem.WarningSystem;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+
+import static java.lang.Math.toIntExact;
 
 public class Interpreter {
     private static final Interpreter SINGLE_INSTANCE = new Interpreter();
@@ -31,8 +32,8 @@ public class Interpreter {
         features.put("Change the air quality thresholds", 4);
         features.put("Change the emergency contacts", 5);
         features.put("Add a new room", 6);
-        features.put("Add a new sensor", 7);
-        features.put("Add a new equipment", 8);
+        features.put("Add new sensors to a room", 7);
+        features.put("Add new equipment to a room", 8);
 
         methods = new HashMap<>();
         methods.put(1, "changeActualTemp");
@@ -41,7 +42,7 @@ public class Interpreter {
         methods.put(4, "changeThresholds");
         methods.put(5, "changeContacts");
         methods.put(6, "addRoom");
-        methods.put(7, "addSensor");
+        methods.put(7, "addSensors");
         methods.put(8, "addEquipment");
     }
 
@@ -66,7 +67,8 @@ public class Interpreter {
 
         if (!AlarmSystem.isEnabled()) subFeatures.remove("Arm or disarm the alarm System");
         if (!AirQualityTester.isEnabled()) subFeatures.remove("Change the air quality thresholds");
-        if (!AlarmSystem.isEnabled() && !AirQualityTester.isEnabled()) subFeatures.remove("Change the emergency contacts");
+        if (!AlarmSystem.isEnabled() && !AirQualityTester.isEnabled())
+            subFeatures.remove("Change the emergency contacts");
 
         return subFeatures;
     }
@@ -175,7 +177,7 @@ public class Interpreter {
 
         List<String> contacts = new ArrayList<>();
         for (int i = 0; i < nbContacts; i++) {
-            System.out.print("Type information for contact no." + i + ": ");
+            System.out.print("Type information for contact no." + (i + 1) + ": ");
             contacts.add(sc.nextLine());
         }
 
@@ -183,14 +185,81 @@ public class Interpreter {
     }
 
     private void addRoom() {
-        System.out.println(Arrays.toString(Thread.currentThread().getStackTrace()));
+        System.out.println("What is the name of the room you want to add?");
+        String roomName = sc.nextLine();
+        if (roomName.equals("")) roomName = sc.nextLine();
+
+        House.getInstance().addRoom(new Room(roomName));
     }
 
-    private void addSensor() {
-        System.out.println(Arrays.toString(Thread.currentThread().getStackTrace()));
+    private void addSensors() {
+        System.out.println("Where do you want to add sensors?");
+        String roomName = sc.nextLine();
+        if (roomName.equals("")) roomName = sc.nextLine();
+
+        Room room = House.getInstance().getRoom(roomName);
+        if (room == null) {
+            System.out.println("This room does not exist, please try again.");
+            addSensors();
+        } else {
+            System.out.println("How many sensors do you want to add?");
+            int nbSensors = sc.nextInt();
+
+            List<Sensor> sensors = new ArrayList<>();
+            for (int i = 0; i < nbSensors; i++) {
+                System.out.print("Type of sensor no." + (i + 1) + ": ");
+                String sensorName = sc.nextLine();
+                if (sensorName.equals("")) sensorName = sc.nextLine();
+
+                String classPath = "be.uclouvain.lingi2252.groupN.sensors." + Parameterization.toClassName(sensorName);
+                try {
+                    Class<?> clazz = Class.forName(classPath);
+                    Constructor<?> ctor = clazz.getConstructor(String.class, CommunicationHub.class);
+                    int sensorId = toIntExact(room.getSensors().stream()
+                            .filter(clazz::isInstance)
+                            .count());
+                    Sensor sensor = (Sensor) ctor.newInstance(room.getName() + '_' + sensorName + '_' + sensorId, room.getCommHub());
+                    sensors.add(sensor);
+                } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                    System.out.println("[" + sensorName + "] does not exist as a sensor, please try again.");
+                    i--;
+                }
+            }
+            House.getInstance().getRoom(roomName).addSensors(sensors);
+        }
     }
 
     private void addEquipment() {
-        System.out.println(Arrays.toString(Thread.currentThread().getStackTrace()));
+        System.out.println("Where do you want to add equipment?");
+        String roomName = sc.nextLine();
+        if (roomName.equals("")) roomName = sc.nextLine();
+
+        Room room = House.getInstance().getRoom(roomName);
+        if (room == null) {
+            System.out.println("This room does not exist, please try again.");
+            addEquipment();
+        } else {
+            System.out.println("How much equipment do you want to add?");
+            int nbEquipment = sc.nextInt();
+
+            List<Equipment> equipmentList = new ArrayList<>();
+            for (int i = 0; i < nbEquipment; i++) {
+                System.out.print("Type of equipment no." + (i + 1) + ": ");
+                String equipmentName = sc.nextLine();
+                if (equipmentName.equals("")) equipmentName = sc.nextLine();
+
+                String classPath = "be.uclouvain.lingi2252.groupN.equipment." + Parameterization.toClassName(equipmentName);
+                try {
+                    Class<?> clazz = Class.forName(classPath);
+                    Constructor<?> ctor = clazz.getConstructor(Room.class);
+                    Equipment equipment = (Equipment) ctor.newInstance(room);
+                    equipmentList.add(equipment);
+                } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                    System.out.println("[" + equipmentName + "] does not exist as an equipment, please try again.");
+                    i--;
+                }
+            }
+            House.getInstance().getRoom(roomName).addEquipment(equipmentList);
+        }
     }
 }

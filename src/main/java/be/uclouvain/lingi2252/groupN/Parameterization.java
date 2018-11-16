@@ -31,7 +31,12 @@ public class Parameterization {
     }
 
     public static String toClassName(String string) {
-        String[] split = string.split("_");
+        String[] split;
+        if (string.contains("_")) {
+            split = string.split("_");
+        } else {
+            split = string.split(" ");
+        }
         StringBuilder res = new StringBuilder();
 
         for (String aSplit : split) {
