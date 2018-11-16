@@ -36,7 +36,7 @@ DESIGN PATTERNS USED:
 CODE SAMPLES FOR VARIABILITY:
 
 A room can have different sensors / equipment
-REFLECTION AND INHERITANCE AT THE F***ING TIME:
+REFLECTION AND INHERITANCE AT THE SAME TIME:
 
 Parameterization.java in addEquipmentToRoom() method
 String equipmentKey = (String) equipmentObj;
