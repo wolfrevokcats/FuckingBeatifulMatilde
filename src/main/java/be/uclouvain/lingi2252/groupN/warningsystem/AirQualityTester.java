@@ -71,5 +71,29 @@ public class AirQualityTester extends WarningSystem {
     public static boolean isEnabled() {
         return enabled;
     }
+
+    public Double getHumidityThreshold() {
+        return humidityThreshold;
+    }
+
+    public Double getFineParticlesThreshold() {
+        return fineParticlesThreshold;
+    }
+
+    public Double getHarmfulGasThreshold() {
+        return harmfulGasThreshold;
+    }
+
+    public void setHumidityThreshold(Double humidityThreshold) {
+        this.humidityThreshold = humidityThreshold;
+    }
+
+    public void setFineParticlesThreshold(Double fineParticlesThreshold) {
+        this.fineParticlesThreshold = fineParticlesThreshold;
+    }
+
+    public void setHarmfulGasThreshold(Double harmfulGasThreshold) {
+        this.harmfulGasThreshold = harmfulGasThreshold;
+    }
 }
 
