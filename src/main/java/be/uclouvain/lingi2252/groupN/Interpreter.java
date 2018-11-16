@@ -1,5 +1,11 @@
 package be.uclouvain.lingi2252.groupN;
 
+import be.uclouvain.lingi2252.groupN.equipment.Conditioners;
+import be.uclouvain.lingi2252.groupN.equipment.Fireplaces;
+import be.uclouvain.lingi2252.groupN.equipment.Heaters;
+import be.uclouvain.lingi2252.groupN.equipment.TemperatureControl;
+import be.uclouvain.lingi2252.groupN.sensors.TemperatureSensor;
+import be.uclouvain.lingi2252.groupN.signals.Temperature;
 import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 
@@ -11,8 +17,11 @@ public class Interpreter {
     private static final Interpreter SINGLE_INSTANCE = new Interpreter();
     private Map<String, Integer> features;
     private Map<Integer, String> methods;
+    private Scanner sc;
 
     private Interpreter() {
+        sc = new Scanner(System.in).useLocale(Locale.US);
+
         features = new HashMap<>();
         features.put("Change the actual temperature in the house", 0);
         features.put("Change the desired temperature in the house", 1);
@@ -64,7 +73,6 @@ public class Interpreter {
         Map<String, Integer> availableFeatures = checkFeatures();
         System.out.println(welcome(availableFeatures));
 
-        Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
 
         try {
@@ -76,11 +84,38 @@ public class Interpreter {
     }
 
     private void changeActualTemp() {
-        System.out.println(Arrays.toString(Thread.currentThread().getStackTrace()));
+        System.out.println("What is the temperature inside the house?");
+
+        double temp = sc.nextDouble();
+
+        House.getInstance().getRooms().stream()
+                .filter(room -> !room.getName().equals("garden"))
+                .map(Room::getSensors)
+                .flatMap(Collection::stream)
+                .filter(sensor -> sensor instanceof TemperatureSensor)
+                .forEach(sensor -> sensor.sense(new Temperature(temp)));
     }
 
     private void changeDesiredTemp() {
-        System.out.println(Arrays.toString(Thread.currentThread().getStackTrace()));
+        System.out.println("What is the minimum temperature you want inside the house?");
+        double minTemp = sc.nextDouble();
+
+        System.out.println("What is the maximum temperature you want inside the house?");
+        double maxTemp = sc.nextDouble();
+
+        House.getInstance().getRooms().stream()
+                .filter(room -> !room.getName().equals("garden"))
+                .map(Room::getEquipmentList)
+                .flatMap(Collection::stream)
+                .filter(equipment -> equipment instanceof Heaters || equipment instanceof Fireplaces)
+                .forEach(equipment -> ((TemperatureControl) equipment).setTargetTemp(minTemp, minTemp + 1));
+
+        House.getInstance().getRooms().stream()
+                .filter(room -> !room.getName().equals("garden"))
+                .map(Room::getEquipmentList)
+                .flatMap(Collection::stream)
+                .filter(equipment -> equipment instanceof Conditioners)
+                .forEach(equipment -> ((TemperatureControl) equipment).setTargetTemp(maxTemp - 1, maxTemp));
     }
 
     private void changeAlarmStatus() {

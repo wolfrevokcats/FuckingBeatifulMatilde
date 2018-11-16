@@ -18,10 +18,4 @@ public class Fireplaces extends TemperatureControl {
     public void schedule(Boolean status, Double from, Double to) {
 
     }
-
-    @Override
-    public void giveTemperature(Double temperature) {
-        if (temperature > maxTemp) set(false);
-        else if (temperature < minTemp) set(true);
-    }
 }

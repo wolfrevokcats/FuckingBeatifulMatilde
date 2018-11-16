@@ -148,4 +148,8 @@ public class Room {
     public List<Equipment> getEquipmentList() {
         return equipmentList;
     }
+
+    public List<Sensor> getSensors() {
+        return sensors;
+    }
 }

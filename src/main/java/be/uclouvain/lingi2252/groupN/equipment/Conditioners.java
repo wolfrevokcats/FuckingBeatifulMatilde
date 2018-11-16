@@ -21,6 +21,7 @@ public class Conditioners extends TemperatureControl {
 
     @Override
     public void giveTemperature(Double temperature) {
+        lastTemp = temperature;
         if (temperature > maxTemp) set(true);
         else if (temperature < minTemp) set(false);
     }

@@ -38,6 +38,7 @@ public class Scenario {
         Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "richHouse.json").toString());
         House house = House.getInstance();
 
+        Interpreter.getInstance().interpret();
 
         Date dNow = new Date();
         Date customDate = new Date(dNow.getYear(), dNow.getMonth(), dNow.getDate(), 19, 57, 44);

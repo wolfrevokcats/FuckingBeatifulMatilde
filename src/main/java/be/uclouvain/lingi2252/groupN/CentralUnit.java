@@ -44,8 +44,6 @@ public class CentralUnit {
                 .flatMap(Collection::stream)
                 .filter(equipment -> equipment instanceof Heaters || equipment instanceof Fireplaces)
                 .forEach(equipment -> ((TemperatureControl) equipment).setTargetTemp(lowTemp, highTemp));
-
-        forceSendTemp();
     }
 
     /**
@@ -62,19 +60,6 @@ public class CentralUnit {
                 .flatMap(Collection::stream)
                 .filter(equipment -> equipment instanceof Conditioners)
                 .forEach(equipment -> ((TemperatureControl) equipment).setTargetTemp(lowTemp, highTemp));
-
-        forceSendTemp();
-    }
-
-    /**
-     * Sends manually the last measured temperature to the TemperatureControl equipments
-     */
-    private void forceSendTemp() {
-        hubs.stream()
-                .filter(hub -> hub.getLastValue(hub.getOwner().getName() + "_" + "temperature_sensor_0") != null)
-                .forEach(hub -> hub.getOwner().getEquipmentList().stream()
-                        .filter(equipment -> equipment instanceof TemperatureControl)
-                        .forEach(equipment -> ((TemperatureControl) equipment).giveTemperature((Double) hub.getLastValue(hub.getOwner().getName() + "_" + "temperature_sensor_0").extract())));
     }
 
     public void setBlindsSchedule(Double fromHour, Double toHour) {
