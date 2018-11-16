@@ -67,5 +67,9 @@ public class AirQualityTester extends WarningSystem {
         }
         //send lists of commands to commhubs
     }
+
+    public static boolean isEnabled() {
+        return enabled;
+    }
 }
 

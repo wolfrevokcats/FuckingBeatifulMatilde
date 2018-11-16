@@ -31,6 +31,7 @@ public abstract class WarningSystem {
         for (String contact : toBeCalled) {
             System.out.println("Calling " + contact + " with this message \"" + message + "\"");
         }
-
     }
+
+
 }

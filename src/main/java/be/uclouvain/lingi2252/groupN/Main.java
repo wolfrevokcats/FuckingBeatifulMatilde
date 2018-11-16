@@ -7,8 +7,8 @@ public class Main {
             Scenario.scenario1();
             System.out.println("--- Second Scenario ---");
             Scenario.scenario2();
-//            System.out.println("--- Third Scenario ---");
-//            Scenario.scenario3();
+            System.out.println("--- Third Scenario ---");
+            Scenario.scenario3();
 
         } catch (InterruptedException e) {
             e.printStackTrace();

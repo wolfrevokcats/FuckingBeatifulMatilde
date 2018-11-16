@@ -71,4 +71,8 @@ public class SmartAssistant {
     private boolean checkInput(String input, String wanted) {
         return (input.toLowerCase().contains(wanted.toLowerCase()));
     }
+
+    public static boolean isEnabled() {
+        return enabled;
+    }
 }

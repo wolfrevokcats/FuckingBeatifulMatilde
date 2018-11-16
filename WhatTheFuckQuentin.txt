@@ -29,8 +29,8 @@
 
 DESIGN PATTERNS USED:
 
-- Singleton (Parameterization, House, SmartAssistant, CentralUnit, AlarmSystem, AirQualityTester)
-- Facade (User -> enterRoom)
+- Singleton (Parameterization, House, SmartAssistant, CentralUnit, AlarmSystem, AirQualityTester, Interpreter)
+- Facade (User::enterRoom, Parametrization::initialize, Interpreter::interpret)
 
 
 CODE SAMPLES FOR VARIABILITY:

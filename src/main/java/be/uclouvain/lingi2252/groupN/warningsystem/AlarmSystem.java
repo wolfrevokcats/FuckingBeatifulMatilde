@@ -59,5 +59,7 @@ public class AlarmSystem extends WarningSystem {
         }
     }
 
-
+    public static boolean isEnabled() {
+        return enabled;
+    }
 }
