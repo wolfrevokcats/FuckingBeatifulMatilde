@@ -137,6 +137,7 @@ public class Parameterization {
                 System.out.println("Sensor [" + classPath + "] doesn't exist or isn't implemented yet!");
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
+                System.out.println(sensorKey);
             }
 
             room.addSensors(sensors);
@@ -182,15 +183,15 @@ public class Parameterization {
                         Double humidityThreshold = (Double) jsonAirThresholds.get("humidity");
                         Double fineParticlesThreshold = (Double) jsonAirThresholds.get("fine_particles");
                         Double harmfulGasThreshold = (Double) jsonAirThresholds.get("harmful_gas");
-                        AirQualityTester airQT = new AirQualityTester(commHubs, humidityThreshold, fineParticlesThreshold, harmfulGasThreshold);
-                        house.addAirQT(airQT);
+                        AirQualityTester.enable();
+                        AirQualityTester.getInstance().initialize(commHubs, humidityThreshold, fineParticlesThreshold, harmfulGasThreshold);
                         break;
                     case "alarm_system":
-                        AlarmSystem alarmSystem = new AlarmSystem(commHubs);
-                        house.addAlarm(alarmSystem);
+                        AlarmSystem.enable();
+                        AlarmSystem.getInstance().initialize(commHubs);
                         break;
                     case "smart_assistant":
-                        SmartAssistant.getInstance().initialize();
+                        SmartAssistant.enable();
                         break;
                     default:
                         System.out.println("Equipment doesn't exist or isn't implemented yet!");

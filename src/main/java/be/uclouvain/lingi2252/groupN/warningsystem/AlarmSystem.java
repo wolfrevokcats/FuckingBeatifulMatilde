@@ -11,21 +11,29 @@ import be.uclouvain.lingi2252.groupN.signals.Signal;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class AlarmSystem {
+public class AlarmSystem extends WarningSystem {
 
     //fields
-    protected List<CommunicationHub> hubs;
-    private Boolean status;
-    // <message,contact numbers>
-    private Map<String, List<String>> contacts;
+    private static final AlarmSystem SINGLE_INSTANCE = new AlarmSystem();
+    private static boolean enabled = false;
+    private boolean armed;
 
-    public AlarmSystem(List<CommunicationHub> hubs) {
-        this.status = false;
-        this.hubs = hubs;
-        this.contacts = new HashMap<>();
-        this.contacts.put("FALL", new ArrayList<>(Arrays.asList("118", "Adalberto")));
-        this.contacts.put("FIRE", new ArrayList<>(Arrays.asList("115", "Natalie")));
-        this.contacts.put("BREAK-IN", new ArrayList<>(Arrays.asList("112", "Julie")));
+    private AlarmSystem() {
+    }
+
+    public static void enable() {
+        enabled = true;
+    }
+
+    public static AlarmSystem getInstance() {
+        if (enabled) return SINGLE_INSTANCE;
+        System.out.println("There is no alarm system in this house");
+        return null;
+    }
+
+    public void initialize(List<CommunicationHub> hubs) {
+        super.initialize(hubs);
+        this.armed = false;
     }
 
     public void compute(Signal signal, Room room) {
@@ -44,23 +52,10 @@ public class AlarmSystem {
 
     }
 
-    public void ring(Room room, String issue) {
-        //send lists of commands to commhubs
-
-    }
-
-    public void emergencyCall(String reason, String message) {
-        List<String> toBeCalled = this.contacts.get(reason);
-        for (String contact : toBeCalled) {
-            System.out.println("Calling " + contact + " with this message \"" + message + "\"");
-        }
-
-    }
-
     public void setEngaged(Boolean flag) {
-        if (flag != status) {
-            this.status = flag;
-            System.out.println("Alarm status: " + (status ? "armed" : "disarmed"));
+        if (flag != armed) {
+            this.armed = flag;
+            System.out.println("Alarm status: " + (armed ? "armed" : "disarmed"));
         }
     }
 

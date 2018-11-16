@@ -1,8 +1,5 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
-import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,16 +10,12 @@ public class House {
     private List<Room> rooms;
     private List<User> residents;
     private List<User> owners;
-    private AlarmSystem alarm;
-    private AirQualityTester airQT;
 
     //constructor
     private House() {
         this.rooms = new ArrayList<>();
         this.residents = new ArrayList<>();
         this.owners = new ArrayList<>();
-        this.alarm = null;
-        this.airQT = null;
     }
 
     public static House getInstance() {
@@ -32,8 +25,6 @@ public class House {
     public void initialize(List<User> owners) {
         this.owners = owners;
         this.rooms = new ArrayList<>();
-        alarm = null;
-        airQT = null;
         residents = new ArrayList<>();
     }
 
@@ -74,22 +65,6 @@ public class House {
 
     public void removeUser(User user) {
         this.residents.remove(user);
-    }
-
-    public void addAlarm(AlarmSystem alarm) {
-        this.alarm = alarm;
-    }
-
-    public void addAirQT(AirQualityTester airQualityTester) {
-        this.airQT = airQualityTester;
-    }
-
-    public AlarmSystem getAlarm() {
-        return this.alarm;
-    }
-
-    public AirQualityTester getAirQT() {
-        return this.airQT;
     }
 
     public List<User> getResidents() {

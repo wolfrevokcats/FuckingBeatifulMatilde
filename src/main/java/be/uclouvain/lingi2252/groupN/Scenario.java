@@ -5,6 +5,7 @@ import be.uclouvain.lingi2252.groupN.signals.Contact;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
 import be.uclouvain.lingi2252.groupN.signals.Motion;
 import be.uclouvain.lingi2252.groupN.signals.Temperature;
+import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -42,7 +43,7 @@ public class Scenario {
         Date customDate = new Date(dNow.getYear(), dNow.getMonth(), dNow.getDate(), 19, 57, 44);
         SimpleDateFormat ft = new SimpleDateFormat("HH:mm:ss");
 
-        House.getInstance().getAlarm().setEngaged(true);
+        AlarmSystem.getInstance().setEngaged(true);
         User quentin = house.getUser("quentin");
         System.out.println("Time: " + ft.format(customDate));
         simpleDisplayDelay(3, 500);

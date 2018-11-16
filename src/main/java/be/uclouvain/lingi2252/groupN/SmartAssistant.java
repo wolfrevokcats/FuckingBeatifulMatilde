@@ -9,23 +9,22 @@ import java.util.List;
 public class SmartAssistant {
 
     private static final SmartAssistant SINGLE_INSTANCE = new SmartAssistant();
-    private boolean enabled;
+    private static boolean enabled = false;
 
     private SmartAssistant() {
-        enabled = false;
     }
 
     public static SmartAssistant getInstance() {
-        return SINGLE_INSTANCE;
+        if (enabled) return SINGLE_INSTANCE;
+        System.out.println("There is no smart assistant in this house");
+        return null;
     }
 
-    public void initialize() {
+    public static void enable() {
         enabled = true;
     }
 
     public String ask(User user, String input) {
-        if (!enabled) return "There is no smart assistant in this house.";
-
         if (checkInput(input, "temperature")) {
             String potentialNumber = input.replaceAll("[^0-9]+", "");
             if (checkInput(input, "raise") || checkInput(input, "increase")) {

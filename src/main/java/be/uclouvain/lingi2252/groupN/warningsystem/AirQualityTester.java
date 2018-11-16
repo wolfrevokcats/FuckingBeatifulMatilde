@@ -9,19 +9,30 @@ import java.util.List;
 import java.util.Map;
 
 
-public class AirQualityTester extends AlarmSystem {
+public class AirQualityTester extends WarningSystem {
 
     // fields
+    private static final AirQualityTester SINGLE_INSTANCE = new AirQualityTester();
+    private static boolean enabled = false;
     private Double humidityThreshold;
     private Double fineParticlesThreshold;
     private Double harmfulGasThreshold;
 
-    public AirQualityTester(List<CommunicationHub> hubs) {
-        super(hubs);
+    private AirQualityTester() {
     }
 
-    public AirQualityTester(List<CommunicationHub> hubs, Double humidityThreshold, Double fineParticlesThreshold, Double harmfulGasThreshold) {
-        super(hubs);
+    public static void enable() {
+        enabled = true;
+    }
+
+    public static AirQualityTester getInstance() {
+        if (enabled) return SINGLE_INSTANCE;
+        System.out.println("There is no air quality tester in this house");
+        return null;
+    }
+
+    public void initialize(List<CommunicationHub> hubs, Double humidityThreshold, Double fineParticlesThreshold, Double harmfulGasThreshold) {
+        super.initialize(hubs);
         this.harmfulGasThreshold = harmfulGasThreshold;
         this.fineParticlesThreshold = fineParticlesThreshold;
         this.humidityThreshold = humidityThreshold;

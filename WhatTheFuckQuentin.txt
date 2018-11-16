@@ -9,8 +9,7 @@
 - Create and implement scenario 3:
 - Look for useful design patterns:
     - Singleton V
-    - Factory Pattern
-    - Observer
+    - Facade V
 - Modify Parameterization to be able to check if something is implemented (room / equipment / sensor / feature...): check in: call alarm/room that doesn't exist
 
 
@@ -28,7 +27,13 @@
     1) Scenario 3
     2) Find some design patterns
 
-CODE SAMPLES FOR VARIABILITY :
+DESIGN PATTERNS USED:
+
+- Singleton (Parameterization, House, SmartAssistant, CentralUnit)
+- Facade (User -> enterRoom)
+
+
+CODE SAMPLES FOR VARIABILITY:
 
 A room can have different sensors / equipment
 REFLECTION AND INHERITANCE AT THE F***ING TIME:

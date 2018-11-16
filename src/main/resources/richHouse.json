@@ -33,7 +33,7 @@
   "additional_features": {
     "air_quality_tester": true,
     "alarm_system": true,
-    "smart_assistant": false
+    "smart_assistant": true
   },
   "air_quality_thresholds":{
     "humidity": 0.8,

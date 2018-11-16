@@ -5,6 +5,8 @@ import be.uclouvain.lingi2252.groupN.sensors.AirSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.signals.*;
+import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
+import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,13 +37,13 @@ public class CommunicationHub {
         } else if (signal instanceof Motion) {
             if (signal.extract().equals("FALL")) {
                 System.out.println("Fall detected in [" + owner.getName() + "]");
-                House.getInstance().getAlarm().compute(signal, owner);
+                AlarmSystem.getInstance().compute(signal, owner);
             }
         } else if (signal instanceof Frame && sensor instanceof Camera) {
-            House.getInstance().getAlarm().compute(signal, owner);
+            AlarmSystem.getInstance().compute(signal, owner);
 
         } else if (signal instanceof Air && sensor instanceof AirSensor) {
-            House.getInstance().getAirQT().compute(signal, owner);
+            AirQualityTester.getInstance().compute(signal, owner);
         }
     }
 
