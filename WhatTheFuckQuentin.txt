@@ -29,7 +29,7 @@
 
 DESIGN PATTERNS USED:
 
-- Singleton (Parameterization, House, SmartAssistant, CentralUnit)
+- Singleton (Parameterization, House, SmartAssistant, CentralUnit, AlarmSystem, AirQualityTester)
 - Facade (User -> enterRoom)
 
 

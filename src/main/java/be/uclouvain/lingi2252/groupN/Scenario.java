@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class Scenario {
 
     // constructor
-    public Scenario() {
+    private Scenario() {
 
     }
 
