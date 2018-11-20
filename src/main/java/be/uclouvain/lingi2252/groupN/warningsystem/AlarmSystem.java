@@ -55,10 +55,23 @@ public class AlarmSystem extends WarningSystem {
             }
 
         } else if (signal instanceof Contact){
-            System.out.println("A detachment has been detached from a contact_sensor");
+            System.out.println("A detachment has been detected in [" + room.getName() + "]");
+            ring(room, "detachment detected");
+
+
         }
 
 
+    }
+
+    @Override
+    public void ring(Room room, String issue) {
+        if (issue.equals("detachment detected")) {
+            System.out.print("Alarm starts ringing in the house...");
+            System.out.println("[unusual detachment] detected!");
+            //room.findWhy("detachment");
+            room.lockdown();
+        }
     }
 
     public void setEngaged(Boolean flag) {

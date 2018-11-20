@@ -5,7 +5,9 @@ import be.uclouvain.lingi2252.groupN.equipment.Equipment;
 import be.uclouvain.lingi2252.groupN.equipment.Lights;
 import be.uclouvain.lingi2252.groupN.equipment.Windows;
 import be.uclouvain.lingi2252.groupN.sensors.Camera;
+import be.uclouvain.lingi2252.groupN.sensors.ContactSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
+import be.uclouvain.lingi2252.groupN.signals.Contact;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
 
 import java.util.ArrayList;
@@ -48,9 +50,6 @@ public class Room {
                 .forEach(lights -> lights.set(false));
     }
 
-    public void lockdown() {
-
-    }
 
     public List<Frame> findObject(String[] objects) {
         List<Camera> cameras = sensors.stream().filter(sensor -> sensor instanceof Camera).map(sensor -> (Camera) sensor).collect(Collectors.toList());
@@ -73,6 +72,15 @@ public class Room {
         for (Equipment equipment : equipmentList) {
             if (equipment instanceof Doors || equipment instanceof Windows)
                 equipment.set(true);
+        }
+    }
+
+    public void lockdown() {
+        System.out.println("Applying lock-down procedure to room [" + name + "]");
+        for (Equipment equipment : equipmentList) {
+            if (equipment instanceof Doors || equipment instanceof Windows)
+                equipment.set(false);
+
         }
     }
 

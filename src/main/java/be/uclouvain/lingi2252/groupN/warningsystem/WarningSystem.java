@@ -25,7 +25,6 @@ public abstract class WarningSystem {
     public abstract void compute(Signal signal, Room room);
 
     public void ring(Room room, String issue) {
-        //send lists of commands to commhubs
 
     }
 

@@ -71,25 +71,22 @@ public class Scenario {
 
 
     public static void scenario3() throws InterruptedException {
-        System.out.println("1");
         Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "poorHouse.json").toString());
-        System.out.println("2");
         House house = House.getInstance();
 
-        System.out.println("3");
         User julie = house.getUser("julie");
         System.out.println("At 21.00 CEST " + julie.getName() + " goes to sleep");
+        simpleDisplayDelay(3, 500);
 
         julie.enterRoom("bedroom");
         simpleDisplayDelay(3, 500);
-        System.out.println(julie.getName() + " switches [off] the lights");
+        System.out.println("[" + julie.getName() + "]" + " switches manually [off] the lights");
         simpleDisplayDelay(3, 500);
         simpleDisplayDelay(3, 500);
         // contact sensors sense a detachment
-        System.out.println("contact sensor");
-        house.getRoom("entrance").getSensor("entrance_contact_sensors_0").sense(new Contact(true));
-        System.out.println("contact sensor");
+        house.getRoom("entrance").getSensor("entrance_contact_sensor_0").sense(new Contact(true));
         simpleDisplayDelay(3, 500);
+        house.getRoom("entrance").getSensor("entrance_camera_0").sense(new Frame("intrusive detected"));
 
 
     }
