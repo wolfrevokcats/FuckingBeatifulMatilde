@@ -1,10 +1,10 @@
 package be.uclouvain.lingi2252.groupN.signals;
 
-public class Contact implements Signal{
+public class Contact implements Signal {
 
     private Boolean open;
 
-    public Contact(Boolean status){
+    public Contact(Boolean status) {
         this.open = status;
     }
 

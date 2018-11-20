@@ -31,6 +31,10 @@ public class AirQualityTester extends WarningSystem {
         return null;
     }
 
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
     public void initialize(List<CommunicationHub> hubs, Double humidityThreshold, Double fineParticlesThreshold, Double harmfulGasThreshold) {
         super.initialize(hubs);
         this.harmfulGasThreshold = harmfulGasThreshold;
@@ -68,28 +72,24 @@ public class AirQualityTester extends WarningSystem {
         //send lists of commands to commhubs
     }
 
-    public static boolean isEnabled() {
-        return enabled;
-    }
-
     public Double getHumidityThreshold() {
         return humidityThreshold;
-    }
-
-    public Double getFineParticlesThreshold() {
-        return fineParticlesThreshold;
-    }
-
-    public Double getHarmfulGasThreshold() {
-        return harmfulGasThreshold;
     }
 
     public void setHumidityThreshold(Double humidityThreshold) {
         this.humidityThreshold = humidityThreshold;
     }
 
+    public Double getFineParticlesThreshold() {
+        return fineParticlesThreshold;
+    }
+
     public void setFineParticlesThreshold(Double fineParticlesThreshold) {
         this.fineParticlesThreshold = fineParticlesThreshold;
+    }
+
+    public Double getHarmfulGasThreshold() {
+        return harmfulGasThreshold;
     }
 
     public void setHarmfulGasThreshold(Double harmfulGasThreshold) {

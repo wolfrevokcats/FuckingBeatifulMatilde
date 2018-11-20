@@ -1,10 +1,6 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.signals.Air;
-import be.uclouvain.lingi2252.groupN.signals.Contact;
-import be.uclouvain.lingi2252.groupN.signals.Frame;
-import be.uclouvain.lingi2252.groupN.signals.Motion;
-import be.uclouvain.lingi2252.groupN.signals.Temperature;
+import be.uclouvain.lingi2252.groupN.signals.*;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 
 import java.nio.file.Paths;
@@ -89,7 +85,6 @@ public class Scenario {
         simpleDisplayDelay(3, 500);
         house.getRoom("entrance").getSensor("entrance_contact_sensors_0").sense(new Contact(true));
         simpleDisplayDelay(3, 500);
-
 
 
     }

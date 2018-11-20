@@ -7,9 +7,13 @@ import be.uclouvain.lingi2252.groupN.signals.Signal;
 import java.util.*;
 
 public abstract class WarningSystem {
-    protected List<CommunicationHub> hubs;
     // <message,contact numbers>
     private static Map<String, List<String>> emergencyContacts = new HashMap<>();
+    protected List<CommunicationHub> hubs;
+
+    public static void addOrReplaceContact(String reason, List<String> contacts) {
+        emergencyContacts.put(reason, contacts);
+    }
 
     public void initialize(List<CommunicationHub> hubs) {
         this.hubs = hubs;
@@ -30,9 +34,5 @@ public abstract class WarningSystem {
         for (String contact : toBeCalled) {
             System.out.println("Calling " + contact + " with this message \"" + message + "\"");
         }
-    }
-
-    public static void addOrReplaceContact(String reason, List<String> contacts) {
-        emergencyContacts.put(reason, contacts);
     }
 }

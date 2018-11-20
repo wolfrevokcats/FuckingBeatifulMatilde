@@ -8,7 +8,7 @@ import be.uclouvain.lingi2252.groupN.signals.Frame;
 import be.uclouvain.lingi2252.groupN.signals.Motion;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
 
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class AlarmSystem extends WarningSystem {
@@ -29,6 +29,10 @@ public class AlarmSystem extends WarningSystem {
         if (enabled) return SINGLE_INSTANCE;
         System.out.println("There is no alarm system in this house");
         return null;
+    }
+
+    public static boolean isEnabled() {
+        return enabled;
     }
 
     public void initialize(List<CommunicationHub> hubs) {
@@ -57,10 +61,6 @@ public class AlarmSystem extends WarningSystem {
             this.armed = flag;
             System.out.println("Alarm status: " + (armed ? "armed" : "disarmed"));
         }
-    }
-
-    public static boolean isEnabled() {
-        return enabled;
     }
 
     public boolean isArmed() {

@@ -24,6 +24,10 @@ public class SmartAssistant {
         enabled = true;
     }
 
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
     public String ask(User user, String input) {
         if (checkInput(input, "temperature")) {
             String potentialNumber = input.replaceAll("[^0-9]+", "");
@@ -70,9 +74,5 @@ public class SmartAssistant {
 
     private boolean checkInput(String input, String wanted) {
         return (input.toLowerCase().contains(wanted.toLowerCase()));
-    }
-
-    public static boolean isEnabled() {
-        return enabled;
     }
 }
