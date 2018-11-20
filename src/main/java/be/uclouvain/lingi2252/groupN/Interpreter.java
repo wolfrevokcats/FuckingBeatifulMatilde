@@ -73,16 +73,43 @@ public class Interpreter {
         return subFeatures;
     }
 
+    private Object input(String inputType) {
+        try {
+            String line = sc.nextLine();
+            Scanner reader = new Scanner(line);
+            switch (inputType) {
+                case "string":
+                    String str = sc.nextLine();
+                    if (str.equals("")) return sc.nextLine();
+                    return str;
+                case "int":
+                    return reader.nextInt();
+                case "double":
+                    return reader.nextDouble();
+                default:
+                    return null;
+            }
+        } catch (InputMismatchException e) {
+            return null;
+        }
+
+    }
+
     public void interpret() {
         Map<String, Integer> availableFeatures = checkFeatures();
         System.out.println(welcome(availableFeatures));
 
-        int choice = sc.nextInt();
+        Object choice = input("int");
 
-        if (choice == 0) return;
+        if (choice == null) {
+            System.out.println("This is not a valid option, please try again.");
+            interpret();
+        }
+
+        if ((int) choice == 0) return;
 
         try {
-            Method method = this.getClass().getDeclaredMethod(methods.get(choice));
+            Method method = this.getClass().getDeclaredMethod(methods.get((int) choice));
             method.invoke(this);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
@@ -94,45 +121,63 @@ public class Interpreter {
     private void changeActualTemp() {
         System.out.println("What is the temperature inside the house?");
 
-        double temp = sc.nextDouble();
+        Object temp = input("double");
+
+        if (temp == null) {
+            System.out.println("This is not a valid temperature, please try again.");
+            changeActualTemp();
+        }
 
         House.getInstance().getRooms().stream()
                 .filter(room -> !room.getName().equals("garden"))
                 .map(Room::getSensors)
                 .flatMap(Collection::stream)
                 .filter(sensor -> sensor instanceof TemperatureSensor)
-                .forEach(sensor -> sensor.sense(new Temperature(temp)));
+                .forEach(sensor -> sensor.sense(new Temperature((double) temp)));
     }
 
     private void changeDesiredTemp() {
         System.out.println("What is the minimum temperature you want inside the house?");
-        double minTemp = sc.nextDouble();
+        Object minTemp = input("double");
+
+        if (minTemp == null) {
+            System.out.println("This is not a valid temperature, please try again.");
+            changeActualTemp();
+        }
 
         System.out.println("What is the maximum temperature you want inside the house?");
-        double maxTemp = sc.nextDouble();
+        Object maxTemp = input("double");
+
+        if (maxTemp == null) {
+            System.out.println("This is not a valid temperature, please try again.");
+            changeActualTemp();
+        }
 
         House.getInstance().getRooms().stream()
                 .map(Room::getEquipmentList)
                 .flatMap(Collection::stream)
                 .filter(equipment -> equipment instanceof Heaters || equipment instanceof Fireplaces)
-                .forEach(equipment -> ((TemperatureControl) equipment).setTargetTemp(minTemp, minTemp + 1));
+                .forEach(equipment -> ((TemperatureControl) equipment).setTargetTemp((double) minTemp, (double) minTemp + 1));
 
         House.getInstance().getRooms().stream()
                 .map(Room::getEquipmentList)
                 .flatMap(Collection::stream)
                 .filter(equipment -> equipment instanceof Conditioners)
-                .forEach(equipment -> ((TemperatureControl) equipment).setTargetTemp(maxTemp - 1, maxTemp));
+                .forEach(equipment -> ((TemperatureControl) equipment).setTargetTemp((double) maxTemp - 1, (double) maxTemp));
     }
 
     private void changeAlarmStatus() {
         boolean armed = AlarmSystem.getInstance().isArmed();
         System.out.println("The alarm system is currently " + (armed ? "" : "dis") + "armed. Do you want to " + (armed ? "dis" : "") + "arm it? (Y/N)");
 
-        String yesOrNo = sc.nextLine();
+        Object yesOrNo = input("string");
 
-        if (yesOrNo.equals("")) yesOrNo = sc.nextLine();
+        if (yesOrNo == null) {
+            System.out.println("This is not a valid answer, please try again.");
+            changeAlarmStatus();
+        }
 
-        switch (yesOrNo.toLowerCase()) {
+        switch (((String) yesOrNo).toLowerCase()) {
             case "y":
             case "yes":
                 AlarmSystem.getInstance().setEngaged(!armed);
@@ -153,113 +198,154 @@ public class Interpreter {
 
         System.out.println("Current humidity threshold: " + airQT.getHumidityThreshold());
         System.out.print("New threshold: ");
-        Double humidityThreshold = sc.nextDouble();
-        airQT.setHumidityThreshold(humidityThreshold);
+        Object humidityThreshold = input("double");
+        if (humidityThreshold == null) {
+            System.out.println("This is not a valid threshold, please try again.");
+            changeThresholds();
+        }
+        airQT.setHumidityThreshold((double) humidityThreshold);
 
         System.out.println("Current fine particles threshold: " + airQT.getFineParticlesThreshold());
         System.out.print("New threshold: ");
-        Double fineParticlesThreshold = sc.nextDouble();
-        airQT.setFineParticlesThreshold(fineParticlesThreshold);
+        Object fineParticlesThreshold = input("double");
+        if (fineParticlesThreshold == null) {
+            System.out.println("This is not a valid threshold, please try again.");
+            changeThresholds();
+        }
+        airQT.setFineParticlesThreshold((double) fineParticlesThreshold);
 
         System.out.println("Current harmful gas threshold: " + airQT.getHarmfulGasThreshold());
         System.out.print("New threshold: ");
-        Double harmfulGasThreshold = sc.nextDouble();
-        airQT.setHarmfulGasThreshold(harmfulGasThreshold);
+        Object harmfulGasThreshold = input("double");
+        if (harmfulGasThreshold == null) {
+            System.out.println("This is not a valid threshold, please try again.");
+            changeThresholds();
+        }
+        airQT.setHarmfulGasThreshold((double) harmfulGasThreshold);
     }
 
     private void changeContacts() {
         System.out.println("How many contacts do you wish to add?");
-        int nbContacts = sc.nextInt();
+        Object nbContacts = input("int");
 
-        System.out.println("For which emergency should these contacts be called?");
-        String reason = sc.nextLine();
-        if (reason.equals("")) reason = sc.nextLine();
-
-        List<String> contacts = new ArrayList<>();
-        for (int i = 0; i < nbContacts; i++) {
-            System.out.print("Type information for contact no." + (i + 1) + ": ");
-            contacts.add(sc.nextLine());
+        if (nbContacts == null) {
+            System.out.println("This is not a valid number, please try again.");
+            changeContacts();
         }
 
-        WarningSystem.addOrReplaceContact(reason, contacts);
+        System.out.println("For which emergency should these contacts be called?");
+        Object reason = input("string");
+
+        if (reason == null) {
+            System.out.println("This is not a valid reason, please try again.");
+            changeContacts();
+        }
+
+        List<String> contacts = new ArrayList<>();
+        for (int i = 0; i < (int) nbContacts; i++) {
+            System.out.print("Type information for contact no." + (i + 1) + ": ");
+            contacts.add((String) input("string"));
+        }
+
+        WarningSystem.addOrReplaceContact((String) reason, contacts);
     }
 
     private void addRoom() {
         System.out.println("What is the name of the room you want to add?");
-        String roomName = sc.nextLine();
-        if (roomName.equals("")) roomName = sc.nextLine();
+        Object roomName = input("String");
 
-        House.getInstance().addRoom(new Room(roomName));
+        if (roomName == null) {
+            System.out.println("This is not a valid name, please try again.");
+            addRoom();
+        }
+
+        House.getInstance().addRoom(new Room((String) roomName));
     }
 
     private void addSensors() {
         System.out.println("Where do you want to add sensors?");
-        String roomName = sc.nextLine();
-        if (roomName.equals("")) roomName = sc.nextLine();
+        Object roomName = input("String");
 
-        Room room = House.getInstance().getRoom(roomName);
+        if (roomName == null) {
+            System.out.println("This is not a valid name, please try again.");
+            addSensors();
+        }
+
+        Room room = House.getInstance().getRoom((String) roomName);
         if (room == null) {
             System.out.println("This room does not exist, please try again.");
             addSensors();
-        } else {
-            System.out.println("How many sensors do you want to add?");
-            int nbSensors = sc.nextInt();
-
-            List<Sensor> sensors = new ArrayList<>();
-            for (int i = 0; i < nbSensors; i++) {
-                System.out.print("Type of sensor no." + (i + 1) + ": ");
-                String sensorName = sc.nextLine();
-                if (sensorName.equals("")) sensorName = sc.nextLine();
-
-                String classPath = "be.uclouvain.lingi2252.groupN.sensors." + Parameterization.toClassName(sensorName);
-                try {
-                    Class<?> clazz = Class.forName(classPath);
-                    Constructor<?> ctor = clazz.getConstructor(String.class, CommunicationHub.class);
-                    int sensorId = toIntExact(room.getSensors().stream()
-                            .filter(clazz::isInstance)
-                            .count());
-                    Sensor sensor = (Sensor) ctor.newInstance(room.getName() + '_' + sensorName + '_' + sensorId, room.getCommHub());
-                    sensors.add(sensor);
-                } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                    System.out.println("[" + sensorName + "] does not exist as a sensor, please try again.");
-                    i--;
-                }
-            }
-            House.getInstance().getRoom(roomName).addSensors(sensors);
         }
+
+        System.out.println("How many sensors do you want to add?");
+        Object nbSensors = input("int");
+
+        if (nbSensors == null) {
+            System.out.println("This is not a valid number, please try again.");
+            addSensors();
+        }
+
+        List<Sensor> sensors = new ArrayList<>();
+        for (int i = 0; i < (int) nbSensors; i++) {
+            System.out.print("Type of sensor no." + (i + 1) + ": ");
+            Object sensorName = input("string");
+
+            String classPath = "be.uclouvain.lingi2252.groupN.sensors." + Parameterization.toClassName((String) sensorName);
+            try {
+                Class<?> clazz = Class.forName(classPath);
+                Constructor<?> ctor = clazz.getConstructor(String.class, CommunicationHub.class);
+                int sensorId = toIntExact(room.getSensors().stream()
+                        .filter(clazz::isInstance)
+                        .count());
+                Sensor sensor = (Sensor) ctor.newInstance(room.getName() + '_' + sensorName + '_' + sensorId, room.getCommHub());
+                sensors.add(sensor);
+            } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                System.out.println("[" + sensorName + "] does not exist as a sensor, please try again.");
+                i--;
+            }
+        }
+        House.getInstance().getRoom((String) roomName).addSensors(sensors);
     }
 
     private void addEquipment() {
         System.out.println("Where do you want to add equipment?");
-        String roomName = sc.nextLine();
-        if (roomName.equals("")) roomName = sc.nextLine();
+        Object roomName = input("String");
 
-        Room room = House.getInstance().getRoom(roomName);
+        if (roomName == null) {
+            System.out.println("This is not a valid name, please try again.");
+            addEquipment();
+        }
+
+        Room room = House.getInstance().getRoom((String) roomName);
         if (room == null) {
             System.out.println("This room does not exist, please try again.");
             addEquipment();
-        } else {
-            System.out.println("How much equipment do you want to add?");
-            int nbEquipment = sc.nextInt();
-
-            List<Equipment> equipmentList = new ArrayList<>();
-            for (int i = 0; i < nbEquipment; i++) {
-                System.out.print("Type of equipment no." + (i + 1) + ": ");
-                String equipmentName = sc.nextLine();
-                if (equipmentName.equals("")) equipmentName = sc.nextLine();
-
-                String classPath = "be.uclouvain.lingi2252.groupN.equipment." + Parameterization.toClassName(equipmentName);
-                try {
-                    Class<?> clazz = Class.forName(classPath);
-                    Constructor<?> ctor = clazz.getConstructor(Room.class);
-                    Equipment equipment = (Equipment) ctor.newInstance(room);
-                    equipmentList.add(equipment);
-                } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                    System.out.println("[" + equipmentName + "] does not exist as an equipment, please try again.");
-                    i--;
-                }
-            }
-            House.getInstance().getRoom(roomName).addEquipment(equipmentList);
         }
+
+        System.out.println("How much equipment do you want to add?");
+        Object nbEquipment = input("int");
+
+        if (nbEquipment == null) {
+            System.out.println("This is not a valid number, please try again.");
+            addEquipment();
+        }
+
+        List<Equipment> equipmentList = new ArrayList<>();
+        for (int i = 0; i < (int) nbEquipment; i++) {
+            System.out.print("Type of equipment no." + (i + 1) + ": ");
+            Object equipmentName = input("string");
+
+            String classPath = "be.uclouvain.lingi2252.groupN.equipment." + Parameterization.toClassName((String) equipmentName);
+            try {
+                Class<?> clazz = Class.forName(classPath);
+                Constructor<?> ctor = clazz.getConstructor(Room.class);
+                Equipment equipment = (Equipment) ctor.newInstance(room);
+                equipmentList.add(equipment);
+            } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                System.out.println("[" + equipmentName + "] does not exist as an equipment, please try again.");
+                i--;
+            }
+        }
+        House.getInstance().getRoom((String) roomName).addEquipment(equipmentList);
     }
 }
