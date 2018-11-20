@@ -58,11 +58,9 @@ public class Parameterization {
         try {
             JSONObject mainFile = (JSONObject) jsonParser.parse(new FileReader(jsonFile));
 
-            // Extract lists of Users and Owners from .json file
             JSONObject jsonUsers = (JSONObject) mainFile.get("users");
             addUsersToHouse(jsonUsers);
 
-            // Extract lists of Rooms from .json file
             JSONObject jsonRooms = (JSONObject) mainFile.get("rooms");
             addRoomsToHouse(jsonRooms);
 
@@ -78,13 +76,11 @@ public class Parameterization {
         List<User> users = new ArrayList<>();
         List<User> owners = new ArrayList<>();
 
-        // Fill the list of Users. Each object here are of type User
         for (Object o : jsonUsers.keySet()) {
             String key = (String) o;
             User user = new User(key);
             users.add(user);
 
-            // Fining the owner inside the users list (assigned int = 0)
             int userStatus = toIntExact((long) jsonUsers.get(key));
             if (userStatus == 0) {
                 owners.add(user);

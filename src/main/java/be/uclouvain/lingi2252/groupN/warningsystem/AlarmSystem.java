@@ -7,7 +7,9 @@ import be.uclouvain.lingi2252.groupN.User;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
 import be.uclouvain.lingi2252.groupN.signals.Motion;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
+import be.uclouvain.lingi2252.groupN.signals.Contact;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +54,10 @@ public class AlarmSystem extends WarningSystem {
                 //Something / someone else than a user has been detected
             }
 
+        } else if (signal instanceof Contact){
+            System.out.println("A detachment has been detached from a contact_sensor");
         }
+
 
     }
 

@@ -3,6 +3,7 @@ package be.uclouvain.lingi2252.groupN;
 import be.uclouvain.lingi2252.groupN.equipment.TemperatureControl;
 import be.uclouvain.lingi2252.groupN.sensors.AirSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Camera;
+import be.uclouvain.lingi2252.groupN.sensors.ContactSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.signals.*;
 import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
@@ -44,6 +45,9 @@ public class CommunicationHub {
 
         } else if (signal instanceof Air && sensor instanceof AirSensor) {
             AirQualityTester.getInstance().compute(signal, owner);
+
+        } else if (signal instanceof Contact & sensor instanceof ContactSensor) {
+            AlarmSystem.getInstance().compute(signal, owner);
         }
     }
 
