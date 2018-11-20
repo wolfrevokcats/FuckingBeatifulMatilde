@@ -50,7 +50,7 @@ public class Interpreter {
         return SINGLE_INSTANCE;
     }
 
-    private String welcome(Map<String, Integer> subFeatures) {
+    public String welcome(Map<String, Integer> subFeatures) {
         StringBuilder res = new StringBuilder();
         res.append("Type a number:\n");
 
@@ -62,7 +62,7 @@ public class Interpreter {
         return res.toString();
     }
 
-    private Map<String, Integer> checkFeatures() {
+    public Map<String, Integer> checkFeatures() {
         Map<String, Integer> subFeatures = new HashMap<>(features);
 
         if (!AlarmSystem.isEnabled()) subFeatures.remove("Arm or disarm the alarm System");

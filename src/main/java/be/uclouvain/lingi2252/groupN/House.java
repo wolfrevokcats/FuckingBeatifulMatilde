@@ -45,14 +45,14 @@ public class House {
         return this.rooms.stream()
                 .filter(room -> room.getName().equals(name))
                 .findAny()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("There is no such room [" + name + "] in this house."));
     }
 
     public User getUser(String name) {
         return this.residents.stream()
                 .filter(resident -> resident.getName().equals(name))
                 .findAny()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("There is no such resident [" + name + "] in this house."));
     }
 
     public void addUser(User user) {

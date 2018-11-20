@@ -1,0 +1,22 @@
+{
+   {
+    "entrance": {
+      "sensor"
+    "kitchen": {
+      "sensor": { "camera" : 2, "air_sensor": 1, "motion_sensor": 1 },
+      "equipment": [ "doors", "windows", "cookers" ]
+    },
+    "living_room": {
+      "sensor": { "camera" : 3, "air_sensor": 1, "motion_sensor": 2 },
+      "
+    "bathroom": {
+      "sensor": { "camera" : 2, "air_sensor": 1, "motion_sensor": 1 },
+      "equipment": [ "doors" ]
+    }
+  },
+  "users": {
+,
+    "fine_particles": 10000.0,
+    "harmful_gas": 100.0
+  }
+}

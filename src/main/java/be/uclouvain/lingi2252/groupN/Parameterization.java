@@ -70,7 +70,7 @@ public class Parameterization {
             addFeaturesToHouse(jsonFeatures, mainFile);
 
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("This file [" + filepath + "] does not exist or is not a valid JSON file!");
         }
     }
 

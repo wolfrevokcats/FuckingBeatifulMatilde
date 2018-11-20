@@ -19,26 +19,9 @@ public class Scenario {
 
     }
 
-//    Considering the user gets home at 8PM, the security system
-//    recognizes the owner and, once entered inside, the light
-//    automatically turns on. Depending on the outer temperature
-//    the house calibrates the indoor one through some specific
-//    temperature sensors, also possibly according to the user’s
-//    preset, which is 19C.
-//    Here the communication between user and system is performed
-//    through the house’s smart assistant. The user feels cold and tells the system to raise the temperature. The heaters
-//    turn on until a temperature of 21C is reached.
-//    Moreover the user can’t find his medicine and he asks the
-//    house where it is and the system, after having searched and
-//    found it, makes the smart assistant reply indicating its location
-//    as "The medicine is on the kitchen’s table". When the user goes
-//    to bed, the lights turn off automatically.
-
     public static void scenario1() throws InterruptedException {
         Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "richHouse.json").toString());
         House house = House.getInstance();
-
-        Interpreter.getInstance().interpret();
 
         Date dNow = new Date();
         Date customDate = new Date(dNow.getYear(), dNow.getMonth(), dNow.getDate(), 19, 57, 44);
@@ -81,8 +64,6 @@ public class Scenario {
         simpleDisplayDelay(3, 500);
         house.getRoom("kitchen").getSensor("kitchen_motion_sensor_0").sense(new Motion("FALL"));
     }
-
-
 
     // At 21:00 the user goes to sleep and the alarm system is armed.
     // Close to midnight the contact sensor detects a detachment, spreading an alarm signal to
