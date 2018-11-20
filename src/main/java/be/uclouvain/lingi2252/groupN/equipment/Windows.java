@@ -14,6 +14,6 @@ public class Windows extends Equipment {
 
     @Override
     public void set(Boolean status) {
-        setStatus("turn on/off", status);
+        setStatus("open/close", status);
     }
 }

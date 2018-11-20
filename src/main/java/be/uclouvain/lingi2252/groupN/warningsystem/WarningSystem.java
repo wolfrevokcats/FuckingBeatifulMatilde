@@ -19,7 +19,7 @@ public abstract class WarningSystem {
         this.hubs = hubs;
         emergencyContacts.put("FALL", new ArrayList<>(Arrays.asList("118", "Adalberto")));
         emergencyContacts.put("FIRE", new ArrayList<>(Arrays.asList("115", "Natalie")));
-        emergencyContacts.put("BREAK-IN", new ArrayList<>(Arrays.asList("112", "Julie")));
+        emergencyContacts.put("BREAK-IN", new ArrayList<>(Arrays.asList("112", "Isabella")));
     }
 
     public abstract void compute(Signal signal, Room room);

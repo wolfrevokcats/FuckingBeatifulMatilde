@@ -57,6 +57,7 @@ public class AlarmSystem extends WarningSystem {
         } else if (signal instanceof Contact){
             System.out.println("A detachment has been detected in [" + room.getName() + "]");
             ring(room, "detachment detected");
+            emergencyCall("BREAK-IN", "Somebody not authorized entered in [" + room.getName() + "]");
 
 
         }

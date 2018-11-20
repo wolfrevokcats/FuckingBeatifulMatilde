@@ -77,17 +77,18 @@ public class Scenario {
         User julie = house.getUser("julie");
         System.out.println("At 21.00 CEST " + julie.getName() + " goes to sleep");
         simpleDisplayDelay(3, 500);
+        AlarmSystem.getInstance().setEngaged(true);
+        simpleDisplayDelay(3, 500);
 
         julie.enterRoom("bedroom");
         simpleDisplayDelay(3, 500);
         System.out.println("[" + julie.getName() + "]" + " switches manually [off] the lights");
+        house.getRoom("bedroom").getEquipment("lights").set(false);
         simpleDisplayDelay(3, 500);
         simpleDisplayDelay(3, 500);
-        // contact sensors sense a detachment
-        house.getRoom("entrance").getSensor("entrance_contact_sensor_0").sense(new Contact(true));
+        house.getRoom("kitchen").getEquipment("windows").set(true);
         simpleDisplayDelay(3, 500);
-        house.getRoom("entrance").getSensor("entrance_camera_0").sense(new Frame("intrusive detected"));
-
+        house.getRoom("kitchen").getSensor("kitchen_contact_sensor_0").sense(new Contact(true));
 
     }
 
