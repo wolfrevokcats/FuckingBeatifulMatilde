@@ -8,14 +8,4 @@ public class Fireplaces extends TemperatureControl {
         this.minTemp = 19.0;
         this.maxTemp = 20.0;
     }
-
-    @Override
-    public void set(Boolean status) {
-        setStatus("turn on/off", status);
-    }
-
-    @Override
-    public void schedule(Boolean status, Double from, Double to) {
-
-    }
 }

@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 
-        System.out.println("--- Choose a scenario to implement ---");
+        System.out.println("--- Choose a scenario to run ---");
         System.out.println(" Press \n 1: Scenario1 \n 2: Scenario2\n 3: Scenario3");
         int input = (new Scanner(System.in)).nextInt();
         switch(input){

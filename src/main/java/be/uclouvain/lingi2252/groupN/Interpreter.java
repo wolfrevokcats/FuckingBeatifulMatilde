@@ -5,6 +5,7 @@ import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.sensors.TemperatureSensor;
 import be.uclouvain.lingi2252.groupN.signals.Temperature;
 import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
+import be.uclouvain.lingi2252.groupN.warningsystem.AlarmStatus;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 import be.uclouvain.lingi2252.groupN.warningsystem.WarningSystem;
 
@@ -167,8 +168,9 @@ public class Interpreter {
     }
 
     private void changeAlarmStatus() {
-        boolean armed = AlarmSystem.getInstance().isArmed();
-        System.out.println("The alarm system is currently " + (armed ? "" : "dis") + "armed. Do you want to " + (armed ? "dis" : "") + "arm it? (Y/N)");
+        AlarmStatus status = AlarmSystem.getInstance().getStatus();
+        System.out.print("The alarm system is currently " + status.getDescription() + ".");
+        System.out.println("Do you want to change this status? (Y/N)");
 
         Object yesOrNo = input("string");
 
@@ -180,14 +182,35 @@ public class Interpreter {
         switch (((String) yesOrNo).toLowerCase()) {
             case "y":
             case "yes":
-                AlarmSystem.getInstance().setEngaged(!armed);
+                System.out.println("What is the new status of the alarm?");
+                Object newStatus = input("string");
+                if (newStatus == null) {
+                    System.out.println("This is not a valid answer, please try again.");
+                    changeAlarmStatus();
+                }
+                switch (((String) newStatus).toLowerCase()) {
+                    case "armed":
+                        AlarmSystem.getInstance().setStatus(AlarmStatus.ARMED);
+                        break;
+                    case "disarmed":
+                        AlarmSystem.getInstance().setStatus(AlarmStatus.DISARMED);
+                        break;
+                    case "presence":
+                        AlarmSystem.getInstance().setStatus(AlarmStatus.PRESENCE);
+                        break;
+                    default:
+                        System.out.println("This is not a valid status, please try again.");
+                        changeAlarmStatus();
+                        break;
+                }
+
                 break;
             case "n":
             case "no":
-                System.out.println("Fine. The alarm system is still" + (armed ? "" : "dis") + "armed.");
+                System.out.println("Fine. The alarm system is still " + status.getDescription() + ".");
                 break;
             default:
-                System.out.println("Unknown command. Please try again.");
+                System.out.println("This is not a valid answer, please try again.");
                 changeAlarmStatus();
                 break;
         }

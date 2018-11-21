@@ -11,8 +11,6 @@ public abstract class Equipment {
         this.status = false;
     }
 
-    public abstract void schedule(Boolean status, Double from, Double to);
-
     public Boolean checkStatus() {
         return status;
     }

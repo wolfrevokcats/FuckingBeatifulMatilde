@@ -1,11 +1,8 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.signals.Air;
-import be.uclouvain.lingi2252.groupN.signals.Frame;
-import be.uclouvain.lingi2252.groupN.signals.Motion;
-import be.uclouvain.lingi2252.groupN.signals.Temperature;
+import be.uclouvain.lingi2252.groupN.signals.*;
+import be.uclouvain.lingi2252.groupN.warningsystem.AlarmStatus;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.nio.file.Paths;
@@ -23,7 +20,7 @@ public class ScenarioTest {
         Date customDate = new Date(dNow.getYear(), dNow.getMonth(), dNow.getDate(), 19, 57, 44);
         SimpleDateFormat ft = new SimpleDateFormat("HH:mm:ss");
 
-        AlarmSystem.getInstance().setEngaged(true);
+        AlarmSystem.getInstance().setStatus(AlarmStatus.ARMED);
         User quentin = house.getUser("quentin");
         System.out.println("Time: " + ft.format(customDate));
 
@@ -51,9 +48,19 @@ public class ScenarioTest {
     }
 
     @Test
-    @Ignore
     public void scenario3Test() throws InterruptedException {
-        Scenario.scenario3();
+        Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "poorHouse.json").toString());
+        House house = House.getInstance();
+
+        User julie = house.getUser("julie");
+        System.out.println("At 21.00 CEST " + julie.getName() + " goes to sleep");
+        AlarmSystem.getInstance().setStatus(AlarmStatus.PRESENCE);
+
+        julie.enterRoom("bedroom");
+        System.out.println("[" + julie.getName() + "]" + " switches manually [off] the lights");
+        house.getRoom("bedroom").getEquipment("lights").set(false);
+        house.getRoom("kitchen").getEquipment("windows").set(true);
+        house.getRoom("kitchen").getSensor("kitchen_contact_sensor_0").sense(new Contact(true));
     }
 
     @Test

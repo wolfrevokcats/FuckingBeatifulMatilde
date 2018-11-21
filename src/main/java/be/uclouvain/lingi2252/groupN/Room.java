@@ -1,9 +1,6 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.equipment.Doors;
-import be.uclouvain.lingi2252.groupN.equipment.Equipment;
-import be.uclouvain.lingi2252.groupN.equipment.Lights;
-import be.uclouvain.lingi2252.groupN.equipment.Windows;
+import be.uclouvain.lingi2252.groupN.equipment.*;
 import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.ContactSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
@@ -75,11 +72,13 @@ public class Room {
         }
     }
 
-    public void lockdown() {
+    public void lockDown() {
         System.out.println("Applying lock-down procedure to room [" + name + "]");
         for (Equipment equipment : equipmentList) {
-            if (equipment instanceof Doors || equipment instanceof Windows)
+            if (equipment instanceof Lockable) {
                 equipment.set(false);
+                ((Lockable) equipment).setLocked(true);
+            }
 
         }
     }

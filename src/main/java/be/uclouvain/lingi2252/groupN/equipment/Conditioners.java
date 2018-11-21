@@ -10,16 +10,6 @@ public class Conditioners extends TemperatureControl {
     }
 
     @Override
-    public void set(Boolean status) {
-        setStatus("turn on/off", status);
-    }
-
-    @Override
-    public void schedule(Boolean status, Double from, Double to) {
-
-    }
-
-    @Override
     public void giveTemperature(Double temperature) {
         lastTemp = temperature;
         if (temperature > maxTemp) set(true);

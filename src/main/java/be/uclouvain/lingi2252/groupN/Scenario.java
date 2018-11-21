@@ -1,6 +1,7 @@
 package be.uclouvain.lingi2252.groupN;
 
 import be.uclouvain.lingi2252.groupN.signals.*;
+import be.uclouvain.lingi2252.groupN.warningsystem.AlarmStatus;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 
 import java.nio.file.Paths;
@@ -23,7 +24,7 @@ public class Scenario {
         Date customDate = new Date(dNow.getYear(), dNow.getMonth(), dNow.getDate(), 19, 57, 44);
         SimpleDateFormat ft = new SimpleDateFormat("HH:mm:ss");
 
-        AlarmSystem.getInstance().setEngaged(true);
+        AlarmSystem.getInstance().setStatus(AlarmStatus.ARMED);
         User quentin = house.getUser("quentin");
         System.out.println("Time: " + ft.format(customDate));
         simpleDisplayDelay(3, 500);
@@ -77,7 +78,7 @@ public class Scenario {
         User julie = house.getUser("julie");
         System.out.println("At 21.00 CEST " + julie.getName() + " goes to sleep");
         simpleDisplayDelay(3, 500);
-        AlarmSystem.getInstance().setEngaged(true);
+        AlarmSystem.getInstance().setStatus(AlarmStatus.PRESENCE);
         simpleDisplayDelay(3, 500);
 
         julie.enterRoom("bedroom");

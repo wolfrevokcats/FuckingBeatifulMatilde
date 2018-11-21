@@ -9,7 +9,6 @@ import be.uclouvain.lingi2252.groupN.signals.Motion;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
 import be.uclouvain.lingi2252.groupN.signals.Contact;
 
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +17,7 @@ public class AlarmSystem extends WarningSystem {
     //fields
     private static final AlarmSystem SINGLE_INSTANCE = new AlarmSystem();
     private static boolean enabled = false;
-    private boolean armed;
+    private AlarmStatus status;
 
     private AlarmSystem() {
     }
@@ -39,7 +38,7 @@ public class AlarmSystem extends WarningSystem {
 
     public void initialize(List<CommunicationHub> hubs) {
         super.initialize(hubs);
-        this.armed = false;
+        this.status = AlarmStatus.DISARMED;
     }
 
     public void compute(Signal signal, Room room) {
@@ -49,12 +48,12 @@ public class AlarmSystem extends WarningSystem {
         } else if (signal instanceof Frame) {
             if (House.getInstance().getResidents().stream().map(User::getName).collect(Collectors.toList()).contains(signal.extract())) {
                 System.out.println("[" + signal.extract() + "] recognized.");
-                this.setEngaged(false);
+                this.setStatus(AlarmStatus.DISARMED);
             } else {
                 //Something / someone else than a user has been detected
             }
 
-        } else if (signal instanceof Contact){
+        } else if ((this.status == AlarmStatus.ARMED || this.status == AlarmStatus.PRESENCE) && signal instanceof Contact){
             System.out.println("A detachment has been detected in [" + room.getName() + "]");
             ring(room, "detachment detected");
             emergencyCall("BREAK-IN", "Somebody not authorized entered in [" + room.getName() + "]");
@@ -71,18 +70,18 @@ public class AlarmSystem extends WarningSystem {
             System.out.print("Alarm starts ringing in the house...");
             System.out.println("[unusual detachment] detected!");
             //room.findWhy("detachment");
-            room.lockdown();
+            room.lockDown();
         }
     }
 
-    public void setEngaged(Boolean flag) {
-        if (flag != armed) {
-            this.armed = flag;
-            System.out.println("Alarm status: " + (armed ? "armed" : "disarmed"));
+    public void setStatus(AlarmStatus status) {
+        if (status != this.status) {
+            this.status = status;
+            System.out.print("Alarm status: " + status.getDescription() + ".");
         }
     }
 
-    public boolean isArmed() {
-        return armed;
+    public AlarmStatus getStatus() {
+        return status;
     }
 }
