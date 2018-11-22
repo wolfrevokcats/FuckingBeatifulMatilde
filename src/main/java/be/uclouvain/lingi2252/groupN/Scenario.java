@@ -20,6 +20,8 @@ public class Scenario {
         Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "richHouse.json").toString());
         House house = House.getInstance();
 
+        Interpreter.getInstance().interpret();
+
         Date dNow = new Date();
         Date customDate = new Date(dNow.getYear(), dNow.getMonth(), dNow.getDate(), 19, 57, 44);
         SimpleDateFormat ft = new SimpleDateFormat("HH:mm:ss");
@@ -62,15 +64,6 @@ public class Scenario {
         house.getRoom("kitchen").getSensor("kitchen_motion_sensor_0").sense(new Motion("FALL"));
     }
 
-    // At 21:00 the user goes to sleep and the alarm system is armed.
-    // Close to midnight the contact sensor detects a detachment, spreading an alarm signal to
-    // the alarm system through the communication hub.
-    // The cameras detects the intrusive presence.
-    // Communication Hub:
-    // 1) Close and lock all the doors in the house
-    // 2) Call the emergency numbers
-
-
     public static void scenario3() throws InterruptedException {
         Parameterization.getInstance().initialize(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "poorHouse.json").toString());
         House house = House.getInstance();
@@ -85,7 +78,6 @@ public class Scenario {
         simpleDisplayDelay(3, 500);
         System.out.println("[" + julie.getName() + "]" + " switches manually [off] the lights");
         house.getRoom("bedroom").getEquipment("lights").set(false);
-        simpleDisplayDelay(3, 500);
         simpleDisplayDelay(3, 500);
         house.getRoom("kitchen").getEquipment("windows").set(true);
         simpleDisplayDelay(3, 500);

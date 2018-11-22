@@ -80,9 +80,8 @@ public class Interpreter {
             Scanner reader = new Scanner(line);
             switch (inputType) {
                 case "string":
-                    String str = sc.nextLine();
-                    if (str.equals("")) return sc.nextLine();
-                    return str;
+                    if (line.equals("")) return reader.nextLine();
+                    return line;
                 case "int":
                     return reader.nextInt();
                 case "double":
@@ -275,7 +274,7 @@ public class Interpreter {
 
     private void addRoom() {
         System.out.println("What is the name of the room you want to add?");
-        Object roomName = input("String");
+        Object roomName = input("string");
 
         if (roomName == null) {
             System.out.println("This is not a valid name, please try again.");
@@ -287,7 +286,7 @@ public class Interpreter {
 
     private void addSensors() {
         System.out.println("Where do you want to add sensors?");
-        Object roomName = input("String");
+        Object roomName = input("string");
 
         if (roomName == null) {
             System.out.println("This is not a valid name, please try again.");
@@ -332,7 +331,7 @@ public class Interpreter {
 
     private void addEquipment() {
         System.out.println("Where do you want to add equipment?");
-        Object roomName = input("String");
+        Object roomName = input("string");
 
         if (roomName == null) {
             System.out.println("This is not a valid name, please try again.");

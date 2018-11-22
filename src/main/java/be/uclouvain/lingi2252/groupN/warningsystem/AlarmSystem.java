@@ -69,7 +69,6 @@ public class AlarmSystem extends WarningSystem {
         if (issue.equals("detachment detected")) {
             System.out.print("Alarm starts ringing in the house...");
             System.out.println("[unusual detachment] detected!");
-            //room.findWhy("detachment");
             room.lockDown();
         }
     }
@@ -77,7 +76,7 @@ public class AlarmSystem extends WarningSystem {
     public void setStatus(AlarmStatus status) {
         if (status != this.status) {
             this.status = status;
-            System.out.print("Alarm status: " + status.getDescription() + ".");
+            System.out.println("Alarm status: " + status.getDescription() + ".");
         }
     }
 
