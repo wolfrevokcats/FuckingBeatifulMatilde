@@ -1,6 +1,6 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.equipment.Equipment;
+import be.uclouvain.lingi2252.groupN.actuators.Actuator;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
@@ -109,7 +109,7 @@ public class Parameterization {
             addSensorsToRoom(room, jsonSensors);
 
             // Populate each room with the corresponding sensors
-            JSONArray jsonEquipment = (JSONArray) jsonRoom.get("equipment");
+            JSONArray jsonEquipment = (JSONArray) jsonRoom.get("actuators");
             addEquipmentToRoom(room, jsonEquipment);
         }
 
@@ -151,16 +151,16 @@ public class Parameterization {
         for (Object equipmentObj : jsonEquipment) {
             String equipmentKey = (String) equipmentObj;
 
-            String classPath = "be.uclouvain.lingi2252.groupN.equipment." + toClassName(equipmentKey);
+            String classPath = "be.uclouvain.lingi2252.groupN.actuators." + toClassName(equipmentKey);
 
             try {
                 Class<?> clazz = Class.forName(classPath);
                 Constructor<?> ctor = clazz.getConstructor(Room.class);
 
-                room.addEquipment((Equipment) ctor.newInstance(room));
+                room.addEquipment((Actuator) ctor.newInstance(room));
 
             } catch (ClassNotFoundException e) {
-                System.out.println("Equipment [" + classPath + "] doesn't exist or isn't implemented yet!");
+                System.out.println("Actuator [" + classPath + "] doesn't exist or isn't implemented yet!");
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
             }
@@ -195,7 +195,7 @@ public class Parameterization {
                         SmartAssistant.enable();
                         break;
                     default:
-                        System.out.println("Equipment doesn't exist or isn't implemented yet!");
+                        System.out.println("Actuator doesn't exist or isn't implemented yet!");
                         break;
 
                 }

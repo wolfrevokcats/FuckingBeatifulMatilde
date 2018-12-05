@@ -1,6 +1,6 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.equipment.Lights;
+import be.uclouvain.lingi2252.groupN.actuators.Lights;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,11 +60,11 @@ public class SmartAssistant {
         } else if (checkInput(input, "light")) {
             Room room = user.getLocation();
             if (checkInput(input, "off")) {
-                room.getEquipmentList().stream()
+                room.getActuatorList().stream()
                         .filter(equipment -> equipment instanceof Lights)
                         .forEach(lights -> lights.set(false));
             } else {
-                room.getEquipmentList().stream()
+                room.getActuatorList().stream()
                         .filter(equipment -> equipment instanceof Lights)
                         .forEach(lights -> lights.set(true));
             }

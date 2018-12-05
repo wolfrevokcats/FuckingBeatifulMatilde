@@ -1,6 +1,6 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.equipment.*;
+import be.uclouvain.lingi2252.groupN.actuators.*;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.sensors.TemperatureSensor;
 import be.uclouvain.lingi2252.groupN.signals.Temperature;
@@ -34,7 +34,7 @@ public class Interpreter {
         features.put("Change the emergency contacts", 5);
         features.put("Add a new room", 6);
         features.put("Add new sensors to a room", 7);
-        features.put("Add new equipment to a room", 8);
+        features.put("Add new actuators to a room", 8);
 
         methods = new HashMap<>();
         methods.put(1, "changeActualTemp");
@@ -154,13 +154,13 @@ public class Interpreter {
         }
 
         House.getInstance().getRooms().stream()
-                .map(Room::getEquipmentList)
+                .map(Room::getActuatorList)
                 .flatMap(Collection::stream)
                 .filter(equipment -> equipment instanceof Heaters || equipment instanceof Fireplaces)
                 .forEach(equipment -> ((TemperatureControl) equipment).setTargetTemp((double) minTemp, (double) minTemp + 1));
 
         House.getInstance().getRooms().stream()
-                .map(Room::getEquipmentList)
+                .map(Room::getActuatorList)
                 .flatMap(Collection::stream)
                 .filter(equipment -> equipment instanceof Conditioners)
                 .forEach(equipment -> ((TemperatureControl) equipment).setTargetTemp((double) maxTemp - 1, (double) maxTemp));
@@ -330,7 +330,7 @@ public class Interpreter {
     }
 
     private void addEquipment() {
-        System.out.println("Where do you want to add equipment?");
+        System.out.println("Where do you want to add actuators?");
         Object roomName = input("string");
 
         if (roomName == null) {
@@ -344,7 +344,7 @@ public class Interpreter {
             addEquipment();
         }
 
-        System.out.println("How much equipment do you want to add?");
+        System.out.println("How much actuators do you want to add?");
         Object nbEquipment = input("int");
 
         if (nbEquipment == null) {
@@ -352,22 +352,22 @@ public class Interpreter {
             addEquipment();
         }
 
-        List<Equipment> equipmentList = new ArrayList<>();
+        List<Actuator> actuatorList = new ArrayList<>();
         for (int i = 0; i < (int) nbEquipment; i++) {
-            System.out.print("Type of equipment no." + (i + 1) + ": ");
+            System.out.print("Type of actuators no." + (i + 1) + ": ");
             Object equipmentName = input("string");
 
-            String classPath = "be.uclouvain.lingi2252.groupN.equipment." + Parameterization.toClassName((String) equipmentName);
+            String classPath = "be.uclouvain.lingi2252.groupN.actuators." + Parameterization.toClassName((String) equipmentName);
             try {
                 Class<?> clazz = Class.forName(classPath);
                 Constructor<?> ctor = clazz.getConstructor(Room.class);
-                Equipment equipment = (Equipment) ctor.newInstance(room);
-                equipmentList.add(equipment);
+                Actuator actuator = (Actuator) ctor.newInstance(room);
+                actuatorList.add(actuator);
             } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                System.out.println("[" + equipmentName + "] does not exist as an equipment, please try again.");
+                System.out.println("[" + equipmentName + "] does not exist as an actuators, please try again.");
                 i--;
             }
         }
-        House.getInstance().getRoom((String) roomName).addEquipment(equipmentList);
+        House.getInstance().getRoom((String) roomName).addEquipment(actuatorList);
     }
 }

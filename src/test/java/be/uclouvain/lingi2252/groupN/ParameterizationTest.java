@@ -54,7 +54,7 @@ public class ParameterizationTest {
         assertNotNull(AirQualityTester.getInstance());
 
         Room kitchen = house.getRoom("kitchen");
-        assertEquals(3, kitchen.getEquipmentList().size());
+        assertEquals(3, kitchen.getActuatorList().size());
 
         User quentin = house.getUser("quentin");
         quentin.enterRoom("kitchen");
@@ -70,7 +70,7 @@ public class ParameterizationTest {
         assertNotNull(AirQualityTester.getInstance());
 
         kitchen = house.getRoom("kitchen");
-        assertEquals(6, kitchen.getEquipmentList().size());
+        assertEquals(6, kitchen.getActuatorList().size());
 
         quentin = house.getUser("quentin");
         quentin.enterRoom("kitchen");

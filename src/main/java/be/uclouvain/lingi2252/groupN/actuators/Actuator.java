@@ -1,12 +1,12 @@
-package be.uclouvain.lingi2252.groupN.equipment;
+package be.uclouvain.lingi2252.groupN.actuators;
 
 import be.uclouvain.lingi2252.groupN.Room;
 
-public abstract class Equipment {
+public abstract class Actuator {
     protected Boolean status;
     protected Room owner;
 
-    protected Equipment(Room owner) {
+    protected Actuator(Room owner) {
         this.owner = owner;
         this.status = false;
     }

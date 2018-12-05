@@ -1,10 +1,8 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.equipment.*;
+import be.uclouvain.lingi2252.groupN.actuators.*;
 import be.uclouvain.lingi2252.groupN.sensors.Camera;
-import be.uclouvain.lingi2252.groupN.sensors.ContactSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
-import be.uclouvain.lingi2252.groupN.signals.Contact;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
 
 import java.util.ArrayList;
@@ -19,21 +17,21 @@ public class Room {
     private String name;
     private List<Sensor> sensors;
     private CommunicationHub commHub;
-    private List<Equipment> equipmentList;
+    private List<Actuator> actuatorList;
 
     //constructor
     public Room(String name) {
         this.name = name;
         this.commHub = new CommunicationHub(this);
         this.sensors = new ArrayList<>();
-        this.equipmentList = new ArrayList<>();
+        this.actuatorList = new ArrayList<>();
     }
 
 
     //methods
     public void roomEntered(User user) {
         System.out.println("[" + user.getName() + "] is entering the room [" + name + "]");
-        equipmentList.stream()
+        actuatorList.stream()
                 .filter(equipment -> equipment instanceof Lights)
                 .filter(lights -> !lights.checkStatus())
                 .forEach(lights -> lights.set(true));
@@ -41,9 +39,9 @@ public class Room {
 
     public void roomLeft(User user) {
         System.out.println("[" + user.getName() + "] left the room [" + name + "]");
-        equipmentList.stream()
+        actuatorList.stream()
                 .filter(equipment -> equipment instanceof Lights)
-                .filter(Equipment::checkStatus)
+                .filter(Actuator::checkStatus)
                 .forEach(lights -> lights.set(false));
     }
 
@@ -66,18 +64,18 @@ public class Room {
 
     public void evacuate() {
         System.out.println("Triggering [" + name + "] evacuation");
-        for (Equipment equipment : equipmentList) {
-            if (equipment instanceof Doors || equipment instanceof Windows)
-                equipment.set(true);
+        for (Actuator actuator : actuatorList) {
+            if (actuator instanceof Doors || actuator instanceof Windows)
+                actuator.set(true);
         }
     }
 
     public void lockDown() {
         System.out.println("Applying lock-down procedure to room [" + name + "]");
-        for (Equipment equipment : equipmentList) {
-            if (equipment instanceof Lockable) {
-                equipment.set(false);
-                ((Lockable) equipment).setLocked(true);
+        for (Actuator actuator : actuatorList) {
+            if (actuator instanceof Lockable) {
+                actuator.set(false);
+                ((Lockable) actuator).setLocked(true);
             }
 
         }
@@ -105,18 +103,18 @@ public class Room {
         return null;
     }
 
-    public Equipment getEquipment(String name) {
-        String className = "be.uclouvain.lingi2252.groupN.equipment." + Parameterization.toClassName(name);
-        return equipmentList.stream()
+    public Actuator getEquipment(String name) {
+        String className = "be.uclouvain.lingi2252.groupN.actuators." + Parameterization.toClassName(name);
+        return actuatorList.stream()
                 .filter(equipment -> {
                     try {
                         return Class.forName(className).isInstance(equipment);
                     } catch (ClassNotFoundException e) {
-                        throw new IllegalArgumentException("The equipment [" + name + "] does not exist!");
+                        throw new IllegalArgumentException("The actuators [" + name + "] does not exist!");
                     }
                 })
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("No such equipment [" + name + "] in this room [" + this.name + "]!"));
+                .orElseThrow(() -> new IllegalArgumentException("No such actuators [" + name + "] in this room [" + this.name + "]!"));
     }
 
 
@@ -132,16 +130,16 @@ public class Room {
         sensors.remove(sensor);
     }
 
-    public void addEquipment(Equipment equipment) {
-        equipmentList.add(equipment);
+    public void addEquipment(Actuator actuator) {
+        actuatorList.add(actuator);
     }
 
-    public void addEquipment(List<Equipment> equipmentList) {
-        this.equipmentList.addAll(equipmentList);
+    public void addEquipment(List<Actuator> actuatorList) {
+        this.actuatorList.addAll(actuatorList);
     }
 
-    public void removeEquipment(Equipment equipment) {
-        equipmentList.remove(equipment);
+    public void removeEquipment(Actuator actuator) {
+        actuatorList.remove(actuator);
     }
 
     public String getName() {
@@ -152,8 +150,8 @@ public class Room {
         return commHub;
     }
 
-    public List<Equipment> getEquipmentList() {
-        return equipmentList;
+    public List<Actuator> getActuatorList() {
+        return actuatorList;
     }
 
     public List<Sensor> getSensors() {

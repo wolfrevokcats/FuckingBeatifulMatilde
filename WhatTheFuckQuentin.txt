@@ -5,12 +5,12 @@
     2) threshold for harmful gas
     3) threshold for humidity
 - .json file: additionalFeature: just the ones you put??
-- Add new sensors and equipment
+- Add new sensors and actuator
 - Create and implement scenario 3:
 - Look for useful design patterns:
     - Singleton V
     - Facade V
-- Modify Parameterization to be able to check if something is implemented (room / equipment / sensor / feature...): check in: call alarm/room that doesn't exist
+- Modify Parameterization to be able to check if something is implemented (room / actuator / sensor / feature...): check in: call alarm/room that doesn't exist
 
 
 - how things change if we change the configuration file?
@@ -35,13 +35,13 @@ DESIGN PATTERNS USED:
 
 CODE SAMPLES FOR VARIABILITY:
 
-A room can have different sensors / equipment
+A room can have different sensors / actuator
 REFLECTION AND INHERITANCE AT THE SAME TIME:
 
 Parameterization.java in addEquipmentToRoom() method
 String equipmentKey = (String) equipmentObj;
 
-            String classPath = "be.uclouvain.lingi2252.groupN.equipment." + toClassName(equipmentKey);
+            String classPath = "be.uclouvain.lingi2252.groupN.actuators." + toClassName(equipmentKey);
 
             try {
                 Class<?> clazz = Class.forName(classPath);

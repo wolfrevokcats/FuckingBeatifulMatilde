@@ -1,6 +1,6 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.equipment.TemperatureControl;
+import be.uclouvain.lingi2252.groupN.actuators.TemperatureControl;
 import be.uclouvain.lingi2252.groupN.sensors.AirSensor;
 import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.ContactSensor;
@@ -31,7 +31,7 @@ public class CommunicationHub {
         if (signal instanceof Temperature) {
             System.out.println("Temperature measured [" + signal.extract() + "] in [" + owner.getName() + "]");
 
-            owner.getEquipmentList().stream()
+            owner.getActuatorList().stream()
                     .filter(equipment -> equipment instanceof TemperatureControl)
                     .forEach(equipment -> ((TemperatureControl) equipment).giveTemperature((Double) signal.extract()));
 

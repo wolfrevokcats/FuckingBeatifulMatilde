@@ -1,9 +1,9 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.equipment.Conditioners;
-import be.uclouvain.lingi2252.groupN.equipment.Fireplaces;
-import be.uclouvain.lingi2252.groupN.equipment.Heaters;
-import be.uclouvain.lingi2252.groupN.equipment.TemperatureControl;
+import be.uclouvain.lingi2252.groupN.actuators.Conditioners;
+import be.uclouvain.lingi2252.groupN.actuators.Fireplaces;
+import be.uclouvain.lingi2252.groupN.actuators.Heaters;
+import be.uclouvain.lingi2252.groupN.actuators.TemperatureControl;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
 
 import java.util.*;
@@ -40,7 +40,7 @@ public class CentralUnit {
     public void setHeatingTempRules(Double lowTemp, Double highTemp) {
         hubs.stream()
                 .map(CommunicationHub::getOwner)
-                .map(Room::getEquipmentList)
+                .map(Room::getActuatorList)
                 .flatMap(Collection::stream)
                 .filter(equipment -> equipment instanceof Heaters || equipment instanceof Fireplaces)
                 .forEach(equipment -> ((TemperatureControl) equipment).setTargetTemp(lowTemp, highTemp));
@@ -56,7 +56,7 @@ public class CentralUnit {
     public void setCoolingTempRules(Double lowTemp, Double highTemp) {
         hubs.stream()
                 .map(CommunicationHub::getOwner)
-                .map(Room::getEquipmentList)
+                .map(Room::getActuatorList)
                 .flatMap(Collection::stream)
                 .filter(equipment -> equipment instanceof Conditioners)
                 .forEach(equipment -> ((TemperatureControl) equipment).setTargetTemp(lowTemp, highTemp));

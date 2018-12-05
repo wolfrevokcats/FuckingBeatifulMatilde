@@ -1,8 +1,8 @@
-package be.uclouvain.lingi2252.groupN.equipment;
+package be.uclouvain.lingi2252.groupN.actuators;
 
 import be.uclouvain.lingi2252.groupN.Room;
 
-public abstract class Lockable extends Equipment {
+public abstract class Lockable extends Actuator {
     private boolean locked;
 
     protected Lockable(Room owner) {
