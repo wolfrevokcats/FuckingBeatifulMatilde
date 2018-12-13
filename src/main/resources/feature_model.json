@@ -1,0 +1,19 @@
+{
+  "min_features": [
+    ["lights", "blinds", "doors", "windows", "conditioners", "fireplaces", "heaters"],
+    ["evacuation", "lock down", "object tracking"],
+    ["bathroom", "bedroom", "entrance", "garden", "kitchen", "living room"],
+    ["air sensors", "cameras", "contact sensors", "motion sensors", "temperature sensors"]
+  ],
+  "implications": {
+    "conditioners": ["temperature sensors"],
+    "fireplaces": ["temperature sensors"],
+    "heaters": ["temperature sensors"],
+    "object tracking": ["cameras"],
+    "alarm system": ["cameras", "contact sensors"],
+    "lights": ["motion sensors"],
+    "air quality tester": ["air sensors"],
+    "lock down": ["alarm system"],
+    "evacuation": ["air quality tester"]
+  }
+}

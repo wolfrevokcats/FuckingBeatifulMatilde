@@ -1,6 +1,7 @@
 package be.uclouvain.lingi2252.groupN;
 
 import be.uclouvain.lingi2252.groupN.actuators.*;
+import be.uclouvain.lingi2252.groupN.parameterization.Parameterization;
 import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
