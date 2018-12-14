@@ -70,6 +70,10 @@ public class Parameterization {
             JSONObject jsonFeatures = (JSONObject) mainFile.get("additional_features");
             addFeaturesToHouse(jsonFeatures, mainFile);
 
+            if (!ModelChecker.getInstance().checkFeatures()) {
+                throw new IllegalArgumentException("This file [" + filepath + "] is not compliant with the feature model!");
+            }
+
         } catch (IOException | ParseException e) {
             throw new IllegalArgumentException("This file [" + filepath + "] does not exist or is not a valid JSON file!");
         }
@@ -136,6 +140,7 @@ public class Parameterization {
                 for (int i = 0; i < nbSensors; i++) {
                     Sensor sensor = (Sensor) ctor.newInstance(room.getName() + '_' + sensorKey + '_' + i, room.getCommHub());
                     sensors.add(sensor);
+                    ModelChecker.getInstance().addFeature(sensorKey);
                 }
             } catch (ClassNotFoundException e) {
                 System.out.println("Sensor [" + classPath + "] doesn't exist or isn't implemented yet!");
@@ -161,6 +166,7 @@ public class Parameterization {
                 Constructor<?> ctor = clazz.getConstructor(Room.class);
 
                 room.addEquipment((Actuator) ctor.newInstance(room));
+                ModelChecker.getInstance().addFeature(equipmentKey);
 
             } catch (ClassNotFoundException e) {
                 System.out.println("Actuator [" + classPath + "] doesn't exist or isn't implemented yet!");
@@ -181,6 +187,7 @@ public class Parameterization {
             boolean isPresent = (boolean) jsonFeatures.get(featureKey);
 
             if (isPresent) {
+                ModelChecker.getInstance().addFeature(featureKey);
                 switch (featureKey) {
                     case "air_quality_tester":
                         JSONObject jsonAirThresholds = (JSONObject) mainFile.get("air_quality_thresholds");

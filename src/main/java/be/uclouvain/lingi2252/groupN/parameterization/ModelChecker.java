@@ -71,7 +71,34 @@ public class ModelChecker {
         }
     }
 
-    public void extractFeatures(String filepath) {
+    public void addFeature(String feature) {
+        this.actualFeatures.add(tolerantFormat(feature));
+    }
 
+    public void removeFeature(String feature) {
+        this.actualFeatures.remove(tolerantFormat(feature));
+    }
+
+    public boolean checkFeatures() {
+        for (List<String> clause : this.minFeatures) {
+            boolean minIsPresent = false;
+            for (String feature : clause) {
+                if (actualFeatures.contains(feature)) {
+                    minIsPresent = true;
+                    break;
+                }
+            }
+            if (!minIsPresent) return false;
+        }
+
+        for (Map.Entry<String, List<String>> entry : this.constraints.entrySet()) {
+            if (actualFeatures.contains(entry.getKey())) {
+                for (String feature : entry.getValue()) {
+                    if (!actualFeatures.contains(feature)) return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
