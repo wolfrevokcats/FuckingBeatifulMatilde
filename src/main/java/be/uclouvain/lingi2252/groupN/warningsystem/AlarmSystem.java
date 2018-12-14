@@ -4,10 +4,10 @@ import be.uclouvain.lingi2252.groupN.CommunicationHub;
 import be.uclouvain.lingi2252.groupN.House;
 import be.uclouvain.lingi2252.groupN.Room;
 import be.uclouvain.lingi2252.groupN.User;
+import be.uclouvain.lingi2252.groupN.signals.Contact;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
 import be.uclouvain.lingi2252.groupN.signals.Motion;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
-import be.uclouvain.lingi2252.groupN.signals.Contact;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,7 +53,7 @@ public class AlarmSystem extends WarningSystem {
                 //Something / someone else than a user has been detected
             }
 
-        } else if ((this.status == AlarmStatus.ARMED || this.status == AlarmStatus.PRESENCE) && signal instanceof Contact){
+        } else if ((this.status == AlarmStatus.ARMED || this.status == AlarmStatus.PRESENCE) && signal instanceof Contact) {
             System.out.println("A detachment has been detected in [" + room.getName() + "]");
             ring(room, "detachment detected");
             emergencyCall("BREAK-IN", "Somebody not authorized entered in [" + room.getName() + "]");
@@ -73,14 +73,14 @@ public class AlarmSystem extends WarningSystem {
         }
     }
 
+    public AlarmStatus getStatus() {
+        return status;
+    }
+
     public void setStatus(AlarmStatus status) {
         if (status != this.status) {
             this.status = status;
             System.out.println("Alarm status: " + status.getDescription() + ".");
         }
-    }
-
-    public AlarmStatus getStatus() {
-        return status;
     }
 }

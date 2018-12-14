@@ -4,9 +4,10 @@ import be.uclouvain.lingi2252.groupN.actuators.Conditioners;
 import be.uclouvain.lingi2252.groupN.actuators.Fireplaces;
 import be.uclouvain.lingi2252.groupN.actuators.Heaters;
 import be.uclouvain.lingi2252.groupN.actuators.TemperatureControl;
-import be.uclouvain.lingi2252.groupN.signals.Frame;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class CentralUnit {
 
@@ -60,32 +61,5 @@ public class CentralUnit {
                 .flatMap(Collection::stream)
                 .filter(equipment -> equipment instanceof Conditioners)
                 .forEach(equipment -> ((TemperatureControl) equipment).setTargetTemp(lowTemp, highTemp));
-    }
-
-    public void setBlindsSchedule(Double fromHour, Double toHour) {
-
-    }
-
-    public String findObject(String[] objects) {
-        Map<Room, List<Frame>> possibleMatches = new HashMap<>();
-        System.out.println("Object Tracking procedure triggered to find " + Arrays.toString(objects));
-
-        hubs.stream()
-                .map(CommunicationHub::getOwner)
-                .forEach(room -> possibleMatches.put(room, room.findObject(objects)));
-
-        StringBuilder res = new StringBuilder().append("Possible matches for ").append(Arrays.toString(objects)).append(":\n");
-        boolean found = false;
-
-        for (Room room : possibleMatches.keySet()) {
-            for (Frame frame : possibleMatches.get(room)) {
-                res.append(frame.extract()).append(" in [").append(room.getName()).append("]");
-                found = true;
-            }
-        }
-
-        if (!found) res.append("No match found.");
-
-        return res.toString();
     }
 }

@@ -1,4 +1,5 @@
 package be.uclouvain.lingi2252.groupN;
+
 import java.util.Scanner;
 
 public class Main {
@@ -7,10 +8,10 @@ public class Main {
         System.out.println("--- Choose a scenario to run ---");
         System.out.println(" Press \n 0: Quit \n 1: Scenario1 \n 2: Scenario2\n 3: Scenario3");
         boolean flag = true;
-        while(flag){
-            try{
+        while (flag) {
+            try {
                 int input = (new Scanner(System.in)).nextInt();
-                switch(input){
+                switch (input) {
                     case 0:
                         System.out.println("--- End of the demo ---");
                         break;
@@ -30,8 +31,7 @@ public class Main {
                         break;
                 }
                 flag = false;
-            }
-            catch(java.util.InputMismatchException e) {
+            } catch (java.util.InputMismatchException e) {
                 System.out.println("Please enter one of the following options:" +
                         "\n 1: Scenario1 \n 2: Scenario2 \n 3: Scenario3");
             }

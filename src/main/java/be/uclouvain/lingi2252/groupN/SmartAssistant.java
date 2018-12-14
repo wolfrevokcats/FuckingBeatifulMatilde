@@ -1,10 +1,13 @@
 package be.uclouvain.lingi2252.groupN;
 
 import be.uclouvain.lingi2252.groupN.actuators.Lights;
+import be.uclouvain.lingi2252.groupN.procedures.ObjectTracker;
+import be.uclouvain.lingi2252.groupN.signals.Frame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class SmartAssistant {
 
@@ -51,12 +54,30 @@ public class SmartAssistant {
                 }
             }
         } else if (checkInput(input, "find") || checkInput(input, "where")) {
+            if (!ObjectTracker.isEnabled()) return "The object tracking is not available in this house";
+
             String search = input.replaceAll("[^a-zA-Z ]", "").toLowerCase();
             search = search.replace("find ", " ").replace("where ", " ");
             search = search.replace(" is ", " ").replace(" my ", " ").replace(" the ", " ");
             List<String> words = new ArrayList<>(Arrays.asList(search.split(" ")));
             words.removeIf(String::isEmpty);
-            return CentralUnit.getInstance().findObject(words.toArray(new String[0]));
+
+            Map<Room, List<Frame>> possibleMatches = ObjectTracker.getInstance().find(words.toArray(new String[0]));
+
+            StringBuilder res = new StringBuilder().append("Possible matches for ").append(Arrays.toString(words.toArray(new String[0]))).append(":\n");
+            boolean found = false;
+
+            for (Room room : possibleMatches.keySet()) {
+                for (Frame frame : possibleMatches.get(room)) {
+                    res.append(frame.extract()).append(" in [").append(room.getName()).append("]");
+                    found = true;
+                }
+            }
+
+            if (!found) res.append("No match found.");
+
+            return res.toString();
+
         } else if (checkInput(input, "light")) {
             Room room = user.getLocation();
             if (checkInput(input, "off")) {

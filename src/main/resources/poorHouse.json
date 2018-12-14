@@ -26,6 +26,9 @@
   "additional_features": {
     "air_quality_tester": false,
     "alarm_system": true,
-    "smart_assistant": false
+    "smart_assistant": false,
+    "lock_down": true,
+    "evacuation": false,
+    "object_tracking": false
   }
 }

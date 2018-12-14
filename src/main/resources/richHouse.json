@@ -1,7 +1,7 @@
 {
   "rooms": {
     "entrance": {
-      "sensor": { "camera" : 2, "air_sensor": 1, "motion_sensor": 1, "temperature_sensor": 1 },
+      "sensor": { "camera" : 2, "air_sensor": 1, "motion_sensor": 1, "temperature_sensor": 1, "contact_sensor": 1 },
       "equipment": [ "doors", "windows", "lights", "heaters", "conditioners", "fireplaces" ]
     },
     "kitchen": {
@@ -33,7 +33,10 @@
   "additional_features": {
     "air_quality_tester": true,
     "alarm_system": true,
-    "smart_assistant": true
+    "smart_assistant": true,
+    "lock_down": false,
+    "evacuation": true,
+    "object_tracking": true
   },
   "air_quality_thresholds":{
     "humidity": 0.8,

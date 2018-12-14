@@ -2,14 +2,10 @@ package be.uclouvain.lingi2252.groupN;
 
 import be.uclouvain.lingi2252.groupN.actuators.*;
 import be.uclouvain.lingi2252.groupN.parameterization.Parameterization;
-import be.uclouvain.lingi2252.groupN.sensors.Camera;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
-import be.uclouvain.lingi2252.groupN.signals.Frame;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 
 public class Room {
@@ -46,23 +42,6 @@ public class Room {
                 .forEach(lights -> lights.set(false));
     }
 
-
-    public List<Frame> findObject(String[] objects) {
-        List<Camera> cameras = sensors.stream().filter(sensor -> sensor instanceof Camera).map(sensor -> (Camera) sensor).collect(Collectors.toList());
-        List<Frame> lastFrames = cameras.stream().map(camera -> (Frame) commHub.getLastValue(camera)).collect(Collectors.toList());
-
-        List<Frame> res = new ArrayList<>();
-
-        for (String object : objects) {
-            res.addAll(lastFrames.stream()
-                    .filter(Objects::nonNull)
-                    .filter(frame -> frame.extract().contains(object))
-                    .collect(Collectors.toList()));
-        }
-
-        return res;
-    }
-
     public void evacuate() {
         System.out.println("Triggering [" + name + "] evacuation");
         for (Actuator actuator : actuatorList) {
@@ -78,20 +57,6 @@ public class Room {
                 actuator.set(false);
                 ((Lockable) actuator).setLocked(true);
             }
-
-        }
-    }
-
-    public void findWhy(String what) {
-        System.out.println("Object Tracking procedure triggered to find what caused [" + what + "] in [" + name + "]");
-        if (what.equals("smoke")) {
-            List<Camera> cameras = sensors.stream().filter(sensor -> sensor instanceof Camera).map(sensor -> (Camera) sensor).collect(Collectors.toList());
-            List<Frame> lastFrames = cameras.stream().map(camera -> (Frame) commHub.getLastValue(camera)).collect(Collectors.toList());
-
-            lastFrames.stream()
-                    .filter(Objects::nonNull)
-                    .filter(frame -> frame.extract().contains("smoke"))
-                    .forEach(frame -> System.out.println("Smoke identified [" + frame.extract().substring(6) + "]"));
 
         }
     }

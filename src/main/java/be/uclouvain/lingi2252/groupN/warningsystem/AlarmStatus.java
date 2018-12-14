@@ -7,7 +7,9 @@ public enum AlarmStatus {
 
     private final String description;
 
-    AlarmStatus(String description) { this.description = description; }
+    AlarmStatus(String description) {
+        this.description = description;
+    }
 
     public String getDescription() {
         return description;

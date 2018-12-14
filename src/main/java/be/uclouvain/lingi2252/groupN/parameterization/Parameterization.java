@@ -2,6 +2,7 @@ package be.uclouvain.lingi2252.groupN.parameterization;
 
 import be.uclouvain.lingi2252.groupN.*;
 import be.uclouvain.lingi2252.groupN.actuators.Actuator;
+import be.uclouvain.lingi2252.groupN.procedures.ObjectTracker;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
@@ -108,6 +109,7 @@ public class Parameterization {
             String roomKey = (String) roomObj;
             Room room = new Room(roomKey);
             rooms.add(room);
+            ModelChecker.getInstance().addFeature(roomKey);
 
             JSONObject jsonRoom = (JSONObject) jsonRooms.get(roomKey);
 
@@ -116,7 +118,7 @@ public class Parameterization {
             addSensorsToRoom(room, jsonSensors);
 
             // Populate each room with the corresponding sensors
-            JSONArray jsonEquipment = (JSONArray) jsonRoom.get("actuators");
+            JSONArray jsonEquipment = (JSONArray) jsonRoom.get("equipment");
             addEquipmentToRoom(room, jsonEquipment);
         }
 
@@ -204,8 +206,17 @@ public class Parameterization {
                     case "smart_assistant":
                         SmartAssistant.enable();
                         break;
+                    case "object_tracking":
+                        ObjectTracker.enable();
+                        break;
+                    case "lock_down":
+                        //ObjectTracker.enable();
+                        break;
+                    case "evacuation":
+                        //ObjectTracker.enable();
+                        break;
                     default:
-                        System.out.println("Actuator doesn't exist or isn't implemented yet!");
+                        System.out.println("Feature [" + featureKey + "] doesn't exist or isn't implemented yet!");
                         break;
 
                 }
