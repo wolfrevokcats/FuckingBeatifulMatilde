@@ -2,6 +2,7 @@ package be.uclouvain.lingi2252.groupN.warningsystem;
 
 import be.uclouvain.lingi2252.groupN.CommunicationHub;
 import be.uclouvain.lingi2252.groupN.Room;
+import be.uclouvain.lingi2252.groupN.procedures.EvacuationManager;
 import be.uclouvain.lingi2252.groupN.procedures.ObjectTracker;
 import be.uclouvain.lingi2252.groupN.signals.Air;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
@@ -67,7 +68,7 @@ public class AirQualityTester extends WarningSystem {
         if (issue.equals("harmful gas")) {
             System.out.print("Alarm starts ringing in the house...");
             System.out.println("[harmful gas] detected!");
-            room.evacuate();
+            if (EvacuationManager.isEnabled()) EvacuationManager.getInstance().evacuate();
             if (ObjectTracker.isEnabled()) ObjectTracker.getInstance().find(room, new String[]{"smoke"});
         }
         //send lists of commands to commhubs

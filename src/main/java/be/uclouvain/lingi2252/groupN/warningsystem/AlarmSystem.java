@@ -4,6 +4,7 @@ import be.uclouvain.lingi2252.groupN.CommunicationHub;
 import be.uclouvain.lingi2252.groupN.House;
 import be.uclouvain.lingi2252.groupN.Room;
 import be.uclouvain.lingi2252.groupN.User;
+import be.uclouvain.lingi2252.groupN.procedures.LockDownManager;
 import be.uclouvain.lingi2252.groupN.signals.Contact;
 import be.uclouvain.lingi2252.groupN.signals.Frame;
 import be.uclouvain.lingi2252.groupN.signals.Motion;
@@ -69,7 +70,7 @@ public class AlarmSystem extends WarningSystem {
         if (issue.equals("detachment detected")) {
             System.out.print("Alarm starts ringing in the house...");
             System.out.println("[unusual detachment] detected!");
-            room.lockDown();
+            if (LockDownManager.isEnabled()) LockDownManager.getInstance().lockDown(room);
         }
     }
 

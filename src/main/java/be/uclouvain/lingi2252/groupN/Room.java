@@ -42,25 +42,6 @@ public class Room {
                 .forEach(lights -> lights.set(false));
     }
 
-    public void evacuate() {
-        System.out.println("Triggering [" + name + "] evacuation");
-        for (Actuator actuator : actuatorList) {
-            if (actuator instanceof Doors || actuator instanceof Windows)
-                actuator.set(true);
-        }
-    }
-
-    public void lockDown() {
-        System.out.println("Applying lock-down procedure to room [" + name + "]");
-        for (Actuator actuator : actuatorList) {
-            if (actuator instanceof Lockable) {
-                actuator.set(false);
-                ((Lockable) actuator).setLocked(true);
-            }
-
-        }
-    }
-
     public Sensor getSensor(String name) {
         for (Sensor sensor : sensors)
             if (sensor.getName().equals(name))

@@ -1,6 +1,7 @@
 package be.uclouvain.lingi2252.groupN;
 
 import be.uclouvain.lingi2252.groupN.actuators.*;
+import be.uclouvain.lingi2252.groupN.parameterization.ModelChecker;
 import be.uclouvain.lingi2252.groupN.parameterization.Parameterization;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.sensors.TemperatureSensor;
@@ -105,6 +106,7 @@ public class Interpreter {
         if (choice == null) {
             System.out.println("This is not a valid option, please try again.");
             interpret();
+            return;
         }
 
         if ((int) choice == 0) return;
@@ -119,6 +121,22 @@ public class Interpreter {
         interpret();
     }
 
+    private boolean checkIntegrity(Object object) {
+        ModelChecker.getInstance().addFeature(object.getClass().getSimpleName());
+
+        if (ModelChecker.getInstance().checkFeatures()) {
+            return true;
+        } else {
+            ModelChecker.getInstance().removeFeature(object.getClass().getSimpleName());
+            return false;
+        }
+    }
+
+    private boolean checkIntegrity(List<Object> objects) {
+        return objects.stream()
+                .anyMatch(object -> !checkIntegrity(object));
+    }
+
     private void changeActualTemp() {
         System.out.println("What is the temperature inside the house?");
 
@@ -127,6 +145,7 @@ public class Interpreter {
         if (temp == null) {
             System.out.println("This is not a valid temperature, please try again.");
             changeActualTemp();
+            return;
         }
 
         House.getInstance().getRooms().stream()
@@ -143,7 +162,8 @@ public class Interpreter {
 
         if (minTemp == null) {
             System.out.println("This is not a valid temperature, please try again.");
-            changeActualTemp();
+            changeDesiredTemp();
+            return;
         }
 
         System.out.println("What is the maximum temperature you want inside the house?");
@@ -151,7 +171,8 @@ public class Interpreter {
 
         if (maxTemp == null) {
             System.out.println("This is not a valid temperature, please try again.");
-            changeActualTemp();
+            changeDesiredTemp();
+            return;
         }
 
         House.getInstance().getRooms().stream()
@@ -177,6 +198,7 @@ public class Interpreter {
         if (yesOrNo == null) {
             System.out.println("This is not a valid answer, please try again.");
             changeAlarmStatus();
+            return;
         }
 
         switch (((String) yesOrNo).toLowerCase()) {
@@ -187,6 +209,7 @@ public class Interpreter {
                 if (newStatus == null) {
                     System.out.println("This is not a valid answer, please try again.");
                     changeAlarmStatus();
+                    return;
                 }
                 switch (((String) newStatus).toLowerCase()) {
                     case "armed":
@@ -201,7 +224,7 @@ public class Interpreter {
                     default:
                         System.out.println("This is not a valid status, please try again.");
                         changeAlarmStatus();
-                        break;
+                        return;
                 }
 
                 break;
@@ -225,6 +248,7 @@ public class Interpreter {
         if (humidityThreshold == null) {
             System.out.println("This is not a valid threshold, please try again.");
             changeThresholds();
+            return;
         }
         airQT.setHumidityThreshold((double) humidityThreshold);
 
@@ -234,6 +258,7 @@ public class Interpreter {
         if (fineParticlesThreshold == null) {
             System.out.println("This is not a valid threshold, please try again.");
             changeThresholds();
+            return;
         }
         airQT.setFineParticlesThreshold((double) fineParticlesThreshold);
 
@@ -243,6 +268,7 @@ public class Interpreter {
         if (harmfulGasThreshold == null) {
             System.out.println("This is not a valid threshold, please try again.");
             changeThresholds();
+            return;
         }
         airQT.setHarmfulGasThreshold((double) harmfulGasThreshold);
     }
@@ -254,6 +280,7 @@ public class Interpreter {
         if (nbContacts == null) {
             System.out.println("This is not a valid number, please try again.");
             changeContacts();
+            return;
         }
 
         System.out.println("For which emergency should these contacts be called?");
@@ -262,6 +289,7 @@ public class Interpreter {
         if (reason == null) {
             System.out.println("This is not a valid reason, please try again.");
             changeContacts();
+            return;
         }
 
         List<String> contacts = new ArrayList<>();
@@ -280,6 +308,7 @@ public class Interpreter {
         if (roomName == null) {
             System.out.println("This is not a valid name, please try again.");
             addRoom();
+            return;
         }
 
         House.getInstance().addRoom(new Room((String) roomName));
@@ -292,12 +321,14 @@ public class Interpreter {
         if (roomName == null) {
             System.out.println("This is not a valid name, please try again.");
             addSensors();
+            return;
         }
 
         Room room = House.getInstance().getRoom((String) roomName);
         if (room == null) {
             System.out.println("This room does not exist, please try again.");
             addSensors();
+            return;
         }
 
         System.out.println("How many sensors do you want to add?");
@@ -306,6 +337,7 @@ public class Interpreter {
         if (nbSensors == null) {
             System.out.println("This is not a valid number, please try again.");
             addSensors();
+            return;
         }
 
         List<Sensor> sensors = new ArrayList<>();
@@ -327,7 +359,9 @@ public class Interpreter {
                 i--;
             }
         }
-        House.getInstance().getRoom((String) roomName).addSensors(sensors);
+
+        if (checkIntegrity(sensors)) House.getInstance().getRoom((String) roomName).addSensors(sensors);
+        else System.out.println("This cannot be added.");
     }
 
     private void addEquipment() {
@@ -337,20 +371,23 @@ public class Interpreter {
         if (roomName == null) {
             System.out.println("This is not a valid name, please try again.");
             addEquipment();
+            return;
         }
 
         Room room = House.getInstance().getRoom((String) roomName);
         if (room == null) {
             System.out.println("This room does not exist, please try again.");
             addEquipment();
+            return;
         }
 
-        System.out.println("How much actuators do you want to add?");
+        System.out.println("How many actuators do you want to add?");
         Object nbEquipment = input("int");
 
         if (nbEquipment == null) {
             System.out.println("This is not a valid number, please try again.");
             addEquipment();
+            return;
         }
 
         List<Actuator> actuatorList = new ArrayList<>();
@@ -365,10 +402,12 @@ public class Interpreter {
                 Actuator actuator = (Actuator) ctor.newInstance(room);
                 actuatorList.add(actuator);
             } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                System.out.println("[" + equipmentName + "] does not exist as an actuators, please try again.");
+                System.out.println("[" + equipmentName + "] does not exist as an actuator, please try again.");
                 i--;
             }
         }
-        House.getInstance().getRoom((String) roomName).addEquipment(actuatorList);
+
+        if (checkIntegrity(actuatorList)) House.getInstance().getRoom((String) roomName).addEquipment(actuatorList);
+        else System.out.println("This cannot be added.");
     }
 }
