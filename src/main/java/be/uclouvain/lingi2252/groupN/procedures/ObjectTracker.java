@@ -30,7 +30,9 @@ public class ObjectTracker {
         return enabled;
     }
 
-    public List<Frame> find(Room room, String[] things) {
+    public List<Frame> find(Room room, String[] things, boolean main) {
+        if (main) System.out.println("Object Tracking procedure triggered to find " + Arrays.toString(things) + " in [" + room.getName() + "]");
+
         List<Camera> cameras = room.getSensors().stream().filter(sensor -> sensor instanceof Camera).map(sensor -> (Camera) sensor).collect(Collectors.toList());
         List<Frame> lastFrames = cameras.stream().map(camera -> (Frame) room.getCommHub().getLastValue(camera)).collect(Collectors.toList());
 
@@ -47,12 +49,14 @@ public class ObjectTracker {
     }
 
     public Map<Room, List<Frame>> find(String[] things) {
+        System.out.println("Object Tracking procedure triggered to find " + Arrays.toString(things));
+
         List<Room> rooms = House.getInstance().getRooms();
         Map<Room, List<Frame>> possibleMatches = new HashMap<>();
 
         rooms.stream()
-                .filter(room -> !find(room, things).isEmpty())
-                .forEach(room -> possibleMatches.put(room, find(room, things)));
+                .filter(room -> !find(room, things, false).isEmpty())
+                .forEach(room -> possibleMatches.put(room, find(room, things, false)));
 
         return possibleMatches;
     }

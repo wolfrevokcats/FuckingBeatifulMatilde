@@ -69,7 +69,7 @@ public class AirQualityTester extends WarningSystem {
             System.out.print("Alarm starts ringing in the house...");
             System.out.println("[harmful gas] detected!");
             if (EvacuationManager.isEnabled()) EvacuationManager.getInstance().evacuate();
-            if (ObjectTracker.isEnabled()) ObjectTracker.getInstance().find(room, new String[]{"smoke"});
+            if (ObjectTracker.isEnabled()) ObjectTracker.getInstance().find(room, new String[]{"smoke"}, true);
         }
         //send lists of commands to commhubs
     }

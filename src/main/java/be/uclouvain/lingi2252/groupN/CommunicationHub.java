@@ -36,6 +36,7 @@ public class CommunicationHub extends Observable implements Observer {
         if (signal instanceof Temperature) {
             System.out.println("Temperature measured [" + signal.extract() + "] in [" + owner.getName() + "]");
 
+            setChanged();
             notifyObservers(signal.extract());
 
         } else if (signal instanceof Motion) {
