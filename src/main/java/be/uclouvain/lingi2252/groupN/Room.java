@@ -79,6 +79,7 @@ public class Room {
 
     public void addEquipment(Actuator actuator) {
         actuatorList.add(actuator);
+        if (actuator instanceof TemperatureControl) commHub.addObserver((TemperatureControl) actuator);
     }
 
     public void addEquipment(List<Actuator> actuatorList) {

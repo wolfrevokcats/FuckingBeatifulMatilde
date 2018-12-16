@@ -2,7 +2,10 @@ package be.uclouvain.lingi2252.groupN.actuators;
 
 import be.uclouvain.lingi2252.groupN.Room;
 
-public abstract class TemperatureControl extends Switchable {
+import java.util.Observable;
+import java.util.Observer;
+
+public abstract class TemperatureControl extends Switchable implements Observer {
     protected Double minTemp;
     protected Double maxTemp;
     protected Double lastTemp;
@@ -11,10 +14,11 @@ public abstract class TemperatureControl extends Switchable {
         super(owner);
     }
 
-    public void giveTemperature(Double temperature) {
-        lastTemp = temperature;
-        if (temperature > maxTemp) set(false);
-        else if (temperature < minTemp) set(true);
+    @Override
+    public void update(Observable o, Object arg) {
+        lastTemp = (Double) arg;
+        if (lastTemp > maxTemp) set(false);
+        else if (lastTemp < minTemp) set(true);
     }
 
     public Double getMinTemp() {
@@ -30,7 +34,7 @@ public abstract class TemperatureControl extends Switchable {
             this.maxTemp = maxTemp;
         }
 
-        if (lastTemp != null) giveTemperature(lastTemp);
+        if (lastTemp != null) update(null, lastTemp);
     }
 
     public Double getMaxTemp() {

@@ -11,8 +11,10 @@ import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
-public class CommunicationHub {
+public class CommunicationHub extends Observable implements Observer {
 
     // fields
     private Room owner;
@@ -24,16 +26,17 @@ public class CommunicationHub {
         lastValues = new HashMap<>();
     }
 
-    //methods
-    public void elaborate(Signal signal, Sensor sensor) {
+    @Override
+    public void update(Observable o, Object arg) {
+        Sensor sensor = (Sensor) o;
+        Signal signal = (Signal) arg;
+
         lastValues.put(sensor, signal);
 
         if (signal instanceof Temperature) {
             System.out.println("Temperature measured [" + signal.extract() + "] in [" + owner.getName() + "]");
 
-            owner.getActuatorList().stream()
-                    .filter(equipment -> equipment instanceof TemperatureControl)
-                    .forEach(equipment -> ((TemperatureControl) equipment).giveTemperature((Double) signal.extract()));
+            notifyObservers(signal.extract());
 
         } else if (signal instanceof Motion) {
             if (signal.extract().equals("FALL")) {

@@ -2,6 +2,8 @@ package be.uclouvain.lingi2252.groupN.actuators;
 
 import be.uclouvain.lingi2252.groupN.Room;
 
+import java.util.Observable;
+
 public class Conditioners extends TemperatureControl {
     public Conditioners(Room owner) {
         super(owner);
@@ -10,9 +12,9 @@ public class Conditioners extends TemperatureControl {
     }
 
     @Override
-    public void giveTemperature(Double temperature) {
-        lastTemp = temperature;
-        if (temperature > maxTemp) set(true);
-        else if (temperature < minTemp) set(false);
+    public void update(Observable o, Object arg) {
+        lastTemp = (Double) arg;
+        if (lastTemp > maxTemp) set(true);
+        else if (lastTemp < minTemp) set(false);
     }
 }
