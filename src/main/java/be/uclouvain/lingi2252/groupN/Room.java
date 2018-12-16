@@ -1,6 +1,8 @@
 package be.uclouvain.lingi2252.groupN;
 
-import be.uclouvain.lingi2252.groupN.actuators.*;
+import be.uclouvain.lingi2252.groupN.actuators.Actuator;
+import be.uclouvain.lingi2252.groupN.actuators.Lights;
+import be.uclouvain.lingi2252.groupN.actuators.TemperatureControl;
 import be.uclouvain.lingi2252.groupN.parameterization.Parameterization;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 

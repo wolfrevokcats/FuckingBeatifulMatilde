@@ -17,7 +17,7 @@ public abstract class Sensor extends Observable {
 
     public void sense(Signal signal) {
         System.out.println("Sensor [" + name + "] received a signal");
-        if (!signal.equals(lastValue)){
+        if (!signal.equals(lastValue)) {
             lastValue = signal;
             setChanged();
             notifyObservers(signal);

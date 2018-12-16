@@ -2,8 +2,8 @@ package be.uclouvain.lingi2252.groupN;
 
 import be.uclouvain.lingi2252.groupN.actuators.*;
 import be.uclouvain.lingi2252.groupN.parameterization.ModelChecker;
-import be.uclouvain.lingi2252.groupN.parameterization.Parameterization;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
+import be.uclouvain.lingi2252.groupN.sensors.SensorFactory;
 import be.uclouvain.lingi2252.groupN.sensors.TemperatureSensor;
 import be.uclouvain.lingi2252.groupN.signals.Temperature;
 import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
@@ -11,12 +11,9 @@ import be.uclouvain.lingi2252.groupN.warningsystem.AlarmStatus;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 import be.uclouvain.lingi2252.groupN.warningsystem.WarningSystem;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
-
-import static java.lang.Math.toIntExact;
 
 public class Interpreter {
     private static final Interpreter SINGLE_INSTANCE = new Interpreter();
@@ -345,28 +342,17 @@ public class Interpreter {
             return;
         }
 
-        List<Sensor> sensors = new ArrayList<>();
         for (int i = 0; i < (int) nbSensors; i++) {
             System.out.print("Type of sensor no." + (i + 1) + ": ");
             Object sensorName = input("string");
 
-            String classPath = "be.uclouvain.lingi2252.groupN.sensors." + Parameterization.toClassName((String) sensorName);
-            try {
-                Class<?> clazz = Class.forName(classPath);
-                Constructor<?> ctor = clazz.getConstructor(String.class, CommunicationHub.class);
-                int sensorId = toIntExact(room.getSensors().stream()
-                        .filter(clazz::isInstance)
-                        .count());
-                Sensor sensor = (Sensor) ctor.newInstance(room.getName() + '_' + sensorName + '_' + sensorId, room.getCommHub());
-                sensors.add(sensor);
-            } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                System.out.println("[" + sensorName + "] does not exist as a sensor, please try again.");
-                i--;
+            Sensor sensor = SensorFactory.getSensor((String) sensorName, room);
+            if (sensor == null) i--;
+            else {
+                if (checkIntegrity(sensor)) House.getInstance().getRoom((String) roomName).addSensor(sensor);
+                else System.out.println("This cannot be added.");
             }
         }
-
-        if (checkIntegrity(sensors)) House.getInstance().getRoom((String) roomName).addSensors(sensors);
-        else System.out.println("This cannot be added.");
     }
 
     private void addEquipment() {
@@ -400,15 +386,11 @@ public class Interpreter {
             System.out.print("Type of actuators no." + (i + 1) + ": ");
             Object equipmentName = input("string");
 
-            String classPath = "be.uclouvain.lingi2252.groupN.actuators." + Parameterization.toClassName((String) equipmentName);
-            try {
-                Class<?> clazz = Class.forName(classPath);
-                Constructor<?> ctor = clazz.getConstructor(Room.class);
-                Actuator actuator = (Actuator) ctor.newInstance(room);
-                actuatorList.add(actuator);
-            } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                System.out.println("[" + equipmentName + "] does not exist as an actuator, please try again.");
-                i--;
+            Actuator actuator = ActuatorFactory.getActuator((String) equipmentName, room);
+            if (actuator == null) i--;
+            else {
+                if (checkIntegrity(actuator)) House.getInstance().getRoom((String) roomName).addEquipment(actuator);
+                else System.out.println("This cannot be added.");
             }
         }
 

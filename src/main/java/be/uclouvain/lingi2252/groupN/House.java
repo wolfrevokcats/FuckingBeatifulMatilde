@@ -51,7 +51,7 @@ public class House {
                 .filter(room -> room.getName().equals(name))
                 .findAny()
                 .orElse(null);
-                //.orElseThrow(() -> new IllegalArgumentException("There is no such room [" + name + "] in this house."));
+        //.orElseThrow(() -> new IllegalArgumentException("There is no such room [" + name + "] in this house."));
     }
 
     public User getUser(String name) {
@@ -59,7 +59,7 @@ public class House {
                 .filter(resident -> resident.getName().equals(name))
                 .findAny()
                 .orElse(null);
-                //.orElseThrow(() -> new IllegalArgumentException("There is no such resident [" + name + "] in this house."));
+        //.orElseThrow(() -> new IllegalArgumentException("There is no such resident [" + name + "] in this house."));
     }
 
     public void addUser(User user) {

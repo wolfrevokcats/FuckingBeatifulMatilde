@@ -2,8 +2,10 @@ package be.uclouvain.lingi2252.groupN.parameterization;
 
 import be.uclouvain.lingi2252.groupN.*;
 import be.uclouvain.lingi2252.groupN.actuators.Actuator;
+import be.uclouvain.lingi2252.groupN.actuators.ActuatorFactory;
 import be.uclouvain.lingi2252.groupN.procedures.ObjectTracker;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
+import be.uclouvain.lingi2252.groupN.sensors.SensorFactory;
 import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 import org.json.simple.JSONArray;
@@ -14,8 +16,6 @@ import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -132,26 +132,13 @@ public class Parameterization {
             String sensorKey = (String) sensorObj;
             int nbSensors = toIntExact((long) jsonSensors.get(sensorKey));
 
-            List<Sensor> sensors = new ArrayList<>();
-
-            String classPath = "be.uclouvain.lingi2252.groupN.sensors." + toClassName(sensorKey);
-
-            try {
-                Class<?> clazz = Class.forName(classPath);
-                Constructor<?> ctor = clazz.getConstructor(String.class, CommunicationHub.class);
-                for (int i = 0; i < nbSensors; i++) {
-                    Sensor sensor = (Sensor) ctor.newInstance(room.getName() + '_' + sensorKey + '_' + i, room.getCommHub());
-                    sensors.add(sensor);
+            for (int i = 0; i < nbSensors; i++) {
+                Sensor sensor = SensorFactory.getSensor(sensorKey, room);
+                if (sensor != null) {
+                    room.addSensor(sensor);
                     ModelChecker.getInstance().addFeature(sensorKey);
                 }
-            } catch (ClassNotFoundException e) {
-                System.out.println("Sensor [" + classPath + "] doesn't exist or isn't implemented yet!");
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                e.printStackTrace();
-                System.out.println(sensorKey);
             }
-
-            room.addSensors(sensors);
         }
     }
 
@@ -161,19 +148,10 @@ public class Parameterization {
         for (Object equipmentObj : jsonEquipment) {
             String equipmentKey = (String) equipmentObj;
 
-            String classPath = "be.uclouvain.lingi2252.groupN.actuators." + toClassName(equipmentKey);
-
-            try {
-                Class<?> clazz = Class.forName(classPath);
-                Constructor<?> ctor = clazz.getConstructor(Room.class);
-
-                room.addEquipment((Actuator) ctor.newInstance(room));
+            Actuator actuator = ActuatorFactory.getActuator(equipmentKey, room);
+            if (actuator != null) {
+                room.addEquipment(actuator);
                 ModelChecker.getInstance().addFeature(equipmentKey);
-
-            } catch (ClassNotFoundException e) {
-                System.out.println("Actuator [" + classPath + "] doesn't exist or isn't implemented yet!");
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                e.printStackTrace();
             }
         }
     }

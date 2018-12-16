@@ -31,7 +31,8 @@ public class ObjectTracker {
     }
 
     public List<Frame> find(Room room, String[] things, boolean main) {
-        if (main) System.out.println("Object Tracking procedure triggered to find " + Arrays.toString(things) + " in [" + room.getName() + "]");
+        if (main)
+            System.out.println("Object Tracking procedure triggered to find " + Arrays.toString(things) + " in [" + room.getName() + "]");
 
         List<Camera> cameras = room.getSensors().stream().filter(sensor -> sensor instanceof Camera).map(sensor -> (Camera) sensor).collect(Collectors.toList());
         List<Frame> lastFrames = cameras.stream().map(camera -> (Frame) room.getCommHub().getLastValue(camera)).collect(Collectors.toList());
