@@ -2,19 +2,21 @@ package be.uclouvain.lingi2252.groupN.interpreter;
 
 import be.uclouvain.lingi2252.groupN.House;
 import be.uclouvain.lingi2252.groupN.Room;
-import be.uclouvain.lingi2252.groupN.actuators.Conditioners;
-import be.uclouvain.lingi2252.groupN.actuators.Fireplaces;
-import be.uclouvain.lingi2252.groupN.actuators.Heaters;
-import be.uclouvain.lingi2252.groupN.actuators.TemperatureControl;
+import be.uclouvain.lingi2252.groupN.actuators.*;
+import be.uclouvain.lingi2252.groupN.sensors.Sensor;
+import be.uclouvain.lingi2252.groupN.sensors.SensorFactory;
 import be.uclouvain.lingi2252.groupN.sensors.TemperatureSensor;
 import be.uclouvain.lingi2252.groupN.signals.Temperature;
 import be.uclouvain.lingi2252.groupN.warningsystem.AirQualityTester;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmStatus;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
+import be.uclouvain.lingi2252.groupN.warningsystem.WarningSystem;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class CommandReceiver {
     private static final CommandReceiver SINGLE_INSTANCE = new CommandReceiver();
@@ -133,127 +135,47 @@ public class CommandReceiver {
 
         return "Air quality thresholds have been changed to :\n- Humidity: " + hT + "\n- Fine particles: " + FPT + "\n- Harmful Gas: " + HGT;
     }
-//
-//    private void changeContacts() {
-//        System.out.println("How many contacts do you wish to add?");
-//        Object nbContacts = input("int");
-//
-//        if (nbContacts == null) {
-//            System.out.println("This is not a valid number, please try again.");
-//            changeContacts();
-//            return;
-//        }
-//
-//        System.out.println("For which emergency should these contacts be called?");
-//        Object reason = input("string");
-//
-//        if (reason == null) {
-//            System.out.println("This is not a valid reason, please try again.");
-//            changeContacts();
-//            return;
-//        }
-//
-//        List<String> contacts = new ArrayList<>();
-//        for (int i = 0; i < (int) nbContacts; i++) {
-//            System.out.print("Type information for contact no." + (i + 1) + ": ");
-//            contacts.add((String) input("string"));
-//        }
-//
-//        WarningSystem.addOrReplaceContact((String) reason, contacts);
-//    }
-//
-//    private void addRoom() {
-//        System.out.println("What is the name of the room you want to add?");
-//        Object roomName = input("string");
-//
-//        if (roomName == null) {
-//            System.out.println("This is not a valid name, please try again.");
-//            addRoom();
-//            return;
-//        }
-//
-//        House.getInstance().addRoom(new Room((String) roomName));
-//    }
-//
-//    private void addSensors() {
-//        System.out.println("Where do you want to add sensors?");
-//        Object roomName = input("string");
-//
-//        if (roomName == null) {
-//            System.out.println("This is not a valid name, please try again.");
-//            addSensors();
-//            return;
-//        }
-//
-//        Room room = House.getInstance().getRoom((String) roomName);
-//        if (room == null) {
-//            System.out.println("This room does not exist, please try again.");
-//            addSensors();
-//            return;
-//        }
-//
-//        System.out.println("How many sensors do you want to add?");
-//        Object nbSensors = input("int");
-//
-//        if (nbSensors == null) {
-//            System.out.println("This is not a valid number, please try again.");
-//            addSensors();
-//            return;
-//        }
-//
-//        for (int i = 0; i < (int) nbSensors; i++) {
-//            System.out.print("Type of sensor no." + (i + 1) + ": ");
-//            Object sensorName = input("string");
-//
-//            Sensor sensor = SensorFactory.getSensor((String) sensorName, room);
-//            if (sensor == null) i--;
-//            else {
-//                if (checkIntegrity(sensor)) House.getInstance().getRoom((String) roomName).addSensor(sensor);
-//                else System.out.println("This cannot be added.");
-//            }
-//        }
-//    }
-//
-//    private void addEquipment() {
-//        System.out.println("Where do you want to add actuators?");
-//        Object roomName = input("string");
-//
-//        if (roomName == null) {
-//            System.out.println("This is not a valid name, please try again.");
-//            addEquipment();
-//            return;
-//        }
-//
-//        Room room = House.getInstance().getRoom((String) roomName);
-//        if (room == null) {
-//            System.out.println("This room does not exist, please try again.");
-//            addEquipment();
-//            return;
-//        }
-//
-//        System.out.println("How many actuators do you want to add?");
-//        Object nbEquipment = input("int");
-//
-//        if (nbEquipment == null) {
-//            System.out.println("This is not a valid number, please try again.");
-//            addEquipment();
-//            return;
-//        }
-//
-//        List<Actuator> actuatorList = new ArrayList<>();
-//        for (int i = 0; i < (int) nbEquipment; i++) {
-//            System.out.print("Type of actuators no." + (i + 1) + ": ");
-//            Object equipmentName = input("string");
-//
-//            Actuator actuator = ActuatorFactory.getActuator((String) equipmentName, room);
-//            if (actuator == null) i--;
-//            else {
-//                if (checkIntegrity(actuator)) House.getInstance().getRoom((String) roomName).addEquipment(actuator);
-//                else System.out.println("This cannot be added.");
-//            }
-//        }
-//
-//        if (checkIntegrity(actuatorList)) House.getInstance().getRoom((String) roomName).addEquipment(actuatorList);
-//        else System.out.println("This cannot be added.");
-//    }
+
+    private String changeContacts(String... reasonAndNumbers) {
+        String reason = reasonAndNumbers[0];
+        List<String> contacts = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(reasonAndNumbers, 1, reasonAndNumbers.length)));
+
+        WarningSystem.addOrReplaceContact(reason, contacts);
+        return "Emergency contacts for " + reason + " have been updated.";
+    }
+
+    private String addRoom(String roomName) {
+        House.getInstance().addRoom(new Room((String) roomName));
+        return "The room " + roomName + " has been added.";
+    }
+
+    private String addSensor(String roomName, String sensorName) {
+        Room room = House.getInstance().getRoom(roomName);
+        Sensor sensor = SensorFactory.getSensor(sensorName, room);
+        if (sensor == null) {
+            return "Sensor " + sensorName + " does not exist, not added.";
+        } else {
+            if (Interpreter.getInstance().checkIntegrity(sensor)) {
+                House.getInstance().getRoom(roomName).addSensor(sensor);
+                return "Sensor " + sensorName + " has been added to " + roomName + ".";
+            } else {
+                return "Sensor " + sensorName + " could not be added to " + roomName + ", not compliant with feature model.\n";
+            }
+        }
+    }
+
+    private String addEquipment(String roomName, String actuatorName) {
+        Room room = House.getInstance().getRoom(roomName);
+        Actuator actuator = ActuatorFactory.getActuator(actuatorName, room);
+        if (actuator == null) {
+            return "Actuator " + actuatorName + " does not exist, not added.";
+        } else {
+            if (Interpreter.getInstance().checkIntegrity(actuator)) {
+                House.getInstance().getRoom(roomName).addEquipment(actuator);
+                return "Actuator " + actuatorName + " has been added to " + roomName + ".";
+            } else {
+                return "Actuator " + actuatorName + " could not be added to " + roomName + ", not compliant with feature model.\n";
+            }
+        }
+    }
 }

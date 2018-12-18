@@ -125,7 +125,7 @@ public class Interpreter {
         interpret();
     }
 
-    private boolean checkIntegrity(Object object) {
+    public boolean checkIntegrity(Object object) {
         ModelChecker.getInstance().addFeature(object.getClass().getSimpleName());
 
         if (ModelChecker.getInstance().checkFeatures()) {
@@ -136,7 +136,7 @@ public class Interpreter {
         }
     }
 
-    private boolean checkIntegrity(List<Object> objects) {
+    public boolean checkIntegrity(List<Object> objects) {
         return objects.stream()
                 .anyMatch(object -> !checkIntegrity(object));
     }
