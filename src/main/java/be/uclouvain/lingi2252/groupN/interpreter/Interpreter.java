@@ -1,5 +1,7 @@
-package be.uclouvain.lingi2252.groupN;
+package be.uclouvain.lingi2252.groupN.interpreter;
 
+import be.uclouvain.lingi2252.groupN.House;
+import be.uclouvain.lingi2252.groupN.Room;
 import be.uclouvain.lingi2252.groupN.actuators.*;
 import be.uclouvain.lingi2252.groupN.parameterization.ModelChecker;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;

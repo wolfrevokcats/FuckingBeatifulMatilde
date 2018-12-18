@@ -1,5 +1,6 @@
 package be.uclouvain.lingi2252.groupN;
 
+import be.uclouvain.lingi2252.groupN.interpreter.Interpreter;
 import org.junit.Test;
 
 import java.util.Map;

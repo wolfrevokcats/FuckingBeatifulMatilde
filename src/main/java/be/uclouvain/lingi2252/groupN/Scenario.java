@@ -1,5 +1,6 @@
 package be.uclouvain.lingi2252.groupN;
 
+import be.uclouvain.lingi2252.groupN.interpreter.Interpreter;
 import be.uclouvain.lingi2252.groupN.parameterization.Parameterization;
 import be.uclouvain.lingi2252.groupN.signals.*;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmStatus;
