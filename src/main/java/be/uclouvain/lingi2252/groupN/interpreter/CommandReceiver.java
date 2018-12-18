@@ -2,6 +2,8 @@ package be.uclouvain.lingi2252.groupN.interpreter;
 
 import be.uclouvain.lingi2252.groupN.House;
 import be.uclouvain.lingi2252.groupN.Room;
+import be.uclouvain.lingi2252.groupN.Scenario;
+import be.uclouvain.lingi2252.groupN.User;
 import be.uclouvain.lingi2252.groupN.actuators.*;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.sensors.SensorFactory;
@@ -177,5 +179,30 @@ public class CommandReceiver {
                 return "Actuator " + actuatorName + " could not be added to " + roomName + ", not compliant with feature model.\n";
             }
         }
+    }
+
+    private String enterRoom(String userName, String roomName) {
+        User user = House.getInstance().getUser(userName);
+        if (user == null) return userName + " is not a valid user.";
+        Room room = House.getInstance().getRoom(roomName);
+        if (room == null) return roomName + " is not a valid room.";
+
+        user.enterRoom(roomName);
+        return userName + " is now in " + roomName + ".";
+    }
+
+    private String scenario1(String string) throws InterruptedException {
+        Scenario.scenario1();
+        return string + "\nScenario 1 finished";
+    }
+
+    private String scenario2(String string) throws InterruptedException {
+        Scenario.scenario2();
+        return string + "\nScenario 2 finished";
+    }
+
+    private String scenario3(String string) throws InterruptedException {
+        Scenario.scenario3();
+        return string + "\nScenario 3 finished";
     }
 }
