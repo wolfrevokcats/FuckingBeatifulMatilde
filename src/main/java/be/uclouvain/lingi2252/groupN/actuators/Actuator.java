@@ -3,7 +3,7 @@ package be.uclouvain.lingi2252.groupN.actuators;
 import be.uclouvain.lingi2252.groupN.Room;
 
 public abstract class Actuator {
-    protected Boolean status;
+    private Boolean status;
     protected Room owner;
 
     protected Actuator(Room owner) {
@@ -17,18 +17,16 @@ public abstract class Actuator {
 
     public abstract void set(Boolean status);
 
-    protected void setStatus(String type, Boolean status) {
+    protected void setStatus(Boolean status) {
         if (status != this.status) {
             this.status = status;
             System.out.print(this.getClass().getSimpleName());
-            switch (type) {
-                case "open/close":
-                    System.out.print(" " + (status ? "opened" : "closed"));
-                    break;
-
-                case "turn on/off":
-                    System.out.print(" turned " + (status ? "on" : "off"));
-                    break;
+            if (this instanceof Lockable) {
+                System.out.print(" " + (status ? "opened" : "closed"));
+            } else if (this instanceof Switchable) {
+                System.out.print(" turned " + (status ? "on" : "off"));
+            } else {
+                throw new IllegalStateException(this.getClass().getSimpleName() + " status could not be changed!");
             }
             System.out.println(" in [" + owner.getName() + "]");
         }

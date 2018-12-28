@@ -9,6 +9,6 @@ public abstract class Switchable extends Actuator {
 
     @Override
     public void set(Boolean status) {
-        setStatus("turn on/off", status);
+        this.setStatus(status);
     }
 }

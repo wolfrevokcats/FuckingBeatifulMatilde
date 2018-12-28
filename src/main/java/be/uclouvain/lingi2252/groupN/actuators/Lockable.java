@@ -11,7 +11,7 @@ public abstract class Lockable extends Actuator {
 
     @Override
     public void set(Boolean status) {
-        setStatus("open/close", status);
+        this.setStatus(status);
     }
 
     public void setLocked(boolean locked) {
