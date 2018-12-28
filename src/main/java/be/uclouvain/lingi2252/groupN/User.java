@@ -27,7 +27,8 @@ public class User {
     }
 
     public void askToSmartAssistant(String request) {
-        System.out.println(SmartAssistant.getInstance().ask(this, request));
+        if (SmartAssistant.isEnabled()) System.out.println(SmartAssistant.getInstance().ask(this, request));
+        else System.out.println("There is no smart assistant in this house.");
     }
 
     public Room getLocation() {

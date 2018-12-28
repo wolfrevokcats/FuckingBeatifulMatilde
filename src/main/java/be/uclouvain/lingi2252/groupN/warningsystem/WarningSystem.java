@@ -24,11 +24,9 @@ public abstract class WarningSystem {
 
     public abstract void compute(Signal signal, Room room);
 
-    public void ring(Room room, String issue) {
+    public abstract void ring(Room room, String issue);
 
-    }
-
-    public void emergencyCall(String reason, String message) {
+    protected void emergencyCall(String reason, String message) {
         List<String> toBeCalled = emergencyContacts.get(reason);
         for (String contact : toBeCalled) {
             System.out.println("Calling " + contact + " with this message \"" + message + "\"");
