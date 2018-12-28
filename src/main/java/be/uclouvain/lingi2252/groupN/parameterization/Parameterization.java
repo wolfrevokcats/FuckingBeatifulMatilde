@@ -3,6 +3,8 @@ package be.uclouvain.lingi2252.groupN.parameterization;
 import be.uclouvain.lingi2252.groupN.*;
 import be.uclouvain.lingi2252.groupN.actuators.Actuator;
 import be.uclouvain.lingi2252.groupN.actuators.ActuatorFactory;
+import be.uclouvain.lingi2252.groupN.procedures.EvacuationManager;
+import be.uclouvain.lingi2252.groupN.procedures.LockDownManager;
 import be.uclouvain.lingi2252.groupN.procedures.ObjectTracker;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.sensors.SensorFactory;
@@ -188,10 +190,10 @@ public class Parameterization {
                         ObjectTracker.enable();
                         break;
                     case "lock_down":
-                        //ObjectTracker.enable();
+                        LockDownManager.enable();
                         break;
                     case "evacuation":
-                        //ObjectTracker.enable();
+                        EvacuationManager.enable();
                         break;
                     default:
                         System.out.println("Feature [" + featureKey + "] doesn't exist or isn't implemented yet!");
