@@ -3,8 +3,8 @@ package be.uclouvain.lingi2252.groupN.actuators;
 import be.uclouvain.lingi2252.groupN.Room;
 
 public abstract class Actuator {
-    private Boolean status;
     protected Room owner;
+    private Boolean status;
 
     protected Actuator(Room owner) {
         this.owner = owner;

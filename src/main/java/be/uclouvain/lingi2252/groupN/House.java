@@ -1,7 +1,10 @@
 package be.uclouvain.lingi2252.groupN;
 
+import be.uclouvain.lingi2252.groupN.actuators.TemperatureControl;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 public class House {
 
@@ -44,6 +47,12 @@ public class House {
 
     public void removeRoom(Room room) {
         this.rooms.remove(room);
+        room.getActuatorList().stream()
+                .filter(actuator -> actuator instanceof TemperatureControl)
+                .forEach(actuator -> room.getCommHub().deleteObservers());
+        room.getActuatorList().clear();
+        room.getSensors().forEach(Observable::deleteObservers);
+        room.getSensors().clear();
     }
 
     public Room getRoom(String name) {

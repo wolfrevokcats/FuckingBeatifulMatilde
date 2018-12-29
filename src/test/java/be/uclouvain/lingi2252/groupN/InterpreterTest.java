@@ -13,7 +13,7 @@ public class InterpreterTest {
     @Test
     public void welcomeTest() {
         Interpreter interpreter = Interpreter.getInstance();
-        Map<String, Integer> subFeatures = interpreter.checkFeatures();
+        Map<String, String> subFeatures = interpreter.checkFeatures();
         String res = interpreter.welcome(subFeatures);
         assertTrue(res.contains("Type a number:\n"));
 

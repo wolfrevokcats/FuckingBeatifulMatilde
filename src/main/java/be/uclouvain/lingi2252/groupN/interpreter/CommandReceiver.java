@@ -5,6 +5,7 @@ import be.uclouvain.lingi2252.groupN.Room;
 import be.uclouvain.lingi2252.groupN.Scenario;
 import be.uclouvain.lingi2252.groupN.User;
 import be.uclouvain.lingi2252.groupN.actuators.*;
+import be.uclouvain.lingi2252.groupN.parameterization.ModelChecker;
 import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 import be.uclouvain.lingi2252.groupN.sensors.SensorFactory;
 import be.uclouvain.lingi2252.groupN.sensors.TemperatureSensor;
@@ -52,7 +53,7 @@ public class CommandReceiver {
         try {
             res = (String) callMethod(input[0], Arrays.copyOfRange(input, 1, input.length));
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+            System.out.println("Command: " + inputString);
         }
         return res;
     }
@@ -152,18 +153,56 @@ public class CommandReceiver {
         return "The room " + roomName + " has been added.";
     }
 
+    private String removeRoom(String roomName) {
+        String res = "";
+
+        try {
+            House.getInstance().removeRoom(House.getInstance().getRoom(roomName));
+            ModelChecker.getInstance().removeFeature(roomName);
+
+            if (!ModelChecker.getInstance().checkFeatures()) {
+                res += "This is not compliant with the feature model.";
+                ModelChecker.getInstance().addFeature(roomName);
+                throw new NullPointerException("");
+            }
+
+            res += "The room " + roomName + " has been removed.";
+
+        } catch (NullPointerException e) {
+            res += "The room " + roomName + " could not be removed.";
+        }
+
+        return res;
+    }
+
     private String addSensor(String roomName, String sensorName) {
         Room room = House.getInstance().getRoom(roomName);
         Sensor sensor = SensorFactory.getSensor(sensorName, room);
         if (sensor == null) {
             return "Sensor " + sensorName + " does not exist, not added.";
         } else {
-            if (Interpreter.getInstance().checkIntegrity(sensor)) {
+            if (Interpreter.getInstance().checkAddIntegrity(sensor)) {
                 House.getInstance().getRoom(roomName).addSensor(sensor);
                 return "Sensor " + sensorName + " has been added to " + roomName + ".";
             } else {
                 return "Sensor " + sensorName + " could not be added to " + roomName + ", not compliant with feature model.\n";
             }
+        }
+    }
+
+    private String removeSensor(String roomName, String sensorName) {
+        try {
+            Room room = House.getInstance().getRoom(roomName);
+            Sensor sensor = room.getSensor(sensorName);
+
+            if (Interpreter.getInstance().checkRemoveIntegrity(sensor)) {
+                House.getInstance().getRoom(roomName).removeSensor(sensor);
+                return "Sensor " + sensorName + " has been removed from " + roomName + ".";
+            } else {
+                return "Sensor " + sensorName + " could not be removed from " + roomName + ", not compliant with feature model.\n";
+            }
+        } catch (NullPointerException e) {
+            return "Sensor " + sensorName + " does not exist in " + roomName + ".";
         }
     }
 
@@ -173,12 +212,28 @@ public class CommandReceiver {
         if (actuator == null) {
             return "Actuator " + actuatorName + " does not exist, not added.";
         } else {
-            if (Interpreter.getInstance().checkIntegrity(actuator)) {
+            if (Interpreter.getInstance().checkAddIntegrity(actuator)) {
                 House.getInstance().getRoom(roomName).addEquipment(actuator);
                 return "Actuator " + actuatorName + " has been added to " + roomName + ".";
             } else {
                 return "Actuator " + actuatorName + " could not be added to " + roomName + ", not compliant with feature model.\n";
             }
+        }
+    }
+
+    private String removeEquipment(String roomName, String equipmentName) {
+        try {
+            Room room = House.getInstance().getRoom(roomName);
+            Actuator actuator = room.getEquipment(equipmentName);
+
+            if (Interpreter.getInstance().checkRemoveIntegrity(actuator)) {
+                House.getInstance().getRoom(roomName).removeEquipment(actuator);
+                return "Actuator " + equipmentName + " has been removed from " + roomName + ".";
+            } else {
+                return "Actuator " + equipmentName + " could not be removed from " + roomName + ", not compliant with feature model.\n";
+            }
+        } catch (NullPointerException e) {
+            return "Actuator " + equipmentName + " does not exist in " + roomName + ".";
         }
     }
 

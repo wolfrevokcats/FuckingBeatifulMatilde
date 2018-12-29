@@ -8,6 +8,7 @@ import be.uclouvain.lingi2252.groupN.sensors.Sensor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 
 public class Room {
@@ -90,6 +91,7 @@ public class Room {
 
     public void removeEquipment(Actuator actuator) {
         actuatorList.remove(actuator);
+        commHub.deleteObserver((Observer) actuator);
     }
 
     public String getName() {
