@@ -6,15 +6,12 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 
         System.out.println("--- Choose a scenario to run ---");
-        System.out.println(" Press \n 0: Quit \n 1: Scenario1 \n 2: Scenario2\n 3: Scenario3");
+        System.out.println(" Press\n 1: Scenario1 \n 2: Scenario2\n 3: Scenario3 \n Any key: Quit ");
         boolean flag = true;
         while (flag) {
             try {
                 int input = (new Scanner(System.in)).nextInt();
                 switch (input) {
-                    case 0:
-                        System.out.println("--- End of the demo ---");
-                        break;
                     case 1:
                         System.out.println("--- First Scenario Implemented ---");
                         Scenario.scenario1();
@@ -28,6 +25,9 @@ public class Main {
                     case 3:
                         System.out.println("--- Third Scenario Implemented ---");
                         Scenario.scenario3();
+                        break;
+                    default:
+                        System.out.println("--- End of the demo ---");
                         break;
                 }
                 flag = false;

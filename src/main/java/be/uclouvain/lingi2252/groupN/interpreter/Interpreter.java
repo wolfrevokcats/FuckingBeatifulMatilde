@@ -76,10 +76,8 @@ public class Interpreter {
     }
 
     private Object input(String inputType) {
-        Scanner reader = null;
-        try {
-            String line = sc.nextLine();
-            reader = new Scanner(line);
+        String line = sc.nextLine();
+        try (Scanner reader = new Scanner(line)) {
             switch (inputType) {
                 case "string":
                     if (line.equals("")) return reader.nextLine();
@@ -93,12 +91,7 @@ public class Interpreter {
             }
         } catch (InputMismatchException e) {
             return null;
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
         }
-
     }
 
     public void interpret() {

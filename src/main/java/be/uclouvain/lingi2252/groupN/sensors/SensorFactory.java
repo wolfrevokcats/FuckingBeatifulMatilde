@@ -10,6 +10,10 @@ import java.lang.reflect.InvocationTargetException;
 import static java.lang.Math.toIntExact;
 
 public class SensorFactory {
+    private SensorFactory() {
+        //private empty constructor to hide the public one
+    }
+
     public static Sensor getSensor(String type, Room room) {
         String classPath = "be.uclouvain.lingi2252.groupN.sensors." + Parameterization.toClassName(type);
 

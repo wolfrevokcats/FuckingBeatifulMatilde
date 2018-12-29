@@ -14,6 +14,7 @@ import be.uclouvain.lingi2252.groupN.warningsystem.AlarmStatus;
 import be.uclouvain.lingi2252.groupN.warningsystem.AlarmSystem;
 import be.uclouvain.lingi2252.groupN.warningsystem.WarningSystem;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +32,7 @@ public class CommandReceiver {
         return SINGLE_INSTANCE;
     }
 
-    private Object callMethod(String sMethod, String... arguments) throws Exception {
+    private Object callMethod(String sMethod, String... arguments) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         if (arguments.length == 1) {
             Method method = this.getClass().getDeclaredMethod(sMethod, String.class);
             return method.invoke(this, arguments[0]);
@@ -50,7 +51,7 @@ public class CommandReceiver {
         String res = "This command is not supported.";
         try {
             res = (String) callMethod(input[0], Arrays.copyOfRange(input, 1, input.length));
-        } catch (Exception e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return res;

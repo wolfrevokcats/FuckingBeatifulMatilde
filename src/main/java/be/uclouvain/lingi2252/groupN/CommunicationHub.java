@@ -49,16 +49,9 @@ public class CommunicationHub extends Observable implements Observer {
         } else if (signal instanceof Air && sensor instanceof AirSensor) {
             AirQualityTester.getInstance().compute(signal, owner);
 
-        } else if (signal instanceof Contact & sensor instanceof ContactSensor) {
+        } else if (signal instanceof Contact && sensor instanceof ContactSensor) {
             AlarmSystem.getInstance().compute(signal, owner);
         }
-    }
-
-    public Signal getLastValue(String sensorName) {
-        for (Sensor sensor : lastValues.keySet()) {
-            if (sensor.getName().equals(sensorName)) return lastValues.get(sensor);
-        }
-        return null;
     }
 
     public Signal getLastValue(Sensor sensor) {

@@ -7,6 +7,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 public class ActuatorFactory {
+    private ActuatorFactory() {
+        //private empty constructor to hide the public one
+    }
+
     public static Actuator getActuator(String type, Room room) {
         String classPath = "be.uclouvain.lingi2252.groupN.actuators." + Parameterization.toClassName(type);
 
