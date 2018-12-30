@@ -31,11 +31,6 @@ public class House {
         this.residents = new ArrayList<>();
     }
 
-    public void reset() {
-        this.rooms = new ArrayList<>();
-        this.residents = new ArrayList<>();
-    }
-
     //methods
     public void addRoom(Room room) {
         this.rooms.add(room);
@@ -69,16 +64,8 @@ public class House {
                 .orElse(null);
     }
 
-    public void addUser(User user) {
-        this.residents.add(user);
-    }
-
     public void addUsers(List<User> users) {
         this.residents.addAll(users);
-    }
-
-    public void removeUser(User user) {
-        this.residents.remove(user);
     }
 
     public List<User> getResidents() {

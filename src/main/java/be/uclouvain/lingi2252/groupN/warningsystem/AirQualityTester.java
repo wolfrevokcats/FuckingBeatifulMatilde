@@ -37,8 +37,7 @@ public class AirQualityTester extends WarningSystem {
         return enabled;
     }
 
-    public void initialize(List<CommunicationHub> hubs, Double humidityThreshold, Double fineParticlesThreshold, Double harmfulGasThreshold) {
-        super.initialize(hubs);
+    public void initialize(Double humidityThreshold, Double fineParticlesThreshold, Double harmfulGasThreshold) {
         this.harmfulGasThreshold = harmfulGasThreshold;
         this.fineParticlesThreshold = fineParticlesThreshold;
         this.humidityThreshold = humidityThreshold;

@@ -72,10 +72,6 @@ public class Room {
         sensors.add(sensor);
     }
 
-    public void addSensors(List<Sensor> sensors) {
-        this.sensors.addAll(sensors);
-    }
-
     public void removeSensor(Sensor sensor) {
         sensors.remove(sensor);
     }
@@ -83,10 +79,6 @@ public class Room {
     public void addEquipment(Actuator actuator) {
         actuatorList.add(actuator);
         if (actuator instanceof TemperatureControl) commHub.addObserver((TemperatureControl) actuator);
-    }
-
-    public void addEquipment(List<Actuator> actuatorList) {
-        this.actuatorList.addAll(actuatorList);
     }
 
     public void removeEquipment(Actuator actuator) {

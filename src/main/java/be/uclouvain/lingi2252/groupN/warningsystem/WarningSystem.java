@@ -9,14 +9,12 @@ import java.util.*;
 public abstract class WarningSystem {
     // <message,contact numbers>
     private static Map<String, List<String>> emergencyContacts = new HashMap<>();
-    protected List<CommunicationHub> hubs;
 
     public static void addOrReplaceContact(String reason, List<String> contacts) {
         emergencyContacts.put(reason, contacts);
     }
 
-    public void initialize(List<CommunicationHub> hubs) {
-        this.hubs = hubs;
+    public void initialize() {
         emergencyContacts.put("FALL", new ArrayList<>(Arrays.asList("118", "Adalberto")));
         emergencyContacts.put("FIRE", new ArrayList<>(Arrays.asList("115", "Natalie")));
         emergencyContacts.put("BREAK-IN", new ArrayList<>(Arrays.asList("112", "Isabella")));

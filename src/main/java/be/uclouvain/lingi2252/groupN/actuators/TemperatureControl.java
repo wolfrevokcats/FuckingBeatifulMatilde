@@ -12,6 +12,8 @@ public abstract class TemperatureControl extends Switchable implements Observer 
 
     protected TemperatureControl(Room owner) {
         super(owner);
+        this.minTemp = 19.0;
+        this.maxTemp = 20.0;
     }
 
     @Override

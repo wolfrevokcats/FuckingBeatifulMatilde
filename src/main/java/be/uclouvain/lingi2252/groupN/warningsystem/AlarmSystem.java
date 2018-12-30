@@ -37,8 +37,8 @@ public class AlarmSystem extends WarningSystem {
         return enabled;
     }
 
-    public void initialize(List<CommunicationHub> hubs) {
-        super.initialize(hubs);
+    public void initialize() {
+        super.initialize();
         this.status = AlarmStatus.DISARMED;
     }
 

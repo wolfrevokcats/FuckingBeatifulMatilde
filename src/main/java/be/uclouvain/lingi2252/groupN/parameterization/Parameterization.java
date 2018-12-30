@@ -177,11 +177,11 @@ public class Parameterization {
                         Double fineParticlesThreshold = (Double) jsonAirThresholds.get("fine_particles");
                         Double harmfulGasThreshold = (Double) jsonAirThresholds.get("harmful_gas");
                         AirQualityTester.enable();
-                        AirQualityTester.getInstance().initialize(commHubs, humidityThreshold, fineParticlesThreshold, harmfulGasThreshold);
+                        AirQualityTester.getInstance().initialize(humidityThreshold, fineParticlesThreshold, harmfulGasThreshold);
                         break;
                     case "alarm_system":
                         AlarmSystem.enable();
-                        AlarmSystem.getInstance().initialize(commHubs);
+                        AlarmSystem.getInstance().initialize();
                         break;
                     case "smart_assistant":
                         SmartAssistant.enable();
