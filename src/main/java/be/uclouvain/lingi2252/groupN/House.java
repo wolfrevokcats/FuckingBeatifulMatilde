@@ -26,7 +26,9 @@ public class House {
     }
 
     public void initialize(List<User> owners) {
-        this.owners.addAll(owners);
+        this.owners = owners;
+        this.rooms = new ArrayList<>();
+        this.residents = new ArrayList<>();
     }
 
     //methods
