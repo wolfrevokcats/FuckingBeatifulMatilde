@@ -1,6 +1,5 @@
 package be.uclouvain.lingi2252.groupN.warningsystem;
 
-import be.uclouvain.lingi2252.groupN.CommunicationHub;
 import be.uclouvain.lingi2252.groupN.Room;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
 

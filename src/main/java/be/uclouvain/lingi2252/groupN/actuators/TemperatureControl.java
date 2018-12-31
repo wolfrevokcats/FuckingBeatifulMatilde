@@ -23,10 +23,6 @@ public abstract class TemperatureControl extends Switchable implements Observer 
         else if (lastTemp < minTemp) set(true);
     }
 
-    public Double getMinTemp() {
-        return minTemp;
-    }
-
     public void setTargetTemp(Double minTemp, Double maxTemp) {
         if (minTemp.equals(maxTemp)) {
             this.minTemp += minTemp;
@@ -37,9 +33,5 @@ public abstract class TemperatureControl extends Switchable implements Observer 
         }
 
         if (lastTemp != null) update(null, lastTemp);
-    }
-
-    public Double getMaxTemp() {
-        return maxTemp;
     }
 }

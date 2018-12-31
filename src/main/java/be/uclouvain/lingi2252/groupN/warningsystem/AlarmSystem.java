@@ -1,6 +1,5 @@
 package be.uclouvain.lingi2252.groupN.warningsystem;
 
-import be.uclouvain.lingi2252.groupN.CommunicationHub;
 import be.uclouvain.lingi2252.groupN.House;
 import be.uclouvain.lingi2252.groupN.Room;
 import be.uclouvain.lingi2252.groupN.User;
@@ -10,7 +9,6 @@ import be.uclouvain.lingi2252.groupN.signals.Frame;
 import be.uclouvain.lingi2252.groupN.signals.Motion;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class AlarmSystem extends WarningSystem {

@@ -1,13 +1,11 @@
 package be.uclouvain.lingi2252.groupN.warningsystem;
 
-import be.uclouvain.lingi2252.groupN.CommunicationHub;
 import be.uclouvain.lingi2252.groupN.Room;
 import be.uclouvain.lingi2252.groupN.procedures.EvacuationManager;
 import be.uclouvain.lingi2252.groupN.procedures.ObjectTracker;
 import be.uclouvain.lingi2252.groupN.signals.Air;
 import be.uclouvain.lingi2252.groupN.signals.Signal;
 
-import java.util.List;
 import java.util.Map;
 
 
